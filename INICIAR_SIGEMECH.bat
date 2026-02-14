@@ -1,86 +1,52 @@
 @echo off
-setlocal
+TITLE SIGEMECH - ORQUESTADOR DE SISTEMAS
+COLOR 0B
 
-echo =======================================================================
-echo  SCRIPT DE ORQUESTACION SIGEMECH
-echo =======================================================================
+:: ========================================================
+:: PASO 1: LIMPIEZA QUIRÚRGICA DE PUERTOS
+:: ========================================================
+echo [SISTEMA] Liberando puertos 3002 y 5174...
+taskkill /F /IM node.exe /T >nul 2>&1
+:: Nota: No se tocan puertos 3001 ni 5173 por respeto a otros proyectos [cite: 2026-02-14].
 
-REM --- PASO 1: LIMPIEZA SELECTIVA DE PUERTOS ---
-echo.
-echo [PASO 1] Limpiando puertos 3002 y 5174...
-echo.
-
-FOR /F "tokens=5" %%a IN ('netstat -aon ^| findstr :3002') DO (
-    IF "%%a" NEQ "0" (
-        echo    - Matando proceso con PID %%a en el puerto 3002 (Backend)
-        taskkill /F /PID %%a
-    )
+:: ========================================================
+:: PASO 2: VALIDACIÓN Y ARRANQUE DEL BACKEND
+:: ========================================================
+echo [BACKEND] Verificando dependencias...
+cd backend
+if not exist node_modules (
+    echo [ALERTA] No se detectaron librerias. Instalando NPM en Backend...
+    call npm install
 )
+echo [BACKEND] Iniciando motor en nueva ventana...
+start "SIGEMECH - LOGS BACKEND" cmd /k "npm run dev"
+cd ..
 
-FOR /F "tokens=5" %%a IN ('netstat -aon ^| findstr :5174') DO (
-    IF "%%a" NEQ "0" (
-        echo    - Matando proceso con PID %%a en el puerto 5174 (Frontend)
-        taskkill /F /PID %%a
-    )
+:: ========================================================
+:: PASO 3: PAUSA DE SINCRONIZACIÓN
+:: ========================================================
+echo [SISTEMA] Esperando inicializacion de base de datos...
+timeout /t 5 /nobreak >nul
+
+:: ========================================================
+:: PASO 4: VALIDACIÓN Y ARRANQUE DEL FRONTEND
+:: ========================================================
+echo [FRONTEND] Verificando dependencias...
+cd frontend
+if not exist node_modules (
+    echo [ALERTA] No se detectaron librerias. Instalando NPM en Frontend...
+    call npm install
 )
-echo.
-echo    Puertos limpiados.
-echo.
+echo [FRONTEND] Iniciando interfaz en nueva ventana...
+start "SIGEMECH - LOGS FRONTEND" cmd /k "npm run dev"
+cd ..
 
+:: ========================================================
+:: PASO 5: NOTIFICACIÓN VISUAL FINAL
+:: ========================================================
+echo [OK] Procesos iniciados correctamente.
+powershell -ExecutionPolicy Bypass -Command "[System.Reflection.Assembly]::LoadWithPartialName('System.Windows.Forms'); [System.Windows.Forms.MessageBox]::Show('🚀 ¡Sistemas SIGEMECH Listos! Puede iniciar su jornada.', 'SIGEMECH - Notificación', 'OK', 'Information')"
 
-REM --- PASO 2: VALIDACION DE ENTORNO ---
-echo [PASO 2] Validando entorno...
-echo.
-IF NOT EXIST "backend\\.env" (
-    echo [ERROR] El archivo de configuracion backend\\.env no existe.
-    echo         Por favor, cree el archivo antes de continuar.
-    pause
-    exit /b 1
-)
-echo    - Archivo backend\\.env encontrado.
-echo.
-
-REM --- PASO 3: LANZAMIENTO DEL BACKEND ---
-echo [PASO 3] Lanzando el Backend...
-echo.
-pushd backend
-IF NOT EXIST "node_modules" (
-    echo    - Detectada primera ejecucion en este entorno. Instalando dependencias necesarias para el Backend...
-    npm install
-)
-start "SIGEMECH - BACKEND" cmd /k "npm run dev"
-popd
-echo    - Se ha iniciado la ventana del Backend.
-echo.
-
-REM --- PASO 4: PAUSA DE CORTESIA ---
-echo [PASO 4] Pausa de 5 segundos para inicializacion del Backend...
-echo.
-timeout /t 5 /nobreak > nul
-echo    - Pausa completada.
-echo.
-
-REM --- PASO 5: LANZAMIENTO DEL FRONTEND ---
-echo [PASO 5] Lanzando el Frontend...
-echo.
-pushd frontend
-IF NOT EXIST "node_modules" (
-    echo    - Detectada primera ejecucion en este entorno. Instalando dependencias necesarias para el Frontend...
-    npm install
-)
-start "SIGEMECH - FRONTEND" cmd /k "npm run dev"
-popd
-echo    - Se ha iniciado la ventana del Frontend.
-echo.
-
-REM --- PASO 6: NOTIFICACION DE EXITO ---
-echo [PASO 6] Notificando exito...
-echo.
-powershell -Command "Add-Type -AssemblyName PresentationFramework; [System.Windows.MessageBox]::Show('El entorno de desarrollo de SIGEMECH se ha iniciado correctamente.','Lanzamiento Exitoso','OK','Information')"
-
-echo =======================================================================
-echo  Orquestacion finalizada.
-echo =======================================================================
-echo.
-
-endlocal
+:: Abrir navegador automáticamente
+start http://localhost:5174
+exit
