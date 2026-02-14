@@ -43,7 +43,13 @@ echo.
 REM --- PASO 3: LANZAMIENTO DEL BACKEND ---
 echo [PASO 3] Lanzando el Backend...
 echo.
-start "SIGEMECH - BACKEND" cmd /k "cd backend && npm run dev"
+pushd backend
+IF NOT EXIST "node_modules" (
+    echo    - Detectada primera ejecucion en este entorno. Instalando dependencias necesarias para el Backend...
+    npm install
+)
+start "SIGEMECH - BACKEND" cmd /k "npm run dev"
+popd
 echo    - Se ha iniciado la ventana del Backend.
 echo.
 
@@ -57,7 +63,13 @@ echo.
 REM --- PASO 5: LANZAMIENTO DEL FRONTEND ---
 echo [PASO 5] Lanzando el Frontend...
 echo.
-start "SIGEMECH - FRONTEND" cmd /k "cd frontend && npm run dev"
+pushd frontend
+IF NOT EXIST "node_modules" (
+    echo    - Detectada primera ejecucion en este entorno. Instalando dependencias necesarias para el Frontend...
+    npm install
+)
+start "SIGEMECH - FRONTEND" cmd /k "npm run dev"
+popd
 echo    - Se ha iniciado la ventana del Frontend.
 echo.
 
