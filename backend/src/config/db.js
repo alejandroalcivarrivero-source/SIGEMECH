@@ -9,7 +9,7 @@ const sequelize = new Sequelize(
     process.env.DB_USER,
     process.env.DB_PASSWORD,
     {
-        host: '100.64.87.1', // IP de Debian según lo solicitado
+        host: process.env.DB_HOST,
         dialect: 'mariadb',
         define: { underscored: true, timestamps: true, freezeTableName: true },
         logging: process.env.NODE_ENV === 'development' ? console.log : false,
