@@ -130,36 +130,36 @@ EmergencyAdmission.belongsTo(Paciente, { foreignKey: 'pacienteId', as: 'paciente
 
 // Catálogos de Admisión
 if (Triaje) {
-    Triaje.hasMany(EmergencyAdmission, { foreignKey: 'triageId', as: 'admisionesPorTriaje' });
-    EmergencyAdmission.belongsTo(Triaje, { foreignKey: 'triageId', as: 'triaje' });
+    Triaje.hasMany(EmergencyAdmission, { foreignKey: 'triajeId', as: 'admisionesPorTriaje' });
+    EmergencyAdmission.belongsTo(Triaje, { foreignKey: 'triajeId', as: 'triaje' });
 }
 
 if (EstadoProceso) {
-    EstadoProceso.hasMany(EmergencyAdmission, { foreignKey: 'statusId', as: 'admisionesPorEstado' });
-    EmergencyAdmission.belongsTo(EstadoProceso, { foreignKey: 'statusId', as: 'estadoProceso' });
+    EstadoProceso.hasMany(EmergencyAdmission, { foreignKey: 'estadoProcesoId', as: 'admisionesPorEstado' });
+    EmergencyAdmission.belongsTo(EstadoProceso, { foreignKey: 'estadoProcesoId', as: 'estadoProceso' });
 }
 
 if (FormularioLlegada) {
-    FormularioLlegada.hasMany(EmergencyAdmission, { foreignKey: 'arrivalFormId', as: 'admisionesPorFormaLlegada' });
-    EmergencyAdmission.belongsTo(FormularioLlegada, { foreignKey: 'arrivalFormId', as: 'formaLlegada' });
+    FormularioLlegada.hasMany(EmergencyAdmission, { foreignKey: 'formaLlegadaId', as: 'admisionesPorFormaLlegada' });
+    EmergencyAdmission.belongsTo(FormularioLlegada, { foreignKey: 'formaLlegadaId', as: 'formaLlegada' });
 }
 
 if (Parentesco) {
-    Parentesco.hasMany(EmergencyAdmission, { foreignKey: 'companionRelationshipId', as: 'admisionesPorParentesco' });
-    EmergencyAdmission.belongsTo(Parentesco, { foreignKey: 'companionRelationshipId', as: 'parentescoAcompanante' });
+    Parentesco.hasMany(EmergencyAdmission, { foreignKey: 'acompananteParentescoId', as: 'admisionesPorParentesco' });
+    EmergencyAdmission.belongsTo(Parentesco, { foreignKey: 'acompananteParentescoId', as: 'parentescoAcompanante' });
 }
 
 if (FuenteInformacion) {
-    FuenteInformacion.hasMany(EmergencyAdmission, { foreignKey: 'informationSourceId', as: 'admisionesPorFuente' });
-    EmergencyAdmission.belongsTo(FuenteInformacion, { foreignKey: 'informationSourceId', as: 'fuenteInformacion' });
+    FuenteInformacion.hasMany(EmergencyAdmission, { foreignKey: 'fuenteInformacionId', as: 'admisionesPorFuente' });
+    EmergencyAdmission.belongsTo(FuenteInformacion, { foreignKey: 'fuenteInformacionId', as: 'fuenteInformacion' });
 }
 
 // Auditoría Admisión
-User.hasMany(EmergencyAdmission, { foreignKey: 'admittedBy', as: 'admisionesRegistradas' });
-EmergencyAdmission.belongsTo(User, { foreignKey: 'admittedBy', as: 'admisionista' });
+User.hasMany(EmergencyAdmission, { foreignKey: 'registradoPor', as: 'admisionesRegistradas' });
+EmergencyAdmission.belongsTo(User, { foreignKey: 'registradoPor', as: 'admisionista' });
 
-User.hasMany(EmergencyAdmission, { foreignKey: 'attendingPhysicianId', as: 'pacientesAsignados' });
-EmergencyAdmission.belongsTo(User, { foreignKey: 'attendingPhysicianId', as: 'medicoTratante' });
+User.hasMany(EmergencyAdmission, { foreignKey: 'medicoTratanteId', as: 'pacientesAsignados' });
+EmergencyAdmission.belongsTo(User, { foreignKey: 'medicoTratanteId', as: 'medicoTratante' });
 
 module.exports = {
     User,

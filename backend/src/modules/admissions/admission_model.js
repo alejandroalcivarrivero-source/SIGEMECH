@@ -4,6 +4,7 @@ const { normalizeStrings } = require('../../config/model_helper');
 
 /**
  * Modelo para el Formulario 008 (Emergencia) - Admisión y Triaje Inicial
+ * Refactorizado a Español Técnico (Normativa MSP)
  */
 const EmergencyAdmission = sequelize.define('admisiones_emergencia', {
     id: {
@@ -17,138 +18,138 @@ const EmergencyAdmission = sequelize.define('admisiones_emergencia', {
         allowNull: false,
         field: 'paciente_id'
     },
-    admissionDate: {
+    fechaAdmision: {
         type: DataTypes.DATE,
         allowNull: false,
         defaultValue: DataTypes.NOW,
-        field: 'admission_date'
+        field: 'fecha_admision'
     },
-    reasonForConsultation: {
+    motivoConsulta: {
         type: DataTypes.TEXT,
         allowNull: false,
-        field: 'reason_for_consultation'
+        field: 'motivo_consulta'
     },
     condicionLlegadaId: {
         type: DataTypes.INTEGER,
         allowNull: true,
-        field: 'arrival_condition_id'
+        field: 'condicion_llegada_id'
     },
-    assignedHealthUnit: {
+    unidadSaludAdscripcion: {
         type: DataTypes.STRING(255),
         allowNull: true,
         field: 'unidad_salud_adscripcion'
     },
-    personalHistory: {
+    antecedentesPersonales: {
         type: DataTypes.TEXT,
         allowNull: true,
-        field: 'personal_history'
+        field: 'antecedentes_personales'
     },
-    familyHistory: {
+    antecedentesFamiliares: {
         type: DataTypes.TEXT,
         allowNull: true,
-        field: 'family_history'
+        field: 'antecedentes_familiares'
     },
-    currentIllness: {
+    enfermedadActual: {
         type: DataTypes.TEXT,
         allowNull: true,
-        field: 'current_illness'
+        field: 'enfermedad_actual'
     },
-    temperature: {
+    temperatura: {
         type: DataTypes.DECIMAL(4, 2),
         allowNull: true,
-        field: 'temperature'
+        field: 'temperatura'
     },
-    bloodPressureSystolic: {
+    presionArterialSistolica: {
         type: DataTypes.INTEGER,
         allowNull: true,
-        field: 'blood_pressure_systolic'
+        field: 'presion_arterial_sistolica'
     },
-    bloodPressureDiastolic: {
+    presionArterialDiastolica: {
         type: DataTypes.INTEGER,
         allowNull: true,
-        field: 'blood_pressure_diastolic'
+        field: 'presion_arterial_diastolica'
     },
-    heartRate: {
+    frecuenciaCardiaca: {
         type: DataTypes.INTEGER,
         allowNull: true,
-        field: 'heart_rate'
+        field: 'frecuencia_cardiaca'
     },
-    respiratoryRate: {
+    frecuenciaRespiratoria: {
         type: DataTypes.INTEGER,
         allowNull: true,
-        field: 'respiratory_rate'
+        field: 'frecuencia_respiratoria'
     },
-    oxygenSaturation: {
+    saturacionOxigeno: {
         type: DataTypes.INTEGER,
         allowNull: true,
-        field: 'oxygen_saturation'
+        field: 'saturacion_oxigeno'
     },
-    weight: {
+    peso: {
         type: DataTypes.DECIMAL(5, 2),
         allowNull: true,
-        field: 'weight'
+        field: 'peso'
     },
-    height: {
+    talla: {
         type: DataTypes.DECIMAL(4, 1),
         allowNull: true,
-        field: 'height'
+        field: 'talla'
     },
-    physicalExam: {
+    examenFisico: {
         type: DataTypes.TEXT,
         allowNull: true,
-        field: 'physical_exam'
+        field: 'examen_fisico'
     },
-    triageId: {
+    triajeId: {
         type: DataTypes.INTEGER,
         allowNull: true,
-        field: 'triage_id'
+        field: 'triaje_id'
     },
-    admittedBy: {
+    registradoPor: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        field: 'admitted_by'
+        field: 'registrado_por'
     },
-    attendingPhysicianId: {
+    medicoTratanteId: {
         type: DataTypes.INTEGER,
         allowNull: true,
-        field: 'attending_physician_id'
+        field: 'medico_tratante_id'
     },
-    statusId: {
+    estadoProcesoId: {
         type: DataTypes.INTEGER,
         allowNull: true,
-        field: 'status_id'
+        field: 'estado_proceso_id'
     },
     // Bloque Acompañante
-    companionName: {
+    acompananteNombre: {
         type: DataTypes.STRING(200),
         allowNull: true,
-        field: 'companion_name'
+        field: 'acompanante_nombre'
     },
-    companionRelationshipId: {
+    acompananteParentescoId: {
         type: DataTypes.INTEGER,
         allowNull: true,
-        field: 'companion_relationship_id'
+        field: 'acompanante_parentesco_id'
     },
-    companionAddress: {
+    acompananteDireccion: {
         type: DataTypes.TEXT,
         allowNull: true,
-        field: 'companion_address'
+        field: 'acompanante_direccion'
     },
-    companionPhone: {
+    acompananteTelefono: {
         type: DataTypes.STRING(20),
         allowNull: true,
-        field: 'companion_phone'
+        field: 'acompanante_telefono'
     },
     // Bloque Logística (MSP 008)
-    arrivalModeId: {
+    formaLlegadaId: {
         type: DataTypes.INTEGER,
         allowNull: true,
-        field: 'arrival_mode_id'
+        field: 'forma_llegada_id'
     },
-    informationSourceId: {
+    fuenteInformacionId: {
         type: DataTypes.INTEGER,
         allowNull: true,
-        field: 'information_source_id'
+        field: 'fuente_informacion_id'
     }
 }, {
     tableName: 'admisiones_emergencia',
