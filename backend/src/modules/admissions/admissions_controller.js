@@ -1,6 +1,6 @@
-const { Paciente, EmergencyAdmission, Representante, Parto } = require('../../models_index');
-const sequelize = require('../../config/db');
+const { sequelize } = require('../../config/db');
 const { Op } = require('sequelize');
+const { Paciente, Representante, Admision, Parto } = sequelize.models;
 
 /**
  * Controlador para el proceso de Admisión de Emergencia
@@ -21,6 +21,24 @@ const admissionController = {
             // Validación rápida de campos obligatorios para trazabilidad precisa
             if (!pacienteData) throw new Error('Falta pacienteData');
             if (!admissionData) throw new Error('Falta admissionData');
+
+            // --- REGLAS DE NEGOCIO (Soberanía de Datos - QA Senior) ---
+            
+            // 1. Validación de Fecha de Ingreso (No Futura)
+            const fechaIngreso = admissionData.fecha_ingreso ? new Date(admissionData.fecha_ingreso) : new Date();
+            if (fechaIngreso > new Date()) {
+                throw new Error('Validación Técnica: La fecha de ingreso no puede ser posterior a la fecha actual.');
+            }
+
+            // 2. Validación de Referencia (Obligatoriedad de Establecimiento de Origen)
+            if (admissionData.id_forma_llegada) {
+                const formaLlegada = await sequelize.models.FormaLlegada.findByPk(admissionData.id_forma_llegada);
+                if (formaLlegada && formaLlegada.nombre === 'Referido') {
+                    if (!admissionData.establecimiento_origen || admissionData.establecimiento_origen.trim() === '') {
+                        throw new Error('Validación de Proceso: Para pacientes referidos, el campo "Establecimiento de Origen" es mandatorio.');
+                    }
+                }
+            }
 
             // --- BLINDAJE DE INTEGRIDAD REFERENCIAL (CATÁLOGOS UBICACIÓN) ---
             const { parishId } = pacienteData;
@@ -100,7 +118,7 @@ const admissionController = {
 
             // 3. Registro de Admisión
             console.log(`[ADMISION] Registrando admisión para paciente ID: ${paciente.id}...`);
-            const admission = await EmergencyAdmission.create({
+            const admission = await Admision.create({
                 ...admissionData,
                 reasonForConsultation: motivoConsulta,
                 pacienteId: paciente.id,
@@ -181,7 +199,7 @@ const admissionController = {
             // Validar admisión reciente (< 48 horas)
             const hace48Horas = new Date(new Date() - 48 * 60 * 60 * 1000);
 
-            const admisionReciente = await EmergencyAdmission.findOne({
+            const admisionReciente = await Admision.findOne({
                 where: {
                     pacienteId: paciente.id,
                     createdAt: {

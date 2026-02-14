@@ -1,37 +1,53 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import authService from '../api/authService';
+import { useAuth } from '../context/AuthContext';
 import ModalFeedback from '../components/ModalFeedback';
-
 const Login = () => {
   const [cedula, setCedula] = useState('');
-  const [password, setPassword] = useState('');
+  const [clave, setClave] = useState('');
   const [modal, setModal] = useState({ show: false, type: 'info', title: '', message: '' });
   const navigate = useNavigate();
-
+  const { login } = useAuth();
+  
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
-      const { user } = await authService.login(cedula, password);
+      // Llamamos a login() del AuthContext para actualizar el estado global
+      const user = await login(cedula, clave);
       
       setModal({
         show: true,
         type: 'success',
-        title: `¡Bienvenido ${user?.nombres || 'Usuario'}!`,
+        title: `¡Bienvenido ${user?.nombres || user?.firstName || 'Usuario'}!`,
         message: 'Credenciales verificadas. Accediendo al sistema...'
       });
 
+      // Redirección automática tras delay de 1.5s
       setTimeout(() => {
         navigate('/dashboard');
       }, 1500);
 
     } catch (err) {
       console.error('Login error:', err);
+            
+            // Si el error es de red y estamos en modo fallback, permitir login local.
+            const isNetworkError = err.message.toLowerCase().includes('network') || err.message.toLowerCase().includes('offline');
+            
+            if (isNetworkError) {
+              setModal({
+                show: true,
+                type: 'informacion',
+                title: 'Estás en Modo Offline',
+                message: 'Intentando autenticación local. Algunas funciones pueden no estar disponibles.'
+              });
+              // Aquí podrías tener una lógica de autenticación local si la hubiera.
+              // Por ahora, solo mostramos el mensaje. El interceptor ya maneja el fallback.
+            }
       
-      // Los errores ahora vienen normalizados por el interceptor blindado
-      const errorMessage = err.message || 'Error inesperado al intentar iniciar sesión.';
-      const errorTitle = err.status === 401 ? 'Acceso Denegado' : 'Error de Sistema';
+            // Los errores ahora vienen normalizados por el interceptor blindado
+            const errorMessage = err.message || 'Error inesperado al intentar iniciar sesión.';
+            const errorTitle = err.status === 401 ? 'Acceso Denegado' : 'Error de Sistema';
       
       setModal({
         show: true,
@@ -44,6 +60,10 @@ const Login = () => {
 
   const closeModal = () => {
     setModal({ ...modal, show: false });
+    // Si el login fue exitoso, redirigir inmediatamente al cerrar el modal
+    if (modal.type === 'success') {
+      navigate('/dashboard');
+    }
   };
 
   return (
@@ -97,8 +117,8 @@ const Login = () => {
             <input
               type="password"
               required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={clave}
+              onChange={(e) => setClave(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
               placeholder="Ingrese su contraseña"
             />

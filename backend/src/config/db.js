@@ -1,40 +1,41 @@
 const { Sequelize } = require('sequelize');
 const dotenv = require('dotenv');
+const { inicializarModelos } = require('../models_index');
 
 dotenv.config();
 
-/**
- * Configuración de Sequelize para MariaDB/MySQL
- * Se utiliza snake_case para la base de datos y camelCase para el código.
- */
 const sequelize = new Sequelize(
     process.env.DB_NAME,
     process.env.DB_USER,
     process.env.DB_PASSWORD,
     {
-        host: process.env.DB_HOST,
+        host: '100.64.87.1', // IP de Debian según lo solicitado
         dialect: 'mariadb',
+        define: { underscored: true, timestamps: true, freezeTableName: true },
+        logging: process.env.NODE_ENV === 'development' ? console.log : false,
         dialectOptions: {
-            connectTimeout: 10000
+            connectTimeout: 5000
         },
-        define: {
-            underscored: true, // Usa snake_case para campos generados automáticamente (createdAt, etc.)
-            timestamps: true,
-            freezeTableName: true // Evita que Sequelize pluralice los nombres de las tablas
-        },
-        logging: process.env.NODE_ENV === 'development' ? console.log : false
     }
 );
 
-const testConnection = async () => {
+const inicializar = async () => {
     try {
         await sequelize.authenticate();
-        console.log('Conexión a la base de datos establecida correctamente con Sequelize.');
+        console.log('Conexión a la base de datos establecida exitosamente.');
+        
+        const models = inicializarModelos(sequelize);
+        console.log('Modelos inicializados.');
+
+        // await sequelize.sync({ alter: true }); // Desactivado para modo producción/estable
+        console.log('Sincronización de modelos desactivada en modo estable.');
     } catch (error) {
-        console.error('No se pudo conectar a la base de datos:', error);
+        console.error('No se pudo conectar o sincronizar la base de datos:', error);
+        process.exit(1); // Salir si la BD no está disponible
     }
 };
 
-testConnection();
-
-module.exports = sequelize;
+module.exports = {
+    sequelize,
+    inicializar
+};

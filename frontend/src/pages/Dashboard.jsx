@@ -1,56 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useLocation, useNavigate, Outlet } from 'react-router-dom';
 import { LogOut, LayoutDashboard, FileText, BarChart2, LifeBuoy, Search, RefreshCw, AlertTriangle, CheckCircle, Clock, Menu, X, ChevronLeft, ChevronRight } from 'lucide-react';
-import FormularioAdmisionMaestra from '../components/FormularioAdmisionMaestra';
+import FormularioAdmisionMaestra from '../components/admision/FormularioAdmisionMaestra';
+import { useAuth } from '../context/AuthContext';
 
-// Mock function para simular la obtención de datos del usuario
-// En una implementación real, esto vendría de un Context o Redux store
-// Ahora también leeremos del localStorage si está disponible para hacerlo un poco más realista
-const useAuth = () => {
-    const [user, setUser] = useState({
-        name: 'Usuario Demo',
-        role: 'usuario',
-        roles: []
-    });
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+const Header = ({ logoPath, onLogout, user, toggleSidebar, isSidebarOpen, activeView }) => {
+    const location = useLocation();
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        const userData = localStorage.getItem('user');
-        
-        if (token && userData) {
-            try {
-                const parsedUser = JSON.parse(userData);
-                // Mapear roles para compatibilidad
-                // Si tiene rol 'Soporte TI' (ID 6), le damos acceso a soporte
-                const roles = parsedUser.roles || [];
-                let mainRole = 'usuario';
-                
-                // Mapeo simple de roles a permisos del frontend
-                if (roles.some(r => r.includes('Admin'))) mainRole = 'admin';
-                else if (roles.some(r => r.includes('Soporte'))) mainRole = 'soporte';
-                
-                setUser({
-                    ...parsedUser,
-                    name: parsedUser.nombres + ' ' + parsedUser.apellidos,
-                    role: mainRole, // Rol principal para lógica simple
-                    roles: roles     // Todos los roles para lógica compleja
-                });
-                setIsAuthenticated(true);
-            } catch (e) {
-                console.error("Error parsing user data", e);
-                setIsAuthenticated(false);
-            }
-        } else {
-            // Si no hay token, redirigir a login (excepto en dev si se desea)
-            setIsAuthenticated(false);
+    const pageTitle = useMemo(() => {
+        const path = location.pathname;
+
+        // Reglas de Misión 2: Títulos dinámicos basados en useLocation
+        if (path === '/dashboard/admision' || activeView === 'admision-maestra') {
+            return 'Admisión de Pacientes (008)';
         }
-    }, []);
+        if (path === '/dashboard') {
+            return 'Panel Principal';
+        }
 
-    return { user, isAuthenticated };
-};
+        // Fallback a lógica anterior si no coincide con las reglas específicas
+        switch (activeView) {
+            case 'estadistica':
+                return 'Estadística';
+            case 'soporte':
+                return 'Supervisión de Auditoría';
+            default:
+                return 'Dashboard';
+        }
+    }, [activeView, location.pathname]);
 
-const Header = ({ logoPath, onLogout, user, toggleSidebar, isSidebarOpen }) => {
     return (
         <header className="bg-blue-700 text-white p-4 flex justify-between items-center shadow-md z-10 sticky top-0">
             <div className="flex items-center gap-3">
@@ -62,7 +40,9 @@ const Header = ({ logoPath, onLogout, user, toggleSidebar, isSidebarOpen }) => {
                     {isSidebarOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
                 </button>
                 <img src={logoPath} alt="SIGEMECH Logo" className="h-10 w-auto bg-white rounded-full p-1" />
-                <h1 className="text-xl font-bold tracking-tight hidden sm:block">SIGEMECH <span className="text-blue-200 font-normal">Dashboard</span></h1>
+                <h1 className="text-xl font-bold tracking-tight hidden sm:block">
+                    SIGEMECH <span className="text-blue-200 font-normal">| {pageTitle}</span>
+                </h1>
                 <h1 className="text-xl font-bold tracking-tight sm:hidden">SIGEMECH</h1>
             </div>
             <div className="flex items-center gap-4 text-sm">
@@ -82,27 +62,32 @@ const Header = ({ logoPath, onLogout, user, toggleSidebar, isSidebarOpen }) => {
     );
 };
 
-const Sidebar = ({ userRole, activeView, setActiveView, isOpen, toggleSidebar }) => {
+const Sidebar = ({ user, activeView, isOpen, toggleSidebar }) => {
+    const navigate = useNavigate();
     const navItems = [
-        { id: 'dashboard', name: 'Dashboard Principal', icon: LayoutDashboard, roles: ['admin', 'supervisor', 'usuario'] },
-        { id: 'admision-maestra', name: 'Admisión de Pacientes (001)', icon: FileText, roles: ['admin', 'usuario'] },
-        { id: 'estadistica', name: 'Estadística', icon: BarChart2, roles: ['admin', 'supervisor'] },
-        { id: 'soporte', name: 'Supervisión de Auditoría', icon: LifeBuoy, roles: ['soporte', 'admin'] }, // Prioridad a soporte
+        { id: 'inicio', name: 'Dashboard Principal', icon: LayoutDashboard, roles: ['admin', 'supervisor', 'usuario'], path: '/dashboard/inicio' },
+        { id: 'admision', name: 'Admisión de Pacientes (008)', icon: FileText, roles: ['admin', 'usuario'], path: '/dashboard/admision' },
+        { id: 'estadistica', name: 'Estadística', icon: BarChart2, roles: ['admin', 'supervisor'], path: '/dashboard/estadistica' },
+        { id: 'soporte', name: 'Supervisión de Auditoría', icon: LifeBuoy, roles: ['soporte', 'admin'], path: '/dashboard/soporte' },
     ];
 
-    // Verificar si el usuario tiene alguno de los roles permitidos
-    const canView = (allowedRoles) => {
-        if (userRole === 'admin') return true; // Admin ve todo por defecto
-        if (allowedRoles.includes(userRole)) return true;
-        return false;
+    // RBAC: Verificar si el usuario tiene permiso
+    const canView = (item) => {
+        if (!user) return false;
+        // Si tiene permiso '*' (Master Sergio), accede a todo
+        if (user.roles?.includes('*') || user.permissions?.includes('*')) return true;
+        // Si el rol es admin, accede a todo (retrocompatibilidad)
+        if (user.role === 'admin') return true;
+        // Verificar por roles específicos definidos en el item
+        return item.roles.includes(user.role);
     };
 
     return (
         <>
-            {/* Overlay para cerrar al hacer click fuera (visible en móvil y desktop cuando está abierto) */}
+            {/* Overlay para cerrar al hacer click fuera (SOLO en móvil) */}
             {isOpen && (
                 <div
-                    className="fixed inset-0 bg-black/50 z-20"
+                    className="fixed inset-0 bg-black/50 z-20 md:hidden"
                     onClick={toggleSidebar}
                 />
             )}
@@ -111,7 +96,7 @@ const Sidebar = ({ userRole, activeView, setActiveView, isOpen, toggleSidebar })
                 className={`
                     fixed inset-y-0 left-0 z-30
                     bg-slate-900 text-slate-300 flex-shrink-0 h-full overflow-y-auto flex flex-col
-                    transition-transform duration-300 ease-in-out w-64
+                    transition-all duration-300 ease-in-out w-64
                     ${isOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full'}
                 `}
             >
@@ -131,21 +116,21 @@ const Sidebar = ({ userRole, activeView, setActiveView, isOpen, toggleSidebar })
                     <nav>
                         <ul className="space-y-2">
                             {navItems.map((item) => (
-                                canView(item.roles) && (
+                                canView(item) && (
                                     <li key={item.id} title={!isOpen ? item.name : ''}>
                                         <button
                                             onClick={() => {
-                                                setActiveView(item.id);
-                                                toggleSidebar(); // Siempre cerrar al seleccionar
+                                                navigate(item.path);
+                                                if (window.innerWidth < 768) toggleSidebar(); // Cerrar solo en móvil
                                             }}
                                             className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium transition-all duration-200
                                                 ${activeView === item.id
-                                                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/50'
+                                                    ? 'bg-blue-700 text-amber-400 shadow-lg shadow-blue-900/50 ring-1 ring-amber-500/30'
                                                     : 'hover:bg-slate-800 hover:text-white'
                                                 }
                                             `}
                                         >
-                                            <item.icon className={`h-5 w-5 flex-shrink-0 ${activeView === item.id ? 'text-white' : 'text-slate-400'}`} />
+                                            <item.icon className={`h-5 w-5 flex-shrink-0 ${activeView === item.id ? 'text-amber-400' : 'text-slate-400'}`} />
                                             <span className="block whitespace-nowrap overflow-hidden">
                                                 {item.name}
                                             </span>
@@ -382,10 +367,18 @@ const SoporteView = () => {
 };
 
 export default function Dashboard() {
-    const { user, isAuthenticated } = useAuth();
-    const [activeView, setActiveView] = useState('dashboard');
+    const { user, logout } = useAuth();
+    const location = useLocation();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const navigate = useNavigate();
+
+    // Sincronización de activeView basada en la URL
+    const activeView = useMemo(() => {
+        const path = location.pathname;
+        if (path.includes('/admision')) return 'admision';
+        if (path.includes('/estadistica')) return 'estadistica';
+        if (path.includes('/soporte')) return 'soporte';
+        return 'inicio';
+    }, [location.pathname]);
     
     const logoPath = '/SIGEMECH_LOGO.png';
 
@@ -395,17 +388,8 @@ export default function Dashboard() {
     const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
     const handleLogout = () => {
-        // Limpiar token y redirigir
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        navigate('/login');
+        logout();
     };
-
-    // Si no hay usuario autenticado (aunque aquí usamos mock, en real se valida token)
-    if (!isAuthenticated) {
-        // Esto normalmente no se renderiza si hay rutas protegidas, pero por seguridad:
-        return <div className="p-10 text-center">Verificando sesión...</div>;
-    }
 
     return (
         <div className="flex flex-col h-screen bg-slate-50">
@@ -416,24 +400,24 @@ export default function Dashboard() {
                 user={user}
                 toggleSidebar={toggleSidebar}
                 isSidebarOpen={isSidebarOpen}
+                activeView={activeView}
             />
             
             {/* Contenido principal: Sidebar + Main Content */}
             <div className="flex flex-1 overflow-hidden relative">
                 <Sidebar
-                    userRole={user.role}
+                    user={user}
                     activeView={activeView}
-                    setActiveView={setActiveView}
                     isOpen={isSidebarOpen}
                     toggleSidebar={toggleSidebar}
                 />
                 
                 {/* Main Content Area */}
-                <main className="flex-1 overflow-y-auto bg-slate-50 p-6 md:p-8 transition-all duration-300 w-full">
+                <main className={`flex-1 overflow-y-auto bg-slate-50 p-6 md:p-8 transition-all duration-300 w-full ${isSidebarOpen ? 'md:ml-64' : 'ml-0'}`}>
                     <div className="max-w-7xl mx-auto">
-                        {activeView === 'dashboard' && (
+                        {activeView === 'inicio' && (
                             <div className="animate-fade-in">
-                                <h2 className="text-3xl font-bold text-slate-800 mb-2">Bienvenido de nuevo, {user.name.split(' ')[0]}</h2>
+                                <h2 className="text-3xl font-bold text-slate-800 mb-2">Bienvenido de nuevo, {user.name?.split(' ')[0]}</h2>
                                 <p className="text-slate-500 mb-8">Resumen de actividad del centro de salud.</p>
                                 
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -484,10 +468,10 @@ export default function Dashboard() {
                             </div>
                         )}
 
-                        {activeView === 'admision-maestra' && (
+                        {activeView === 'admision' && (
                             <div className="animate-fade-in">
                                  <div className="mb-6">
-                                    <h2 className="text-2xl font-bold text-slate-800">Admisión Maestra de Pacientes</h2>
+                                    <h2 className="text-2xl font-bold text-slate-800">Admisión de Pacientes (008)</h2>
                                     <p className="text-slate-500">Registro completo de filiación según Formulario 001 MSP.</p>
                                  </div>
                                  <FormularioAdmisionMaestra />
@@ -505,6 +489,8 @@ export default function Dashboard() {
                         {activeView === 'soporte' && (
                             <SoporteView />
                         )}
+
+                        <Outlet />
                     </div>
                 </main>
             </div>

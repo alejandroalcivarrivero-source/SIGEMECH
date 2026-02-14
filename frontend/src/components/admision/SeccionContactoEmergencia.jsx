@@ -7,19 +7,18 @@ const SeccionContactoEmergencia = ({ formData, handleChange, catalogos, formHabi
     return (
         <div className="space-y-3">
             <h3 className="text-xs font-extrabold text-blue-900 border-b border-blue-200 pb-0.5 mb-2 uppercase tracking-tight">
-                5. Datos de Contacto (Emergencia)
+                5. Datos del Contacto (Emergencia)
             </h3>
             
             <div className="grid grid-cols-4 gap-x-2 gap-y-2">
-                {/* Nombre del Contacto */}
                 <div className="col-span-2">
                     <label className={labelClasses}>
                         Nombre del Contacto <span className="text-red-500">*</span>
                     </label>
                     <input
                         type="text"
-                        name="contactoEmergenciaNombre"
-                        value={formData.contactoEmergenciaNombre}
+                        name="nombre_representante"
+                        value={formData.nombre_representante}
                         onChange={handleChange}
                         disabled={!formHabilitado}
                         placeholder="Nombres y Apellidos"
@@ -28,14 +27,13 @@ const SeccionContactoEmergencia = ({ formData, handleChange, catalogos, formHabi
                     />
                 </div>
 
-                {/* Parentesco */}
                 <div className="col-span-1">
                     <label className={labelClasses}>
                         Parentesco <span className="text-red-500">*</span>
                     </label>
                     <select
-                        name="contactoEmergenciaParentesco"
-                        value={formData.contactoEmergenciaParentesco}
+                        name="id_parentesco_representante"
+                        value={formData.id_parentesco_representante}
                         onChange={handleChange}
                         disabled={!formHabilitado}
                         className={inputClasses}
@@ -46,15 +44,14 @@ const SeccionContactoEmergencia = ({ formData, handleChange, catalogos, formHabi
                     </select>
                 </div>
 
-                {/* Teléfono */}
                 <div className="col-span-1">
                     <label className={labelClasses}>
                         Teléfono <span className="text-red-500">*</span>
                     </label>
                     <input
                         type="text"
-                        name="contactoEmergenciaTelefono"
-                        value={formData.contactoEmergenciaTelefono}
+                        name="documento_representante"
+                        value={formData.documento_representante}
                         onChange={handleChange}
                         disabled={!formHabilitado}
                         placeholder="09XXXXXXXX"
@@ -63,14 +60,13 @@ const SeccionContactoEmergencia = ({ formData, handleChange, catalogos, formHabi
                     />
                 </div>
 
-                {/* Dirección */}
                 <div className="col-span-4">
                     <label className={labelClasses}>
                         Dirección <span className="text-red-500">*</span>
                     </label>
                     <textarea
-                        name="contactoEmergenciaDireccion"
-                        value={formData.contactoEmergenciaDireccion}
+                        name="direccion_representante"
+                        value={formData.direccion_representante}
                         onChange={handleChange}
                         disabled={!formHabilitado}
                         rows="2"

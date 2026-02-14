@@ -10,7 +10,6 @@ router.get('/parroquias/:canton_id', catalogsController.getParroquias);
 router.get('/nacionalidades', catalogsController.getNacionalidades);
 router.get('/etnias', catalogsController.getEtnias);
 router.get('/niveles-educacion', catalogsController.getNivelesEducacion);
-router.get('/seguros-salud', catalogsController.getSegurosSalud);
 
 // Nuevos catálogos normalizados
 router.get('/sexos', catalogsController.getSexos);
@@ -27,13 +26,16 @@ router.get('/tipos-identificacion', catalogsController.getTiposIdentificacion);
 
 // Cascada de Autoidentificación Étnica (Soporta query params y URL params)
 router.get('/etnias', catalogsController.getEtnias);
-router.get('/nacionalidades-etnicas', catalogsController.getEthnicNationalities);
-router.get('/pueblos-etnicos', catalogsController.getEthnicGroups);
+router.get('/autoidentificaciones-etnicas', catalogsController.getEthnicNationalities);
+router.get('/pueblos', catalogsController.getEthnicGroups);
 
 // Rutas compatibles con el requerimiento específico /api/catalogos/...
 // (Express maneja el prefijo en app.js, aquí solo definimos la estructura interna)
-router.get('/nacionalidades-etnicas/:etnia_id', catalogsController.getEthnicNationalities);
-router.get('/pueblos-etnicos/:nacionalidad_id', catalogsController.getEthnicGroups);
+router.get('/autoidentificaciones-etnicas/:etnia_id', catalogsController.getEthnicNationalities);
+router.get('/pueblos/:nacionalidad_id', catalogsController.getEthnicGroups);
 router.get('/establecimientos-salud', catalogsController.getEstablecimientosSalud);
+
+// Ruta para obtener países
+router.get('/paises', catalogsController.getPaises);
 
 module.exports = router;

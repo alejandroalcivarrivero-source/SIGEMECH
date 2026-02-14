@@ -7,19 +7,19 @@ const authService = {
    * @param {string} password 
    * @returns {Promise<Object>} Datos del usuario y token
    */
-  login: async (cedula, password) => {
-    try {
-      const response = await api.post('/auth/login', { cedula, password });
+  login: async (cedula, clave) => {
+      try {
+          const response = await api.post('/auth/login', { cedula, clave });
 
       if (!response || !response.data) {
         throw new Error('Error de conexión con el servidor.');
       }
 
-      if (!response.data.token) {
-        throw new Error('Error de Servidor: Autenticación fallida.');
+      if (!response.data.ficha_acceso) {
+          throw new Error('Error de Servidor: Autenticación fallida.');
       }
 
-      const token = response.data.token;
+      const ficha_acceso = response.data.ficha_acceso;
       const userData = response.data.user || response.data.usuario;
 
       if (!userData) {
@@ -27,10 +27,10 @@ const authService = {
       }
 
       // Almacenamiento local
-      localStorage.setItem('token', token);
+      localStorage.setItem('token', ficha_acceso);
       localStorage.setItem('user', JSON.stringify(userData));
 
-      return { user: userData, token };
+      return { user: userData, token: ficha_acceso };
     } catch (error) {
       // Limpieza preventiva
       localStorage.removeItem('token');

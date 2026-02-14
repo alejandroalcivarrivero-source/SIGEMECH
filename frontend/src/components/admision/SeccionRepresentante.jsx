@@ -11,7 +11,7 @@ const SeccionRepresentante = ({ formData, handleChange, catalogos, formHabilitad
         const { value } = e.target;
         handleChange(e);
 
-        const tipoSeleccionado = catalogos.tiposIdentificacion?.find(t => t.id == formData.tipoDocRepresentante);
+        const tipoSeleccionado = catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_doc_representante);
         const esCedula = tipoSeleccionado?.nombre?.toUpperCase().includes('CÉDULA');
 
         if (esCedula && value.length === 10) {
@@ -27,22 +27,20 @@ const SeccionRepresentante = ({ formData, handleChange, catalogos, formHabilitad
 
     const handleBlurIdentificacion = (e) => {
         const { value } = e.target;
-        const esNeonato = edadInfo?.years === 0 && edadInfo?.months === 0 && (edadInfo?.days || 0) < 28;
+        const isNeonato = edadInfo?.isNeonato;
         
-        // Si es neonato y el parentesco seleccionado es MADRE, disparamos la búsqueda
         const parentescoMadreId = catalogos.parentescos?.find(p => p.nombre?.toUpperCase() === 'MADRE')?.id;
         
-        if (esNeonato && formData.parentescoRepresentante == parentescoMadreId && value && value.length >= 10 && manejarBusquedaMadre) {
+        if (isNeonato && formData.id_parentesco_representante == parentescoMadreId && value && value.length >= 10 && manejarBusquedaMadre) {
             manejarBusquedaMadre(value);
         }
     };
 
-    const esNoIdentificado = catalogos.tiposIdentificacion?.find(t => t.id == formData.tipoDocRepresentante)?.nombre?.toUpperCase().includes('NO IDENTIFICADO');
+    const esNoIdentificado = catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_doc_representante)?.nombre?.toUpperCase().includes('NO IDENTIFICADO');
     
-    // Si es neonato (< 28 días) y se ha inyectado la madre, bloqueamos parentesco
-    const esNeonato = edadInfo?.years === 0 && edadInfo?.months === 0 && (edadInfo?.days || 0) < 28;
+    const isNeonato = edadInfo?.isNeonato;
     const parentescoMadreId = catalogos.parentescos?.find(p => p.nombre?.toUpperCase() === 'MADRE')?.id;
-    const bloqueoMadre = esNeonato && formData.parentescoRepresentante == parentescoMadreId && formData.cedula_madre;
+    const bloqueoMadre = isNeonato && formData.id_parentesco_representante == parentescoMadreId && formData.cedula_madre;
 
     return (
         <div className={`space-y-3 ${esSubcomponente ? 'mt-6 pt-4 border-t-2 border-dashed border-blue-200' : ''}`}>
@@ -51,12 +49,11 @@ const SeccionRepresentante = ({ formData, handleChange, catalogos, formHabilitad
             </h3>
             
             <div className="grid grid-cols-4 gap-x-2 gap-y-2">
-                {/* Tipo ID Representante */}
                 <div className="col-span-1">
                     <label className={labelClasses}>Tipo ID <span className="text-red-500">*</span></label>
                     <select
-                        name="tipoDocRepresentante"
-                        value={formData.tipoDocRepresentante}
+                        name="id_tipo_doc_representante"
+                        value={formData.id_tipo_doc_representante}
                         onChange={handleChange}
                         disabled={!formHabilitado || bloqueoMadre}
                         className={inputClasses}
@@ -67,15 +64,14 @@ const SeccionRepresentante = ({ formData, handleChange, catalogos, formHabilitad
                     </select>
                 </div>
 
-                {/* Identificación Representante */}
                 <div className="col-span-1">
                     <label className={labelClasses}>
                         Identificación <span className="text-red-500">*</span>
                     </label>
                     <input
                         type="text"
-                        name="cedulaRepresentante"
-                        value={formData.cedulaRepresentante}
+                        name="documento_representante"
+                        value={formData.documento_representante}
                         onChange={handleIdentificacionChange}
                         onBlur={handleBlurIdentificacion}
                         disabled={!formHabilitado || bloqueoMadre}
@@ -86,14 +82,13 @@ const SeccionRepresentante = ({ formData, handleChange, catalogos, formHabilitad
                     {errorCedula && <span className="text-[8px] text-red-600 font-bold">{errorCedula}</span>}
                 </div>
 
-                {/* Parentesco */}
                 <div className="col-span-1">
                     <label className={labelClasses}>
                         Parentesco <span className="text-red-500">*</span>
                     </label>
                     <select
-                        name="parentescoRepresentante"
-                        value={formData.parentescoRepresentante}
+                        name="id_parentesco_representante"
+                        value={formData.id_parentesco_representante}
                         onChange={handleChange}
                         disabled={!formHabilitado || bloqueoMadre}
                         className={inputClasses}
@@ -106,51 +101,29 @@ const SeccionRepresentante = ({ formData, handleChange, catalogos, formHabilitad
 
                 <div className="col-span-1"></div>
 
-                {/* Nombres y Apellidos */}
-                <div className="col-span-1">
-                    <label className={labelClasses}>Primer Apellido <span className="text-red-500">*</span></label>
+                <div className="col-span-2">
+                    <label className={labelClasses}>Nombre Completo <span className="text-red-500">*</span></label>
                     <input
                         type="text"
-                        name="repPrimerApellido"
-                        value={formData.repPrimerApellido || ''}
+                        name="nombre_representante"
+                        value={formData.nombre_representante || ''}
                         onChange={handleChange}
                         disabled={!formHabilitado || bloqueoMadre}
                         className={`${inputClasses} uppercase font-bold`}
                         required
                     />
                 </div>
-                <div className="col-span-1">
-                    <label className={labelClasses}>Segundo Apellido</label>
+                
+                <div className="col-span-2">
+                    <label className={labelClasses}>Dirección <span className="text-red-500">*</span></label>
                     <input
                         type="text"
-                        name="repSegundoApellido"
-                        value={formData.repSegundoApellido || ''}
+                        name="direccion_representante"
+                        value={formData.direccion_representante || ''}
                         onChange={handleChange}
-                        disabled={!formHabilitado || bloqueoMadre}
-                        className={`${inputClasses} uppercase font-bold`}
-                    />
-                </div>
-                <div className="col-span-1">
-                    <label className={labelClasses}>Primer Nombre <span className="text-red-500">*</span></label>
-                    <input
-                        type="text"
-                        name="repPrimerNombre"
-                        value={formData.repPrimerNombre || ''}
-                        onChange={handleChange}
-                        disabled={!formHabilitado || bloqueoMadre}
-                        className={`${inputClasses} uppercase font-bold`}
+                        disabled={!formHabilitado}
+                        className={`${inputClasses} uppercase`}
                         required
-                    />
-                </div>
-                <div className="col-span-1">
-                    <label className={labelClasses}>Segundo Nombre</label>
-                    <input
-                        type="text"
-                        name="repSegundoNombre"
-                        value={formData.repSegundoNombre || ''}
-                        onChange={handleChange}
-                        disabled={!formHabilitado || bloqueoMadre}
-                        className={`${inputClasses} uppercase font-bold`}
                     />
                 </div>
             </div>

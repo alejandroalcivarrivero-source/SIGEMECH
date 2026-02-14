@@ -1,31 +1,43 @@
 import React, { useEffect } from 'react';
 import { Search } from 'lucide-react';
 import { generarCodigoTemporal } from '../../utils/pacienteUtils';
+import { generarCodigoNormativo } from '../../utils/generador_codigo';
 
 const SeccionIdentidad = ({ formData, handleChange, handleBusquedaPaciente, catalogos, formHabilitado }) => {
     // Lógica para Generación Automática del Código de 17 caracteres (Normativa MSP)
     useEffect(() => {
-        const tipoSeleccionado = catalogos.tiposIdentificacion?.find(t => t.id == formData.tipoIdentificacion);
+        const tipoSeleccionado = catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion);
         const esNoIdentificado = tipoSeleccionado?.nombre?.toUpperCase() === 'NO IDENTIFICADO';
 
         if (esNoIdentificado) {
-            const nuevoCodigo = generarCodigoTemporal(formData, catalogos.provincias);
-            if (nuevoCodigo !== formData.cedula) {
+            const provNac = catalogos.provincias?.find(p => p.id == formData.provinciaNacimiento);
+            const codProv = provNac?.codigo_inec || '99';
+
+            const nuevoCodigo = generarCodigoNormativo({
+                primer_nombre: formData.primer_nombre,
+                segundo_nombre: formData.segundo_nombre,
+                primer_apellido: formData.primer_apellido,
+                segundo_apellido: formData.segundo_apellido,
+                codigo_provincia: codProv,
+                fecha_nacimiento: formData.fecha_nacimiento
+            });
+
+            if (nuevoCodigo !== formData.numero_documento) {
                 handleChange({
                     target: {
-                        name: 'cedula',
+                        name: 'numero_documento',
                         value: nuevoCodigo
                     }
                 });
             }
         }
     }, [
-        formData.tipoIdentificacion,
-        formData.primerNombre,
-        formData.segundoNombre,
-        formData.primerApellido,
-        formData.segundoApellido,
-        formData.fechaNacimiento,
+        formData.id_tipo_identificacion,
+        formData.primer_nombre,
+        formData.segundo_nombre,
+        formData.primer_apellido,
+        formData.segundo_apellido,
+        formData.fecha_nacimiento,
         formData.provinciaNacimiento,
         catalogos.provincias,
         catalogos.tiposIdentificacion
@@ -49,10 +61,9 @@ const SeccionIdentidad = ({ formData, handleChange, handleBusquedaPaciente, cata
                         Tipo Id. <span className="text-red-500">*</span>
                     </label>
                     <select
-                        name="tipoIdentificacion"
-                        value={formData.tipoIdentificacion}
+                        name="id_tipo_identificacion"
+                        value={formData.id_tipo_identificacion}
                         onChange={(e) => {
-                            // 1. Disparo del cambio via props (limpieza y reset ya ocurren en el padre)
                             handleChange(e);
                         }}
                         className={inputClasses}
@@ -69,20 +80,19 @@ const SeccionIdentidad = ({ formData, handleChange, handleBusquedaPaciente, cata
                     </label>
                     <div className="relative">
                         {(() => {
-                            const tipoSeleccionado = catalogos.tiposIdentificacion?.find(t => t.id == formData.tipoIdentificacion);
+                            const tipoSeleccionado = catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion);
                             const esNoIdentificado = tipoSeleccionado?.nombre?.toUpperCase() === 'NO IDENTIFICADO';
                             
                             return (
                                 <input
                                     type="text"
-                                    name="cedula"
-                                    value={formData.cedula}
+                                    name="numero_documento"
+                                    value={formData.numero_documento}
                                     onChange={(e) => {
-                                        const tipoSeleccionado = catalogos.tiposIdentificacion?.find(t => t.id == formData.tipoIdentificacion);
+                                        const tipoSeleccionado = catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion);
                                         const esCedula = tipoSeleccionado?.nombre?.toUpperCase() === 'CÉDULA DE IDENTIDAD' || tipoSeleccionado?.nombre?.toUpperCase() === 'CEDULA';
                                         
                                         if (esCedula) {
-                                            // Bloqueo de entrada no numérica para Cédula
                                             const val = e.target.value;
                                             if (val && !/^\d+$/.test(val)) return;
                                             if (val.length > 10) return;
@@ -110,10 +120,10 @@ const SeccionIdentidad = ({ formData, handleChange, handleBusquedaPaciente, cata
                         Estado Civil <span className="text-red-500">*</span>
                     </label>
                     <select
-                        name="estadoCivil"
-                        value={formData.estadoCivil}
+                        name="id_estado_civil"
+                        value={formData.id_estado_civil}
                         onChange={handleChange}
-                        disabled={!(formHabilitado || (catalogos.tiposIdentificacion?.find(t => t.id == formData.tipoIdentificacion)?.nombre?.toUpperCase() === 'NO IDENTIFICADO'))}
+                        disabled={!(formHabilitado || (catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion)?.nombre?.toUpperCase() === 'NO IDENTIFICADO'))}
                         className={`${inputClasses} bg-white`}
                         required
                     >
@@ -127,10 +137,10 @@ const SeccionIdentidad = ({ formData, handleChange, handleBusquedaPaciente, cata
                         Sexo <span className="text-red-500">*</span>
                     </label>
                     <select
-                        name="sexo"
-                        value={formData.sexo}
+                        name="id_sexo"
+                        value={formData.id_sexo}
                         onChange={handleChange}
-                        disabled={!(formHabilitado || (catalogos.tiposIdentificacion?.find(t => t.id == formData.tipoIdentificacion)?.nombre?.toUpperCase() === 'NO IDENTIFICADO'))}
+                        disabled={!(formHabilitado || (catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion)?.nombre?.toUpperCase() === 'NO IDENTIFICADO'))}
                         className={`${inputClasses} bg-white`}
                         required
                     >
@@ -139,9 +149,8 @@ const SeccionIdentidad = ({ formData, handleChange, handleBusquedaPaciente, cata
                     </select>
                 </div>
 
-                {/* Fila 2: Apellidos (Compactados en 1 columna cada uno dentro del grid 4x4) */}
                 {(() => {
-                    const tipoSeleccionado = catalogos.tiposIdentificacion?.find(t => t.id == formData.tipoIdentificacion);
+                    const tipoSeleccionado = catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion);
                     const esNoIdentificado = tipoSeleccionado?.nombre?.toUpperCase() === 'NO IDENTIFICADO';
                     const forceEnabled = esNoIdentificado || formHabilitado;
 
@@ -153,8 +162,8 @@ const SeccionIdentidad = ({ formData, handleChange, handleBusquedaPaciente, cata
                                 </label>
                                 <input
                                     type="text"
-                                    name="primerApellido"
-                                    value={formData.primerApellido}
+                                    name="primer_apellido"
+                                    value={formData.primer_apellido}
                                     onChange={handleChange}
                                     disabled={!forceEnabled}
                                     className={`${inputClasses} uppercase font-bold`}
@@ -167,23 +176,22 @@ const SeccionIdentidad = ({ formData, handleChange, handleBusquedaPaciente, cata
                                 </label>
                                 <input
                                     type="text"
-                                    name="segundoApellido"
-                                    value={formData.segundoApellido}
+                                    name="segundo_apellido"
+                                    value={formData.segundo_apellido}
                                     onChange={handleChange}
                                     disabled={!forceEnabled}
                                     className={`${inputClasses} uppercase font-bold`}
                                 />
                             </div>
 
-                            {/* Fila 2 cont: Nombres */}
                             <div className={`${containerClasses} col-span-1`}>
                                 <label className={labelClasses}>
                                     Primer Nombre <span className="text-red-500">*</span>
                                 </label>
                                 <input
                                     type="text"
-                                    name="primerNombre"
-                                    value={formData.primerNombre}
+                                    name="primer_nombre"
+                                    value={formData.primer_nombre}
                                     onChange={handleChange}
                                     disabled={!forceEnabled}
                                     className={`${inputClasses} uppercase font-bold`}
@@ -196,8 +204,8 @@ const SeccionIdentidad = ({ formData, handleChange, handleBusquedaPaciente, cata
                                 </label>
                                 <input
                                     type="text"
-                                    name="segundoNombre"
-                                    value={formData.segundoNombre}
+                                    name="segundo_nombre"
+                                    value={formData.segundo_nombre}
                                     onChange={handleChange}
                                     disabled={!forceEnabled}
                                     className={`${inputClasses} uppercase font-bold`}
@@ -207,10 +215,8 @@ const SeccionIdentidad = ({ formData, handleChange, handleBusquedaPaciente, cata
                     );
                 })()}
 
-                {/* Fila 3: Contacto */}
-                {/* Campos de Contacto que también se habilitan si es No Identificado */}
                 {(() => {
-                    const tipoSeleccionado = catalogos.tiposIdentificacion?.find(t => t.id == formData.tipoIdentificacion);
+                    const tipoSeleccionado = catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion);
                     const esNoIdentificado = tipoSeleccionado?.nombre?.toUpperCase() === 'NO IDENTIFICADO';
                     const forceEnabled = esNoIdentificado || formHabilitado;
 
@@ -220,8 +226,8 @@ const SeccionIdentidad = ({ formData, handleChange, handleBusquedaPaciente, cata
                                 <label className={labelClasses}>Teléf. Fijo</label>
                                 <input
                                     type="text"
-                                    name="telefonoFijo"
-                                    value={formData.telefonoFijo}
+                                    name="telefono_fijo"
+                                    value={formData.telefono_fijo}
                                     onChange={handleChange}
                                     disabled={!forceEnabled}
                                     className={`${inputClasses} bg-white`}
@@ -234,8 +240,8 @@ const SeccionIdentidad = ({ formData, handleChange, handleBusquedaPaciente, cata
                                 </label>
                                 <input
                                     type="text"
-                                    name="telefonoCelular"
-                                    value={formData.telefonoCelular}
+                                    name="telefono"
+                                    value={formData.telefono}
                                     onChange={handleChange}
                                     disabled={!forceEnabled}
                                     className={`${inputClasses} font-bold bg-white`}

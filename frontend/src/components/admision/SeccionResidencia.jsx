@@ -1,13 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { getPaises } from '../../api/catalogService';
 
-const SeccionResidencia = ({ 
-    formData, 
-    handleChange, 
-    catalogos, 
-    cantonesFiltrados, 
-    parroquiasFiltradas, 
-    formHabilitado 
+const SeccionResidencia = ({
+    formData,
+    paciente,
+    handleChange,
+    catalogos,
+    cantonesFiltrados,
+    parroquiasFiltradas,
+    formHabilitado,
+    setFormData
 }) => {
+    if (!paciente) {
+        return <div>Cargando datos del paciente...</div>;
+    }
+    const [paises, setPaises] = useState([]);
+    const esEcuador = paciente?.pais_id === 1;
+
+    useEffect(() => {
+        const cargarPaises = async () => {
+            try {
+                const paisesData = await getPaises();
+                setPaises(paisesData);
+            } catch (error) {
+                console.error("Error al cargar países:", error);
+            }
+        };
+        cargarPaises();
+    }, []);
+
+    useEffect(() => {
+        if (!esEcuador) {
+            setFormData(prev => ({
+                ...prev,
+                provincia_id: '',
+                canton_id: '',
+                parroquia_id: ''
+            }));
+        }
+    }, [esEcuador, setFormData]);
+
     const inputClasses = "w-full rounded border-gray-400 bg-white text-[11px] py-1 px-1.5 focus:border-blue-600 focus:outline-none font-medium h-7 border-2 shadow-sm transition-colors";
     const labelClasses = "block text-[10px] font-bold text-gray-600 mb-0.5 uppercase truncate";
 
@@ -18,35 +50,36 @@ const SeccionResidencia = ({
             </h3>
             
             <div className="grid grid-cols-4 gap-x-2 gap-y-2">
-                {/* Fila 1: Ubicación Política */}
                 <div className="col-span-1">
                     <label className={labelClasses}>
                         País <span className="text-red-500">*</span>
                     </label>
                     <select
-                        name="paisResidencia"
-                        value={formData.paisResidencia}
+                        name="pais_id"
+                        value={formData.pais_id}
                         onChange={handleChange}
                         disabled={!formHabilitado}
                         className={inputClasses}
                         required
                     >
-                        <option value="Ecuador">Ecuador</option>
-                        <option value="Otro">Otro</option>
+                        <option value="">Seleccione un país</option>
+                        {paises.map(pais => (
+                            <option key={pais.id} value={pais.id}>{pais.nombre}</option>
+                        ))}
                     </select>
                 </div>
 
                 <div className="col-span-1">
                     <label className={labelClasses}>
-                        Provincia <span className="text-red-500">*</span>
+                        Provincia {esEcuador && <span className="text-red-500">*</span>}
                     </label>
                     <select
-                        name="provinciaResidencia"
-                        value={formData.provinciaResidencia}
+                        name="provincia_id"
+                        value={formData.provincia_id}
                         onChange={handleChange}
-                        disabled={!formHabilitado}
+                        disabled={!formHabilitado || !esEcuador}
                         className={inputClasses}
-                        required
+                        required={esEcuador}
                     >
                         <option value="">Seleccione</option>
                         {catalogos.provincias.map(p => <option key={p.id} value={p.id}>{p.nombre}</option>)}
@@ -55,15 +88,15 @@ const SeccionResidencia = ({
 
                 <div className="col-span-1">
                     <label className={labelClasses}>
-                        Cantón <span className="text-red-500">*</span>
+                        Cantón {esEcuador && <span className="text-red-500">*</span>}
                     </label>
                     <select
-                        name="cantonResidencia"
-                        value={formData.cantonResidencia}
+                        name="canton_id"
+                        value={formData.canton_id}
                         onChange={handleChange}
-                        disabled={!formHabilitado || !formData.provinciaResidencia}
+                        disabled={!formHabilitado || !paciente.provincia_id || !esEcuador}
                         className={inputClasses}
-                        required
+                        required={esEcuador}
                     >
                         <option value="">Seleccione</option>
                         {cantonesFiltrados.map(c => <option key={c.id} value={c.id}>{c.nombre}</option>)}
@@ -72,25 +105,24 @@ const SeccionResidencia = ({
 
                 <div className="col-span-1">
                     <label className={labelClasses}>
-                        Parroquia <span className="text-red-500">*</span>
+                        Parroquia {esEcuador && <span className="text-red-500">*</span>}
                     </label>
                     <select
-                        name="parroquiaResidencia"
-                        value={formData.parroquiaResidencia}
+                        name="parroquia_id"
+                        value={formData.parroquia_id}
                         onChange={handleChange}
-                        disabled={!formHabilitado || !formData.cantonResidencia}
+                        disabled={!formHabilitado || !paciente.canton_id || !esEcuador}
                         className={inputClasses}
-                        required
+                        required={esEcuador}
                     >
                         <option value="">Seleccione</option>
                         {parroquiasFiltradas.map(p => <option key={p.id} value={p.id}>{p.nombre}</option>)}
                     </select>
                 </div>
 
-                {/* Fila 2: Dirección Detallada */}
                 <div className="col-span-2">
                     <label className={labelClasses}>
-                        Calle Principal <span className="text-red-500">*</span>
+                        Calle Principal {esEcuador && <span className="text-red-500">*</span>}
                     </label>
                     <input
                         type="text"
@@ -100,7 +132,7 @@ const SeccionResidencia = ({
                         disabled={!formHabilitado}
                         placeholder="Vía principal"
                         className={inputClasses}
-                        required
+                        required={esEcuador}
                     />
                 </div>
 
@@ -130,9 +162,10 @@ const SeccionResidencia = ({
                     />
                 </div>
 
-                {/* Fila 3: Barrio y Referencia */}
                 <div className="col-span-1">
-                    <label className={labelClasses}>Barrio</label>
+                    <label className={labelClasses}>
+                        Barrio {esEcuador && <span className="text-red-500">*</span>}
+                    </label>
                     <input
                         type="text"
                         name="barrio"
@@ -141,19 +174,23 @@ const SeccionResidencia = ({
                         disabled={!formHabilitado}
                         placeholder="Sector"
                         className={inputClasses}
+                        required={esEcuador}
                     />
                 </div>
 
                 <div className="col-span-3">
-                    <label className={labelClasses}>Referencia</label>
+                    <label className={labelClasses}>
+                        Referencia {esEcuador && <span className="text-red-500">*</span>}
+                    </label>
                     <input
                         type="text"
-                        name="referenciaResidencia"
-                        value={formData.referenciaResidencia}
+                        name="referencia_domicilio"
+                        value={formData.referencia_domicilio}
                         onChange={handleChange}
                         disabled={!formHabilitado}
                         className={inputClasses}
                         placeholder="Color de casa, hitos cercanos..."
+                        required={esEcuador}
                     />
                 </div>
             </div>

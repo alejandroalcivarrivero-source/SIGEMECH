@@ -4,21 +4,83 @@ import { generarCodigoTemporal } from '../../utils/pacienteUtils';
 import SeccionRepresentante from './SeccionRepresentante';
 import pacienteService from '../../api/pacienteService';
 
-const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, formHabilitado, edadInfo, setFormData }) => {
+const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, formHabilitado, edadInfo, setFormData, setModalConfig, setNavegacionBloqueada }) => {
     const focusRef = useRef(null);
+    const horaRef = useRef(null);
+    const establecimientoRef = useRef(null);
     const [cantones, setCantones] = useState([]);
     const [parroquias, setParroquias] = useState([]);
+    const [contadorErroresHora, setContadorErroresHora] = useState(0);
 
-    // Definición de isNeonato para condicionar visibilidad de campos de nacimiento
-    // Se considera neonato si tiene menos de 28 días O si la bandera isNeonato viene en true (cálculo por horas)
-    // Tarea 3: Usar banderas de negocio inyectadas desde FormularioAdmisionMaestra
+    // Misión: Unificar validación a reloj atómico. [cite: 2026-02-14]
+    const esMenorA24HorasReales = useMemo(() => {
+        if (!formData.fecha_nacimiento) return false;
+        
+        // Si no hay hora, se calcula contra el inicio del día.
+        // Si hay hora, se calcula contra el momento exacto.
+        const hora = formData.hora_parto || '00:00:00';
+        const timestampNacimiento = new Date(`${formData.fecha_nacimiento}T${hora}`).getTime();
+
+        if (isNaN(timestampNacimiento)) return false;
+        
+        // Cálculo Atómico: (Date.now() - timestampNacimiento) < 86400000
+        return (Date.now() - timestampNacimiento) < 86400000;
+    }, [formData.fecha_nacimiento, formData.hora_parto]);
+
+
+    const esHoyOAnteriores24h = useMemo(() => {
+        if (!formData.fecha_nacimiento) return false;
+        const hoy = new Date();
+        const ayer = new Date(hoy);
+        ayer.setDate(ayer.getDate() - 1);
+
+        const fechaSeleccionada = new Date(`${formData.fecha_nacimiento}T00:00:00`);
+        
+        const esMismoDia = (d1, d2) =>
+            d1.getFullYear() === d2.getFullYear() &&
+            d1.getMonth() === d2.getMonth() &&
+            d1.getDate() === d2.getDate();
+
+        // Forzar Campo Hora: visible y obligatorio por defecto si es hoy o ayer.
+        return esMismoDia(fechaSeleccionada, hoy) || esMismoDia(fechaSeleccionada, ayer) || esMenorA24HorasReales;
+    }, [formData.fecha_nacimiento, esMenorA24HorasReales]);
+    
+    // Bloqueo de Navegación: Inhabilita SIGUIENTE si la fecha es < 24h y la hora está vacía.
+    useEffect(() => {
+        const debeBloquear = esMenorA24HorasReales && !formData.hora_parto;
+        if (setNavegacionBloqueada) {
+            setNavegacionBloqueada(debeBloquear);
+        }
+    }, [esMenorA24HorasReales, formData.hora_parto, setNavegacionBloqueada]);
+
+
+    const esRegistroValido = useMemo(() => {
+        if (!formData.fecha_nacimiento) return false;
+        if (esMenorA24HorasReales && !formData.hora_parto) return false;
+        
+        if (formData.hora_parto) {
+            const timestampNacimiento = new Date(`${formData.fecha_nacimiento}T${formData.hora_parto}`).getTime();
+            if (isNaN(timestampNacimiento)) return false;
+            
+            // No puede ser futura (margen 5 min)
+            if (timestampNacimiento > (Date.now() + 5 * 60 * 1000)) return false;
+
+            // Si con la hora ya pasaron más de 24h, invalidar si tiene seleccionado el Tipo C Chone
+            if (!esMenorA24HorasReales) {
+                const est = catalogos.establecimientos?.find(e => e.id == formData.id_lugar_parto);
+                if (est?.nombre?.toUpperCase().includes('CENTRO DE SALUD TIPO C CHONE')) return false;
+            }
+        }
+        return true;
+    }, [formData.fecha_nacimiento, formData.hora_parto, esMenorA24HorasReales, formData.id_lugar_parto, catalogos.establecimientos]);
+
     const isNeonato = edadInfo?.isNeonato;
     const mostrarFlujoNeonatal = edadInfo?.mostrarFlujoNeonatal;
     const esPartoReciente = edadInfo?.esPartoReciente;
 
     const idNacionalidadEcuatoriana = catalogos.nacionalidades?.find(n => n.nombre?.trim().toUpperCase() === 'ECUATORIANA')?.id;
 
-    const [establecimientosSalud, setEstablecimientosSalud] = useState([]);
+    const [establecimientosSalud, setEstablecimientosSalud] = useState(catalogos.establecimientos || []);
 
     useEffect(() => {
         if (focusRef.current) {
@@ -26,18 +88,42 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
         }
     }, []);
 
-    // Cargar establecimientos si no están en catálogos o para asegurar sincronización
-    const [loadingCatalogoParto, setLoadingCatalogoParto] = useState(false);
+    useEffect(() => {
+        const NOMBRE_RESTRINGIDO = 'CENTRO DE SALUD TIPO C CHONE';
+        const establecimientoChone = catalogos.establecimientos?.find(e => e.nombre.toUpperCase().includes(NOMBRE_RESTRINGIDO));
+    
+        if (esMenorA24HorasReales && establecimientoChone) {
+            // Inserta 'Centro de Salud Tipo C Chone' al principio si no está ya.
+            setEstablecimientosSalud(prev => {
+                const yaExiste = prev.some(e => e.id === establecimientoChone.id);
+                if (yaExiste) {
+                    // Mover al principio
+                    return [establecimientoChone, ...prev.filter(e => e.id !== establecimientoChone.id)];
+                } else {
+                    return [establecimientoChone, ...prev];
+                }
+            });
+        } else {
+            // Filtra 'Centro de Salud Tipo C Chone' si la condición no se cumple.
+            setEstablecimientosSalud(prev => prev.filter(e => !e.nombre.toUpperCase().includes(NOMBRE_RESTRINGIDO)));
+
+            // Si estaba seleccionado, se deselecciona.
+            const estSeleccionado = catalogos.establecimientos?.find(e => e.id == formData.id_lugar_parto);
+            if (estSeleccionado?.nombre?.toUpperCase().includes(NOMBRE_RESTRINGIDO)) {
+                handleChange({ target: { name: 'id_lugar_parto', value: '' } });
+            }
+        }
+    }, [esMenorA24HorasReales, catalogos.establecimientos, formData.id_lugar_parto]);
+
     useEffect(() => {
         if (catalogos.establecimientos) {
             setEstablecimientosSalud(catalogos.establecimientos);
         }
     }, [catalogos.establecimientos]);
 
-    // 1. Filtrado de Cantones
     useEffect(() => {
         const cargarCantones = async () => {
-            if (formData.provinciaNacimiento && formData.nacionalidad == idNacionalidadEcuatoriana) {
+            if (formData.provinciaNacimiento && formData.id_nacionalidad == idNacionalidadEcuatoriana) {
                 try {
                     const data = await catalogService.getCantones(formData.provinciaNacimiento);
                     setCantones(data);
@@ -50,12 +136,11 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
             }
         };
         cargarCantones();
-    }, [formData.provinciaNacimiento, formData.nacionalidad, idNacionalidadEcuatoriana]);
+    }, [formData.provinciaNacimiento, formData.id_nacionalidad, idNacionalidadEcuatoriana]);
 
-    // 2. Filtrado de Parroquias
     useEffect(() => {
         const cargarParroquias = async () => {
-            if (formData.cantonNacimiento && formData.nacionalidad == idNacionalidadEcuatoriana) {
+            if (formData.cantonNacimiento && formData.id_nacionalidad == idNacionalidadEcuatoriana) {
                 try {
                     const data = await catalogService.getParroquias(formData.cantonNacimiento);
                     setParroquias(data);
@@ -68,11 +153,10 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
             }
         };
         cargarParroquias();
-    }, [formData.cantonNacimiento, formData.nacionalidad, idNacionalidadEcuatoriana]);
+    }, [formData.cantonNacimiento, formData.id_nacionalidad, idNacionalidadEcuatoriana]);
 
-    // Lógica de Geografía Condicional (Nacionalidad)
     useEffect(() => {
-        if (formData.nacionalidad && formData.nacionalidad != idNacionalidadEcuatoriana) {
+        if (formData.id_nacionalidad && formData.id_nacionalidad != idNacionalidadEcuatoriana) {
             const camposGeografia = ['provinciaNacimiento', 'cantonNacimiento', 'parroquiaNacimiento'];
             let huboCambios = false;
             camposGeografia.forEach(campo => {
@@ -85,68 +169,44 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
                 });
             }
         }
-    }, [formData.nacionalidad, idNacionalidadEcuatoriana, handleChange]);
+    }, [formData.id_nacionalidad, idNacionalidadEcuatoriana, handleChange]);
 
-    // 5. Autogeneración del ID Temporal
     useEffect(() => {
-        if (formData.fechaNacimiento && formData.provinciaNacimiento) {
-            // Solo si es 'NO IDENTIFICADO' o si el ID está vacío y debe generarse
-            const tipoIdent = catalogos.tiposIdentificacion?.find(t => t.id == formData.tipoIdentificacion);
-            if (tipoIdent?.nombre?.toUpperCase() === 'NO IDENTIFICADO' || !formData.numeroIdentificacion) {
+        if (formData.fecha_nacimiento && formData.provinciaNacimiento) {
+            const tipoIdent = catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion);
+            if (tipoIdent?.nombre?.toUpperCase() === 'NO IDENTIFICADO' || !formData.numero_documento) {
                 const nuevoCodigo = generarCodigoTemporal(formData, catalogos.provincias);
-                if (nuevoCodigo !== formData.numeroIdentificacion) {
+                if (nuevoCodigo !== formData.numero_documento) {
                     handleChange({
                         target: {
-                            name: 'numeroIdentificacion',
+                            name: 'numero_documento',
                             value: nuevoCodigo
                         }
                     });
                 }
             }
         }
-    }, [formData.fechaNacimiento, formData.provinciaNacimiento, formData.primerNombre, formData.segundoNombre, formData.primerApellido, formData.segundoApellido]);
+    }, [formData.fecha_nacimiento, formData.provinciaNacimiento, formData.primer_nombre, formData.segundo_nombre, formData.primer_apellido, formData.segundo_apellido]);
 
-    const inputClasses = "w-full rounded border-gray-400 bg-white text-[11px] py-1 px-1.5 focus:border-blue-600 focus:outline-none font-medium h-7 border-2 shadow-sm transition-colors disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed";
+    const inputClasses = "w-full rounded border-gray-400 bg-white text-[11px] py-1 px-1.5 focus:border-blue-600 focus:outline-none font-medium h-7 border-2 shadow-sm transition-colors disabled:bg-100 disabled:text-gray-500 disabled:cursor-not-allowed";
     const inputReadOnlyClasses = "w-full rounded border-gray-400 bg-gray-100 text-[11px] py-1 px-1.5 focus:outline-none font-bold h-7 border-2 shadow-sm text-blue-700 cursor-not-allowed";
     const labelClasses = "block text-[10px] font-bold text-gray-600 mb-0.5 uppercase truncate";
 
-    // Estado para controlar la visibilidad y obligatoriedad de "Cédula Madre"
     const [requiereCedulaMadre, setRequiereCedulaMadre] = useState(false);
 
-    // Efecto para determinar si se requiere cédula de madre según lugar de parto
     useEffect(() => {
         const ESTABLECIMIENTO_LOCAL_NOMBRE = "CENTRO DE SALUD TIPO C CHONE";
         const establecimientoSeleccionado = catalogos.establecimientos?.find(e => e.id == formData.id_lugar_parto);
-        
-        // Es local si coincide el nombre O si no se ha seleccionado nada (asumimos local por defecto/seguridad)
-        // Ojo: Si id_lugar_parto está vacío, establecimientoSeleccionado es undefined.
-        // Asumiremos que si está vacío, NO mostramos/validamos hasta que seleccione.
-        // Pero si selecciona "Otro" o "Externo", la lógica cambia.
-        
-        // Requerimiento Tarea 3:
-        // Ocultar/Mostrar 'Cédula Madre' basado en `lugar_parto`
-        // Si es LOCAL -> Mostrar Cédula Madre
-        // Si es EXTERNO -> Ocultar Cédula Madre (y no validar)
-        
-        // Necesitamos saber qué establecimientos son "Externos".
-        // Asumiremos que SOLO el local requiere validación estricta de madre ingresada.
-        // Los partos externos (en taxi, casa, otro hospital) NO requieren que la madre tenga admisión local.
-        
-        const esLocal = establecimientoSeleccionado?.nombre?.toUpperCase() === ESTABLECIMIENTO_LOCAL_NOMBRE;
+        const nombreEst = establecimientoSeleccionado?.nombre?.toUpperCase() || "";
+        const esLocal = nombreEst.includes("TIPO C") && nombreEst.includes("CHONE");
         setRequiereCedulaMadre(esLocal);
-
-        // Si cambia a externo, limpiar cédula madre si se desea, o mantenerla opcional.
-        // Por ahora solo controlamos el flag.
     }, [formData.id_lugar_parto, catalogos.establecimientos]);
 
 
-    // Lógica Condicional para Validación de Madre (REQUERIMIENTO OFICIAL)
     const manejarBusquedaMadre = async (cedula) => {
         if (!cedula || cedula.length < 10) return;
 
-        // Validar si el parto fue en el establecimiento local
         const ESTABLECIMIENTO_LOCAL_NOMBRE = "CENTRO DE SALUD TIPO C CHONE";
-        // Buscamos coincidencia parcial o exacta más robusta
         const establecimientoSeleccionado = catalogos.establecimientos?.find(e => e.id == formData.id_lugar_parto);
         const nombreEstablecimiento = establecimientoSeleccionado?.nombre?.toUpperCase() || "";
         const esEstablecimientoLocal = nombreEstablecimiento.includes("TIPO C") && nombreEstablecimiento.includes("CHONE");
@@ -155,33 +215,37 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
             const data = await pacienteService.getPacienteByCedula(cedula);
             
             if (data) {
-                // SI el establecimiento es LOCAL y es parto reciente (<= 2 días): Validar estricto
                 if (esEstablecimientoLocal && esPartoReciente) {
-                    // 1. Validar Sexo (Femenino)
                     const idSexoFemenino = catalogos.sexos?.find(s => s.nombre?.toUpperCase() === 'MUJER' || s.nombre?.toUpperCase() === 'FEMENINO')?.id;
-                    if (data.genderId != idSexoFemenino && data.sexo_id != idSexoFemenino) {
-                        alert("Error: La cédula ingresada no corresponde a una persona de sexo femenino.");
+                    if (data.id_sexo != idSexoFemenino) {
+                        setModalConfig({
+                            show: true,
+                            type: 'error',
+                            title: 'Inconsistencia de Datos',
+                            message: 'La cédula ingresada no corresponde a una persona de sexo femenino conforme al Registro Civil.'
+                        });
                         return;
                     }
 
-                    // 2. Validar Atención Previa (Últimas 48 horas)
                     const tieneAdmisionReciente = await pacienteService.verificarAdmisionReciente(data.id, 48);
                     if (!tieneAdmisionReciente) {
-                        alert("Error: No se encontró una admisión para la madre en las últimas 48 horas. Para partos locales, la madre debe estar ingresada.");
+                        setModalConfig({
+                            show: true,
+                            type: 'advertencia',
+                            title: 'Validación de Flujo Materno',
+                            message: 'No se encontró una admisión activa para la madre en las últimas 48 horas. Para partos institucionales, la madre debe estar ingresada en este establecimiento.'
+                        });
                         return;
                     }
                 }
 
-                // Sincronizar automáticamente con campos de Representante (Común para Local y Externo si encuentra paciente)
                 const updates = {
                     madre_id: data.id,
-                    tipoDocRepresentante: data.tipo_identificacion_id || data.tipo_identificacion,
-                    cedulaRepresentante: data.numero_identificacion,
-                    repPrimerApellido: data.primer_apellido,
-                    repSegundoApellido: data.segundo_apellido,
-                    repPrimerNombre: data.primer_nombre,
-                    repSegundoNombre: data.segundo_nombre,
-                    parentescoRepresentante: catalogos.parentescos?.find(p => p.nombre?.toUpperCase() === 'MADRE')?.id || ''
+                    id_tipo_doc_representante: data.id_tipo_identificacion,
+                    documento_representante: data.numero_documento,
+                    nombre_representante: `${data.primer_nombre} ${data.segundo_nombre || ''} ${data.primer_apellido} ${data.segundo_apellido || ''}`.trim(),
+                    direccion_representante: data.direccion || '',
+                    id_parentesco_representante: catalogos.parentescos?.find(p => p.nombre?.toUpperCase() === 'MADRE')?.id || ''
                 };
                 
                 if (typeof setFormData === 'function') {
@@ -196,11 +260,12 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
                 }
             } else {
                 if (esEstablecimientoLocal) {
-                    alert("Error: La madre no está registrada en el sistema. Para partos locales, la madre debe tener historia clínica.");
-                } else {
-                    // SI es EXTERNO y no existe en DB local, NO SE PUEDE autocompletar,
-                    // pero NO BLOQUEAMOS. El usuario llenará representante manualmente.
-                    console.log("Madre externa no encontrada en local, llenado manual requerido.");
+                    setModalConfig({
+                        show: true,
+                        type: 'error',
+                        title: 'Madre No Encontrada',
+                        message: 'La madre no registra historial clínico en este sistema. Para partos institucionales es obligatorio el registro previo de la gestante.'
+                    });
                 }
             }
         } catch (error) {
@@ -208,20 +273,14 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
         }
     };
 
-    // Lógica de limpieza de Representante Legal (REQUERIMIENTO OFICIAL)
-    // Lógica de limpieza de Representante Legal (REQUERIMIENTO OFICIAL)
     useEffect(() => {
-        const mostrarRep = formData.fechaNacimiento && (edadInfo.anios < 2);
+        const mostrarRep = formData.fecha_nacimiento && (edadInfo.anios < 2);
         if (!mostrarRep) {
-            // Campos de paciente_representantes en el estado del formulario
             const camposAResetear = [
-                'tipoDocRepresentante',
-                'cedulaRepresentante',
-                'parentescoRepresentante',
-                'repPrimerApellido',
-                'repSegundoApellido',
-                'repPrimerNombre',
-                'repSegundoNombre'
+                'id_tipo_doc_representante',
+                'documento_representante',
+                'id_parentesco_representante',
+                'nombre_representante'
             ];
             
             let huboCambios = false;
@@ -232,13 +291,12 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
             });
 
             if (huboCambios) {
-                // Notificamos al padre para limpiar los campos
                 camposAResetear.forEach(campo => {
                     handleChange({ target: { name: campo, value: '' } });
                 });
             }
         }
-    }, [formData.fechaNacimiento, edadInfo.anios, handleChange]);
+    }, [formData.fecha_nacimiento, edadInfo.anios, handleChange]);
     
     return (
         <div className="space-y-3">
@@ -246,18 +304,16 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
                 2. NACIMIENTO
             </h3>
             
-            {/* Grid dinámico: 5 columnas si hay horas (neonatos < 28 días), 4 columnas si es estándar */}
             <div className={`grid ${isNeonato ? 'grid-cols-5' : 'grid-cols-4'} gap-x-2 gap-y-2`}>
-                {/* Fila 1: Nacionalidad y Lugar - Span completo o ajustado según columnas */}
                 <div className="col-span-1">
                     <label className={labelClasses}>
                         Nacionalidad <span className="text-red-500">*</span>
                     </label>
                     <select
-                        name="nacionalidad"
-                        value={formData.nacionalidad || ''}
+                        name="id_nacionalidad"
+                        value={formData.id_nacionalidad || ''}
                         onChange={handleChange}
-                        disabled={!(formHabilitado || (catalogos.tiposIdentificacion?.find(t => t.id == formData.tipoIdentificacion)?.nombre?.toUpperCase() === 'NO IDENTIFICADO'))}
+                        disabled={!(formHabilitado || (catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion)?.nombre?.toUpperCase() === 'NO IDENTIFICADO'))}
                         className={inputClasses}
                         required
                     >
@@ -273,9 +329,9 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
                         name="provinciaNacimiento"
                         value={formData.provinciaNacimiento || ''}
                         onChange={handleChange}
-                        disabled={formData.nacionalidad != idNacionalidadEcuatoriana || !(formHabilitado || (catalogos.tiposIdentificacion?.find(t => t.id == formData.tipoIdentificacion)?.nombre?.toUpperCase() === 'NO IDENTIFICADO'))}
+                        disabled={formData.id_nacionalidad != idNacionalidadEcuatoriana || !(formHabilitado || (catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion)?.nombre?.toUpperCase() === 'NO IDENTIFICADO'))}
                         className={inputClasses}
-                        required={formData.nacionalidad == idNacionalidadEcuatoriana}
+                        required={formData.id_nacionalidad == idNacionalidadEcuatoriana}
                     >
                         <option value="">Seleccione</option>
                         {catalogos.provincias.map(p => <option key={p.id} value={p.id}>{p.nombre}</option>)}
@@ -288,7 +344,7 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
                         name="cantonNacimiento"
                         value={formData.cantonNacimiento || ''}
                         onChange={handleChange}
-                        disabled={formData.nacionalidad != idNacionalidadEcuatoriana || !formData.provinciaNacimiento || !(formHabilitado || (catalogos.tiposIdentificacion?.find(t => t.id == formData.tipoIdentificacion)?.nombre?.toUpperCase() === 'NO IDENTIFICADO'))}
+                        disabled={formData.id_nacionalidad != idNacionalidadEcuatoriana || !formData.provinciaNacimiento || !(formHabilitado || (catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion)?.nombre?.toUpperCase() === 'NO IDENTIFICADO'))}
                         className={inputClasses}
                     >
                         <option value="">Seleccione</option>
@@ -302,7 +358,7 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
                         name="parroquiaNacimiento"
                         value={formData.parroquiaNacimiento || ''}
                         onChange={handleChange}
-                        disabled={formData.nacionalidad != idNacionalidadEcuatoriana || !formData.cantonNacimiento || !(formHabilitado || (catalogos.tiposIdentificacion?.find(t => t.id == formData.tipoIdentificacion)?.nombre?.toUpperCase() === 'NO IDENTIFICADO'))}
+                        disabled={formData.id_nacionalidad != idNacionalidadEcuatoriana || !formData.cantonNacimiento || !(formHabilitado || (catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion)?.nombre?.toUpperCase() === 'NO IDENTIFICADO'))}
                         className={inputClasses}
                     >
                         <option value="">Seleccione</option>
@@ -310,25 +366,23 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
                     </select>
                 </div>
 
-                {/* Fila 2: Fecha y Edad Compactada */}
                 <div className="col-span-1">
                     <label className={labelClasses}>
                         Fecha Nacimiento <span className="text-red-500">*</span>
                     </label>
                     <input
                         type="date"
-                        name="fechaNacimiento"
-                        value={formData.fechaNacimiento || ''}
+                        name="fecha_nacimiento"
+                        value={formData.fecha_nacimiento || ''}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         max={new Date().toISOString().split("T")[0]}
-                        disabled={!(formHabilitado || (catalogos.tiposIdentificacion?.find(t => t.id == formData.tipoIdentificacion)?.nombre?.toUpperCase() === 'NO IDENTIFICADO'))}
+                        disabled={!(formHabilitado || (catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion)?.nombre?.toUpperCase() === 'NO IDENTIFICADO'))}
                         className={`${inputClasses} font-bold ${edadInfo.isLess24h ? 'bg-yellow-50 border-yellow-400' : ''}`}
                         required
                     />
                 </div>
 
-                {/* Grid Anidado para el Desglose de Edad (Ajuste perfecto al espacio restante) */}
                 <div className={`col-span-3 grid ${isNeonato ? 'grid-cols-4' : 'grid-cols-3'} gap-2`}>
                     <div className="col-span-1">
                         <label className={labelClasses}>Años</label>
@@ -363,7 +417,6 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
                         />
                     </div>
 
-                    {/* Columna Horas: Solo visible si es neonato < 28 días */}
                     {isNeonato && (
                         <div className="col-span-1">
                             <label className={labelClasses}>Horas</label>
@@ -379,9 +432,7 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
                 </div>
             </div>
 
-            {/* 3. Datos de Nacimiento para Libro de Parto (REQUERIMIENTO RPIS/MSP) - SOLO NEONATOS < 28 DÍAS */}
-            {/* Tarea 3: Visibilidad controlada por mostrarFlujoNeonatal */}
-            {formData.fechaNacimiento && mostrarFlujoNeonatal && (
+            {formData.fecha_nacimiento && mostrarFlujoNeonatal && (
                 <div className="mt-4 p-3 border-2 border-blue-400 bg-blue-50 rounded-lg shadow-inner">
                     <h4 className="text-[11px] font-extrabold text-blue-800 mb-3 border-b border-blue-300 pb-1 flex items-center justify-between">
                         <div className="flex items-center">
@@ -392,34 +443,87 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
                     </h4>
                     
                     <div className="grid grid-cols-4 gap-x-2 gap-y-3">
+              
+                        {esHoyOAnteriores24h && (
+                            <div className="col-span-1 animate-in fade-in zoom-in duration-300">
+                                <label className={labelClasses}>HORA DEL PARTO/NACIMIENTO <span className="text-red-500">*</span></label>
+                                <input
+                                    ref={horaRef}
+                                    type="time"
+                                    name="hora_parto"
+                                    value={formData.hora_parto || ''}
+                                    onChange={(e) => {
+                                        const val = e.target.value;
+                                        if (!val) {
+                                            handleChange(e);
+                                            return;
+                                        }
+              
+                                        const now = new Date();
+                                        const inputDateTime = new Date(`${formData.fecha_nacimiento}T${val}`);
+                                        const margenMs = 5 * 60 * 1000;
+              
+                                        if (inputDateTime.getTime() > (now.getTime() + margenMs)) {
+                                            setContadorErroresHora(prev => {
+                                                const nuevoContador = prev + 1;
+                                                const mensajeBase = 'La hora de nacimiento no puede ser posterior a la actual (margen 5 min).';
+                                                const mensajeExtra = nuevoContador >= 2 ? ' ¿Desea reingresar la fecha completa para evitar confusión?' : '';
+                                                
+                                                setModalConfig({
+                                                    show: true,
+                                                    type: 'error',
+                                                    title: 'Validación de Hora Bloqueante',
+                                                    message: mensajeBase + mensajeExtra,
+                                                    confirmAction: nuevoContador >= 2 ? () => {
+                                                        setFormData(prevData => ({ ...prevData, fecha_nacimiento: '', hora_parto: '' }));
+                                                        setContadorErroresHora(0);
+                                                        setModalConfig(m => ({ ...m, show: false }));
+                                                    } : null,
+                                                    onClose: () => {
+                                                        setFormData(prevData => ({ ...prevData, hora_parto: '' }));
+                                                        setModalConfig(m => ({ ...m, show: false }));
+                                                        setTimeout(() => horaRef.current?.focus(), 150);
+                                                    }
+                                                });
+                                                return nuevoContador;
+                                            });
+                                        } else {
+                                            handleChange(e);
+                                        }
+                                    }}
+                                    onBlur={handleBlur}
+                                    disabled={!formHabilitado}
+                                    required={true}
+                                    className={`${inputClasses} font-bold text-blue-800 bg-white border-blue-400 ${!formData.hora_parto ? 'ring-2 ring-red-200' : ''}`}
+                                />
+                            </div>
+                        )}
                         
                         <div className="col-span-2">
                             <label className={labelClasses}>Lugar del Parto (Establecimiento RPIS)</label>
                             <div className="relative">
                                 <select
+                                    ref={establecimientoRef}
                                     name="id_lugar_parto"
                                     value={formData.id_lugar_parto || ''}
                                     onChange={handleChange}
-                                    disabled={!formHabilitado || establecimientosSalud.length === 0}
-                                    className={`${inputClasses} bg-white ${establecimientosSalud.length === 0 ? 'animate-pulse' : ''}`}
+                                    className={`${inputClasses} bg-white ${establecimientosSalud.length === 0 ? 'animate-pulse' : ''} ${(esMenorA24HorasReales && !formData.hora_parto) ? 'opacity-50 cursor-not-allowed grayscale' : ''}`}
+                                    disabled={!formHabilitado || establecimientosSalud.length === 0 || (esMenorA24HorasReales && !formData.hora_parto)}
                                 >
-                                    <option value="">{establecimientosSalud.length === 0 ? 'Cargando catálogos...' : 'Seleccione Establecimiento...'}</option>
+                                    <option value="">{(esMenorA24HorasReales && !formData.hora_parto) ? '--- INGRESE HORA PRIMERO ---' : 'Seleccione Establecimiento...'}</option>
                                     {establecimientosSalud.map(e => (
                                         <option key={e.id} value={e.id}>{e.nombre}</option>
                                     ))}
                                 </select>
                             </div>
                         </div>
-
-                        {/* Renderizado Condicional de Cédula Madre basado en Lugar de Parto y Edad */}
-                        {/* Tarea 3: Solo mostrar si lugar_parto es Local Y es parto reciente (<= 2 días) */}
+              
                         {(() => {
                             const est = establecimientosSalud.find(e => e.id == formData.id_lugar_parto);
                             const nombreEst = est?.nombre?.toUpperCase() || "";
                             const esLocal = nombreEst.includes("TIPO C") && nombreEst.includes("CHONE");
                             
-                            // Solo exigimos validación materna si es local Y es muy reciente
-                            if (esLocal && esPartoReciente) {
+                            if (esLocal) {
                                 return (
                                     <div className="col-span-1 animate-in fade-in slide-in-from-left-2 duration-300">
                                         <label className={labelClasses}>Cédula Madre <span className="text-red-500">*</span></label>
@@ -439,34 +543,22 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
                             }
                             return null;
                         })()}
-
-                        <div className="col-span-1">
-                            <label className={labelClasses}>HORA DEL PARTO/NACIMIENTO</label>
-                            <input
-                                type="time"
-                                name="hora_parto"
-                                value={formData.hora_parto || ''}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                disabled={!formHabilitado}
-                                className={`${inputClasses} font-bold text-blue-800 bg-white`}
-                            />
-                        </div>
                     </div>
                 </div>
             )}
 
-            {/* Renderizado Condicional: Datos del Representante (ESTRICTAMENTE REACTIVO) */}
-            {formData.fechaNacimiento && edadInfo.anios < 2 && (
-                <SeccionRepresentante
-                    formData={formData}
-                    handleChange={handleChange}
-                    catalogos={catalogos}
-                    formHabilitado={formHabilitado}
-                    esSubcomponente={true}
-                    edadInfo={edadInfo}
-                    manejarBusquedaMadre={manejarBusquedaMadre}
-                />
+            {formData.fecha_nacimiento && edadInfo.anios < 2 && (
+                <div className={!esRegistroValido ? "opacity-50 pointer-events-none grayscale select-none" : ""}>
+                    <SeccionRepresentante
+                        formData={formData}
+                        handleChange={handleChange}
+                        catalogos={catalogos}
+                        formHabilitado={formHabilitado}
+                        esSubcomponente={true}
+                        edadInfo={edadInfo}
+                        manejarBusquedaMadre={manejarBusquedaMadre}
+                    />
+                </div>
             )}
         </div>
     );

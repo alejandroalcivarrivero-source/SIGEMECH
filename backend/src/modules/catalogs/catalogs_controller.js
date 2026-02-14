@@ -1,26 +1,17 @@
-const sequelize = require('../../config/db');
-const { EstablecimientoSalud } = require('../admissions/parto_model');
+const { sequelize } = require('../../config/db');
 const {
-    Province,
+    Provincia,
     Canton,
-    Parish,
+    Parroquia,
     Etnia,
-    NacionalidadEtnica,
-    Pueblo,
-    Instruccion,
-    SeguroSalud,
-    Nacionalidad,
-    Sexo,
+    AutoidentificacionEtnica,
+    NivelInstruccion,
     EstadoCivil,
-    Genero,
-    Parentesco,
-    FormularioLlegada,
-    FuenteInformacion,
-    TipoDocumento,
-    CondicionLlegada,
-    NivelEducacion,
-    TipoIdentificacion
-} = require('../../models_index');
+    Nacionalidad,
+    TipoIdentificacion,
+    Pais,
+    Ocupacion
+} = sequelize.models;
 
 /**
  * Helper para manejo de errores en controladores de catálogos
@@ -47,7 +38,7 @@ const safeFindAll = async (model, res, catalogName, options = {}) => {
 };
 
 async function getProvincias(req, res) {
-    return safeFindAll(Province, res, 'provincias', {
+    return safeFindAll(Provincia, res, 'provincias', {
         order: [['nombre', 'ASC']]
     });
 }
@@ -62,7 +53,7 @@ async function getCantones(req, res) {
 
 async function getParroquias(req, res) {
     const { canton_id } = req.params;
-    return safeFindAll(Parish, res, 'parroquias', {
+    return safeFindAll(Parroquia, res, 'parroquias', {
         where: { cantonId: canton_id },
         order: [['nombre', 'ASC']]
     });
@@ -85,13 +76,13 @@ async function getEtnias(req, res) {
 }
 
 async function getNivelesEducacion(req, res) {
-    return safeFindAll(Instruccion, res, 'instrucción', {
+    return safeFindAll(NivelInstruccion, res, 'instrucción', {
         order: [['nombre', 'ASC']]
     });
 }
 
-async function getSegurosSalud(req, res) {
-    return safeFindAll(SeguroSalud, res, 'seguros de salud', {
+async function getOcupaciones(req, res) {
+    return safeFindAll(Ocupacion, res, 'ocupaciones', {
         order: [['nombre', 'ASC']]
     });
 }
@@ -162,7 +153,7 @@ async function getEthnicNationalities(req, res) {
         options.where = { etniaId: etnia_id };
     }
 
-    return safeFindAll(NacionalidadEtnica, res, 'nacionalidades étnicas', options);
+    return safeFindAll(AutoidentificacionEtnica, res, 'autoidentificaciones étnicas', options);
 }
 
 async function getEthnicGroups(req, res) {
@@ -177,7 +168,7 @@ async function getEthnicGroups(req, res) {
         options.where = { nacionalidadId: nacionalidad_id };
     }
 
-    return safeFindAll(Pueblo, res, 'pueblos étnicos', options);
+    return safeFindAll(Pueblo, res, 'pueblos', options);
 }
 
 /**
@@ -189,6 +180,12 @@ async function getEstablecimientosSalud(req, res) {
     });
 }
 
+async function getPaises(req, res) {
+    return safeFindAll(Pais, res, 'paises', {
+        order: [['nombre', 'ASC']]
+    });
+}
+
 module.exports = {
     getProvincias,
     getCantones,
@@ -196,17 +193,18 @@ module.exports = {
     getNacionalidades,
     getEtnias,
     getNivelesEducacion,
-    getSegurosSalud,
-    getSexos,
+    getOcupaciones,
     getEstadosCiviles,
+    getTiposIdentificacion,
+    getEthnicNationalities,
+    getEthnicGroups,
+    getEstablecimientosSalud,
+    getPaises,
+    getSexos,
     getGeneros,
     getParentescos,
     getFormasLlegada,
     getFuentesInformacion,
     getTiposDocumento,
-    getCondicionesLlegada,
-    getTiposIdentificacion,
-    getEthnicNationalities,
-    getEthnicGroups,
-    getEstablecimientosSalud
+    getCondicionesLlegada
 };

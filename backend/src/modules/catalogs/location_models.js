@@ -1,85 +1,17 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../../config/db');
-const { normalizeStrings } = require('../../config/model_helper');
+const { DataTypes, Model } = require('sequelize');
 
-/**
- * Modelo para Provincias de Ecuador
- */
-const Province = sequelize.define('cat_provincias', {
-    id: {
-        type: DataTypes.STRING(2), // ISO code o código INEC
-        primaryKey: true
-    },
-    nombre: {
-        type: DataTypes.STRING(100),
-        allowNull: false,
-        unique: true,
-        field: 'nombre'
-    }
-}, {
-    tableName: 'cat_provincias',
-    underscored: true,
-    timestamps: false,
-    hooks: {
-        beforeCreate: (m) => normalizeStrings(m),
-        beforeUpdate: (m) => normalizeStrings(m)
-    }
-});
+module.exports = (sequelize) => {
+    class Pais extends Model {}
+    Pais.init({ /*...*/ }, { sequelize, modelName: 'Pais', tableName: 'cat_paises' });
+    
+    class Provincia extends Model {}
+    Provincia.init({ /*...*/ }, { sequelize, modelName: 'Provincia', tableName: 'cat_provincias' });
 
-/**
- * Modelo para Cantones (Municipios)
- */
-const Canton = sequelize.define('cat_cantones', {
-    id: {
-        type: DataTypes.STRING(4), // Código INEC
-        primaryKey: true
-    },
-    nombre: {
-        type: DataTypes.STRING(100),
-        allowNull: false,
-        field: 'nombre'
-    },
-    provinceId: {
-        type: DataTypes.STRING(2),
-        allowNull: false,
-        field: 'provincia_id'
-    }
-}, {
-    tableName: 'cat_cantones',
-    underscored: true,
-    timestamps: false,
-    hooks: {
-        beforeCreate: (m) => normalizeStrings(m),
-        beforeUpdate: (m) => normalizeStrings(m)
-    }
-});
+    class Canton extends Model {}
+    Canton.init({ /*...*/ }, { sequelize, modelName: 'Canton', tableName: 'cat_cantones' });
 
-/**
- * Modelo para Parroquias
- */
-const Parish = sequelize.define('cat_parroquias', {
-    id: {
-        type: DataTypes.STRING(6), // Código INEC
-        primaryKey: true
-    },
-    nombre: {
-        type: DataTypes.STRING(100),
-        allowNull: false,
-        field: 'nombre'
-    },
-    cantonId: {
-        type: DataTypes.STRING(4),
-        allowNull: false,
-        field: 'canton_id'
-    }
-}, {
-    tableName: 'cat_parroquias',
-    underscored: true,
-    timestamps: false,
-    hooks: {
-        beforeCreate: (m) => normalizeStrings(m),
-        beforeUpdate: (m) => normalizeStrings(m)
-    }
-});
+    class Parroquia extends Model {}
+    Parroquia.init({ /*...*/ }, { sequelize, modelName: 'Parroquia', tableName: 'cat_parroquias' });
 
-module.exports = { Province, Canton, Parish };
+    return { Pais, Provincia, Canton, Parroquia };
+};

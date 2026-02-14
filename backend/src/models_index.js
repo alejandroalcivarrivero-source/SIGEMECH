@@ -1,191 +1,41 @@
-const User = require('./modules/users/user_model');
-const Paciente = require('./modules/pacientes/paciente_model');
-const { Province, Canton, Parish } = require('./modules/catalogs/location_models');
-const Representante = require('./modules/pacientes/representante_model');
-const { Parto } = require('./modules/admissions/parto_model');
-// Forzar la carga de catalog_models para asegurar que todos los modelos se registren en sequelize
-require('./modules/catalogs/catalog_models');
-const CatalogModels = require('./modules/catalogs/catalog_models');
-const EmergencyAdmission = require('./modules/admissions/admission_model');
+function inicializarModelos(sequelize) {
+    const Usuario = require('./modules/users/user_model')(sequelize);
+    const Paciente = require('./modules/pacientes/paciente_model')(sequelize);
+    const Parto = require('./modules/admissions/parto_model')(sequelize);
+    const Representante = require('./modules/pacientes/representante_model')(sequelize);
+    const Admision = require('./modules/admissions/admission_model')(sequelize);
+    // Asumo que los modelos de catalogo y localizacion ahora se exportan como funciones que reciben sequelize
+    const { Pais, Provincia, Canton, Parroquia } = require('./modules/catalogs/location_models')(sequelize);
+    const { TipoIdentificacion, Nacionalidad, Etnia, AutoidentificacionEtnica, EstadoCivil, NivelInstruccion, Ocupacion } = require('./modules/catalogs/catalog_models')(sequelize);
 
-// Desestructuración segura con valores por defecto para evitar ReferenceError
-const {
-    Etnia = null,
-    NacionalidadEtnica = null,
-    Pueblo = null,
-    Instruccion = null,
-    SeguroSalud = null,
-    Nacionalidad = null,
-    Triaje = null,
-    EstadoProceso = null,
-    FormularioLlegada = null,
-    Sexo = null,
-    EstadoCivil = null,
-    Genero = null,
-    Parentesco = null,
-    FuenteInformacion = null,
-    TipoDocumento = null,
-    CondicionLlegada = null,
-    NivelEducacion = null,
-    TipoIdentificacion = null
-} = CatalogModels;
+    // Asociaciones
+    Paciente.hasOne(Representante, { foreignKey: 'paciente_id', as: 'representante' });
+    Representante.belongsTo(Paciente, { foreignKey: 'paciente_id' });
+    
+    Paciente.hasMany(Admision, { foreignKey: 'paciente_id', as: 'admisiones' });
+    Admision.belongsTo(Paciente, { foreignKey: 'paciente_id' });
 
-/**
- * REFACTORIZACIÓN INTEGRAL DE ASOCIACIONES
- * Se utilizan alias únicos y descriptivos.
- * Se vinculan las claves foráneas explícitas definidas en los modelos.
- */
-
-// --- GEOGRAFÍA ---
-Province.hasMany(Canton, { foreignKey: 'provinceId', as: 'cantones' });
-Canton.belongsTo(Province, { foreignKey: 'provinceId', as: 'provincia' });
-
-Canton.hasMany(Parish, { foreignKey: 'cantonId', as: 'parroquias' });
-Parish.belongsTo(Canton, { foreignKey: 'cantonId', as: 'canton' });
-
-// --- PACIENTE ---
-// Ubicación
-Parish.hasMany(Paciente, { foreignKey: 'parishId', as: 'pacientesEnParroquia' });
-Paciente.belongsTo(Parish, { foreignKey: 'parishId', as: 'parroquia' });
-
-// --- JERARQUÍA ÉTNICA (NORMALIZADA) ---
-if (Etnia) {
-    Etnia.hasMany(Paciente, { foreignKey: 'ethnicityId', as: 'pacientesPorEtnia' });
-    Paciente.belongsTo(Etnia, { foreignKey: 'ethnicityId', as: 'etnia' });
-
-    if (NacionalidadEtnica) {
-        Etnia.hasMany(NacionalidadEtnica, {
-            foreignKey: 'etnia_id',
-            as: 'nacionalidadesEtnicas'
-        });
-        NacionalidadEtnica.belongsTo(Etnia, {
-            foreignKey: 'etnia_id',
-            as: 'etnia'
-        });
-    }
+    Admision.hasOne(Parto, { foreignKey: 'admision_id', as: 'parto' });
+    Parto.belongsTo(Admision, { foreignKey: 'admision_id' });
+    
+    return {
+        Usuario,
+        Paciente,
+        Parto,
+        Representante,
+        Admision,
+        Pais,
+        Provincia,
+        Canton,
+        Parroquia,
+        TipoIdentificacion,
+        Nacionalidad,
+        Etnia,
+        AutoidentificacionEtnica,
+        EstadoCivil,
+        NivelInstruccion,
+        Ocupacion,
+    };
 }
 
-if (NacionalidadEtnica && Pueblo) {
-    NacionalidadEtnica.hasMany(Pueblo, {
-        foreignKey: 'nacionalidad_id',
-        as: 'pueblosEtnicos'
-    });
-    Pueblo.belongsTo(NacionalidadEtnica, {
-        foreignKey: 'nacionalidad_id',
-        as: 'nacionalidadEtnica'
-    });
-}
-
-if (Instruccion) {
-    Instruccion.hasMany(Paciente, { foreignKey: 'instruccionId', as: 'pacientesPorInstruccion' });
-    Paciente.belongsTo(Instruccion, { foreignKey: 'instruccionId', as: 'instruccion' });
-}
-
-if (SeguroSalud) {
-    SeguroSalud.hasMany(Paciente, { foreignKey: 'healthInsuranceId', as: 'pacientesPorSeguro' });
-    Paciente.belongsTo(SeguroSalud, { foreignKey: 'healthInsuranceId', as: 'seguroSalud' });
-}
-
-if (Nacionalidad) {
-    Nacionalidad.hasMany(Paciente, { foreignKey: 'nacionalidadId', as: 'pacientesPorNacionalidad' });
-    Paciente.belongsTo(Nacionalidad, { foreignKey: 'nacionalidadId', as: 'nacionalidad' });
-}
-
-if (Sexo) {
-    Sexo.hasMany(Paciente, { foreignKey: 'genderId', as: 'pacientesPorSexo' });
-    Paciente.belongsTo(Sexo, { foreignKey: 'genderId', as: 'sexo' });
-}
-
-if (EstadoCivil) {
-    EstadoCivil.hasMany(Paciente, { foreignKey: 'estadoCivilId', as: 'pacientesPorEstadoCivil' });
-    Paciente.belongsTo(EstadoCivil, { foreignKey: 'estadoCivilId', as: 'estadoCivil' });
-}
-
-if (TipoIdentificacion) {
-    TipoIdentificacion.hasMany(Paciente, { foreignKey: 'tipoIdentificacionId', as: 'pacientesPorTipoIdentificacion' });
-    Paciente.belongsTo(TipoIdentificacion, { foreignKey: 'tipoIdentificacionId', as: 'tipoIdentificacion' });
-}
-
-// Auditoría Paciente
-User.hasMany(Paciente, { foreignKey: 'createdBy', as: 'pacientesCreados' });
-Paciente.belongsTo(User, { foreignKey: 'createdBy', as: 'creador' });
-
-// --- REPRESENTANTE LEGAL ---
-Paciente.hasOne(Representante, { foreignKey: 'pacienteId', as: 'representante' });
-Representante.belongsTo(Paciente, { foreignKey: 'pacienteId', as: 'paciente' });
-
-if (TipoIdentificacion) {
-    TipoIdentificacion.hasMany(Representante, { foreignKey: 'tipoIdentificacionId', as: 'representantesPorTipo' });
-    Representante.belongsTo(TipoIdentificacion, { foreignKey: 'tipoIdentificacionId', as: 'tipoIdentificacion' });
-}
-
-if (Parentesco) {
-    Parentesco.hasMany(Representante, { foreignKey: 'parentescoId', as: 'representantesPorParentesco' });
-    Representante.belongsTo(Parentesco, { foreignKey: 'parentescoId', as: 'parentesco' });
-}
-
-// --- ADMISIONES DE EMERGENCIA (FORMULARIO 008) ---
-Paciente.hasMany(EmergencyAdmission, { foreignKey: 'pacienteId', as: 'admisiones' });
-EmergencyAdmission.belongsTo(Paciente, { foreignKey: 'pacienteId', as: 'paciente' });
-
-// Catálogos de Admisión
-if (Triaje) {
-    Triaje.hasMany(EmergencyAdmission, { foreignKey: 'triajeId', as: 'admisionesPorTriaje' });
-    EmergencyAdmission.belongsTo(Triaje, { foreignKey: 'triajeId', as: 'triaje' });
-}
-
-if (EstadoProceso) {
-    EstadoProceso.hasMany(EmergencyAdmission, { foreignKey: 'estadoProcesoId', as: 'admisionesPorEstado' });
-    EmergencyAdmission.belongsTo(EstadoProceso, { foreignKey: 'estadoProcesoId', as: 'estadoProceso' });
-}
-
-if (FormularioLlegada) {
-    FormularioLlegada.hasMany(EmergencyAdmission, { foreignKey: 'formaLlegadaId', as: 'admisionesPorFormaLlegada' });
-    EmergencyAdmission.belongsTo(FormularioLlegada, { foreignKey: 'formaLlegadaId', as: 'formaLlegada' });
-}
-
-if (Parentesco) {
-    Parentesco.hasMany(EmergencyAdmission, { foreignKey: 'acompananteParentescoId', as: 'admisionesPorParentesco' });
-    EmergencyAdmission.belongsTo(Parentesco, { foreignKey: 'acompananteParentescoId', as: 'parentescoAcompanante' });
-}
-
-if (FuenteInformacion) {
-    FuenteInformacion.hasMany(EmergencyAdmission, { foreignKey: 'fuenteInformacionId', as: 'admisionesPorFuente' });
-    EmergencyAdmission.belongsTo(FuenteInformacion, { foreignKey: 'fuenteInformacionId', as: 'fuenteInformacion' });
-}
-
-// Auditoría Admisión
-User.hasMany(EmergencyAdmission, { foreignKey: 'registradoPor', as: 'admisionesRegistradas' });
-EmergencyAdmission.belongsTo(User, { foreignKey: 'registradoPor', as: 'admisionista' });
-
-User.hasMany(EmergencyAdmission, { foreignKey: 'medicoTratanteId', as: 'pacientesAsignados' });
-EmergencyAdmission.belongsTo(User, { foreignKey: 'medicoTratanteId', as: 'medicoTratante' });
-
-module.exports = {
-    User,
-    Paciente,
-    Representante,
-    Province,
-    Canton,
-    Parish,
-    Etnia,
-    NacionalidadEtnica,
-    Pueblo,
-    Instruccion,
-    SeguroSalud,
-    Nacionalidad,
-    Triaje,
-    EstadoProceso,
-    FormularioLlegada,
-    Sexo,
-    EstadoCivil,
-    Genero,
-    Parentesco,
-    FuenteInformacion,
-    TipoDocumento,
-    CondicionLlegada,
-    NivelEducacion,
-    TipoIdentificacion,
-    EmergencyAdmission,
-    Parto
-};
+module.exports = { inicializarModelos };

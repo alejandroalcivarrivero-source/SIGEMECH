@@ -96,7 +96,21 @@ const catalogService = {
     async getEthnicGroups(nacionalidadEtnicaId) {
         const res = await api.get(`/catalogs/pueblos-etnicos/${nacionalidadEtnicaId}`);
         return res.data;
+    },
+
+    /**
+     * Obtiene todos los países.
+     * @returns {Promise<Array>}
+     */
+    async getPaises() {
+        const res = await api.get('/catalogs/paises');
+        return res.data;
     }
+};
+
+export const getPaises = async () => {
+    const res = await api.get('/catalogs/paises');
+    return res.data;
 };
 
 export default catalogService;

@@ -5,16 +5,14 @@ const SeccionBioSocial = ({ formData, handleChange, catalogos, formHabilitado })
     const [nacionalidadesEtnicas, setNacionalidadesEtnicas] = useState([]);
     const [pueblosEtnicos, setPueblosEtnicos] = useState([]);
 
-    // Identificadores para Lógica de Cascada
     const idIndigena = catalogos.etnias?.find(e => e.nombre?.trim().toUpperCase() === 'INDÍGENA')?.id || 1;
     const idKichwa = nacionalidadesEtnicas?.find(n => n.nombre?.trim().toUpperCase() === 'KICHWA')?.id;
 
-    // 1. Cascada Étnica: Cargar Nacionalidades por Etnia
     useEffect(() => {
         const cargarNacionalidadesEtnicas = async () => {
-            if (formData.autoidentificacionEtnica == idIndigena) {
+            if (formData.id_etnia == idIndigena) {
                 try {
-                    const data = await catalogService.getEthnicNationalities(formData.autoidentificacionEtnica);
+                    const data = await catalogService.getEthnicNationalities(formData.id_etnia);
                     setNacionalidadesEtnicas(data);
                 } catch (error) {
                     console.error("Error al cargar nacionalidades étnicas:", error);
@@ -22,21 +20,20 @@ const SeccionBioSocial = ({ formData, handleChange, catalogos, formHabilitado })
                 }
             } else {
                 setNacionalidadesEtnicas([]);
-                if (formData.nacionalidadEtnica || formData.puebloEtnico) {
-                    handleChange({ target: { name: 'nacionalidadEtnica', value: '' } });
-                    handleChange({ target: { name: 'puebloEtnico', value: '' } });
+                if (formData.id_nacionalidad_etnica || formData.id_pueblo) {
+                    handleChange({ target: { name: 'id_nacionalidad_etnica', value: '' } });
+                    handleChange({ target: { name: 'id_pueblo', value: '' } });
                 }
             }
         };
         cargarNacionalidadesEtnicas();
-    }, [formData.autoidentificacionEtnica, idIndigena]);
+    }, [formData.id_etnia, idIndigena]);
 
-    // 2. Cascada Étnica: Cargar Pueblos por Nacionalidad Étnica (REGLA: SOLO SI ES KICHWA)
     useEffect(() => {
         const cargarPueblosEtnicos = async () => {
-            if (formData.nacionalidadEtnica && formData.nacionalidadEtnica == idKichwa) {
+            if (formData.id_nacionalidad_etnica && formData.id_nacionalidad_etnica == idKichwa) {
                 try {
-                    const data = await catalogService.getEthnicGroups(formData.nacionalidadEtnica);
+                    const data = await catalogService.getEthnicGroups(formData.id_nacionalidad_etnica);
                     setPueblosEtnicos(data);
                 } catch (error) {
                     console.error("Error al cargar pueblos étnicos:", error);
@@ -44,13 +41,13 @@ const SeccionBioSocial = ({ formData, handleChange, catalogos, formHabilitado })
                 }
             } else {
                 setPueblosEtnicos([]);
-                if (formData.puebloEtnico) {
-                    handleChange({ target: { name: 'puebloEtnico', value: '' } });
+                if (formData.id_pueblo) {
+                    handleChange({ target: { name: 'id_pueblo', value: '' } });
                 }
             }
         };
         cargarPueblosEtnicos();
-    }, [formData.nacionalidadEtnica, idKichwa]);
+    }, [formData.id_nacionalidad_etnica, idKichwa]);
 
     const inputClasses = "w-full rounded border-gray-400 bg-white text-[11px] py-1 px-1.5 focus:border-blue-600 focus:outline-none font-medium h-7 border-2 shadow-sm transition-colors";
     const labelClasses = "block text-[10px] font-bold text-gray-600 mb-0.5 uppercase truncate";
@@ -62,14 +59,13 @@ const SeccionBioSocial = ({ formData, handleChange, catalogos, formHabilitado })
             </h3>
             
             <div className="grid grid-cols-4 gap-x-2 gap-y-2">
-                {/* Fila 0: Etnia (Movido desde Nacimiento) */}
                 <div className="col-span-1">
                     <label className={labelClasses}>
                         Autoidentificación <span className="text-red-500">*</span>
                     </label>
                     <select
-                        name="autoidentificacionEtnica"
-                        value={formData.autoidentificacionEtnica || ''}
+                        name="id_etnia"
+                        value={formData.id_etnia || ''}
                         onChange={handleChange}
                         disabled={!formHabilitado}
                         className={inputClasses}
@@ -85,10 +81,10 @@ const SeccionBioSocial = ({ formData, handleChange, catalogos, formHabilitado })
                         Nacionalidad Étnica
                     </label>
                     <select
-                        name="nacionalidadEtnica"
-                        value={formData.nacionalidadEtnica || ''}
+                        name="id_nacionalidad_etnica"
+                        value={formData.id_nacionalidad_etnica || ''}
                         onChange={handleChange}
-                        disabled={formData.autoidentificacionEtnica != idIndigena || !formHabilitado}
+                        disabled={formData.id_etnia != idIndigena || !formHabilitado}
                         className={inputClasses}
                     >
                         <option value="">Seleccione</option>
@@ -101,10 +97,10 @@ const SeccionBioSocial = ({ formData, handleChange, catalogos, formHabilitado })
                         Pueblo / Centro
                     </label>
                     <select
-                        name="puebloEtnico"
-                        value={formData.puebloEtnico || ''}
+                        name="id_pueblo"
+                        value={formData.id_pueblo || ''}
                         onChange={handleChange}
-                        disabled={formData.nacionalidadEtnica != idKichwa || !formHabilitado}
+                        disabled={formData.id_nacionalidad_etnica != idKichwa || !formHabilitado}
                         className={inputClasses}
                     >
                         <option value="">Seleccione</option>
@@ -112,14 +108,13 @@ const SeccionBioSocial = ({ formData, handleChange, catalogos, formHabilitado })
                     </select>
                 </div>
 
-                {/* Fila 1: Educación y Ocupación */}
                 <div className="col-span-2">
                     <label className={labelClasses}>
                         Nivel de Educación <span className="text-red-500">*</span>
                     </label>
                     <select
-                        name="nivelEducacion"
-                        value={formData.nivelEducacion}
+                        name="id_instruccion"
+                        value={formData.id_instruccion}
                         onChange={handleChange}
                         disabled={!formHabilitado}
                         className={inputClasses}
@@ -146,14 +141,13 @@ const SeccionBioSocial = ({ formData, handleChange, catalogos, formHabilitado })
                     />
                 </div>
 
-                {/* Fila 2: Seguros y Bonos */}
                 <div className="col-span-2">
                     <label className={labelClasses}>
                         Seguro Salud <span className="text-red-500">*</span>
                     </label>
                     <select
-                        name="seguroSaludPrincipal"
-                        value={formData.seguroSaludPrincipal}
+                        name="id_seguro_salud"
+                        value={formData.id_seguro_salud}
                         onChange={handleChange}
                         disabled={!formHabilitado}
                         className={inputClasses}
@@ -165,45 +159,41 @@ const SeccionBioSocial = ({ formData, handleChange, catalogos, formHabilitado })
                 </div>
 
                 <div className="col-span-2">
-                    <label className={labelClasses}>Tipo de Bono</label>
-                    <select
-                        name="tipoBono"
-                        value={formData.tipoBono || ''}
+                    <label className={labelClasses}>Tipo de Empresa</label>
+                    <input
+                        type="text"
+                        name="tipo_empresa"
+                        value={formData.tipo_empresa || ''}
                         onChange={handleChange}
                         disabled={!formHabilitado}
                         className={inputClasses}
-                    >
-                        <option value="">Ninguno</option>
-                        <option value="DESARROLLO_HUMANO">BDH</option>
-                        <option value="JOAQUIN_GALLEGOS_LARA">Joaquín Gallegos Lara</option>
-                        <option value="MIS_MEJORES_ANOS">Mis Mejores Años</option>
-                    </select>
+                        placeholder="Pública, Privada, etc."
+                    />
                 </div>
 
-                {/* Fila 3: Discapacidad */}
                 <div className="col-span-4 p-2 bg-slate-50 rounded border border-slate-200">
                     <div className="flex items-center mb-2">
                         <input
                             type="checkbox"
-                            name="tieneDiscapacidad"
-                            id="tieneDiscapacidad"
-                            checked={formData.tieneDiscapacidad}
+                            name="tiene_discapacidad"
+                            id="tiene_discapacidad"
+                            checked={formData.tiene_discapacidad}
                             onChange={handleChange}
                             disabled={!formHabilitado}
                             className="w-3.5 h-3.5 rounded border-gray-400 text-blue-600 focus:ring-blue-500 border-2"
                         />
-                        <label htmlFor="tieneDiscapacidad" className="ml-2 text-[10px] font-bold text-gray-700 uppercase">
+                        <label htmlFor="tiene_discapacidad" className="ml-2 text-[10px] font-bold text-gray-700 uppercase">
                             ¿Tiene Discapacidad?
                         </label>
                     </div>
                     
-                    {formData.tieneDiscapacidad && (
+                    {formData.tiene_discapacidad && (
                         <div className="grid grid-cols-3 gap-2 animate-in fade-in slide-in-from-top-2">
                             <div>
                                 <label className={labelClasses}>Tipo</label>
                                 <select
-                                    name="tipoDiscapacidad"
-                                    value={formData.tipoDiscapacidad}
+                                    name="tipo_discapacidad"
+                                    value={formData.tipo_discapacidad}
                                     onChange={handleChange}
                                     className={inputClasses}
                                 >
@@ -219,8 +209,8 @@ const SeccionBioSocial = ({ formData, handleChange, catalogos, formHabilitado })
                                 <label className={labelClasses}>%</label>
                                 <input
                                     type="number"
-                                    name="porcentajeDiscapacidad"
-                                    value={formData.porcentajeDiscapacidad}
+                                    name="porcentaje_discapacidad"
+                                    value={formData.porcentaje_discapacidad}
                                     onChange={handleChange}
                                     className={inputClasses}
                                     min="0" max="100"
@@ -230,8 +220,8 @@ const SeccionBioSocial = ({ formData, handleChange, catalogos, formHabilitado })
                                 <label className={labelClasses}>Nro. Carnet</label>
                                 <input
                                     type="text"
-                                    name="carnetDiscapacidad"
-                                    value={formData.carnetDiscapacidad}
+                                    name="carnet_discapacidad"
+                                    value={formData.carnet_discapacidad}
                                     onChange={handleChange}
                                     className={inputClasses}
                                 />

@@ -9,10 +9,11 @@ export default defineConfig({
     tailwindcss(),
   ],
   server: {
-    port: 5174, // Cambiamos al puerto 5174 para SIGEMECH
+    port: 5174,
+    strictPort: true,
     proxy: {
       '/api': {
-        target: 'http://localhost:3002', // Tu backend
+        target: 'http://localhost:3002',
         changeOrigin: true,
         secure: false,
       }

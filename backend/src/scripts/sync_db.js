@@ -1,5 +1,5 @@
-const sequelize = require('../config/db');
-const { User, Paciente, Province, Canton, Parish } = require('../models_index');
+const { sequelize } = require('../config/db');
+const { inicializarModelos } = require('../models_index');
 
 /**
  * Script para sincronizar los modelos de Sequelize con la base de datos MariaDB.
@@ -10,6 +10,7 @@ const syncDatabase = async () => {
     try {
         console.log('Iniciando sincronización de modelos...');
         
+        inicializarModelos(sequelize);
         // Sincronizar todos los modelos definidos en models_index
         await sequelize.sync({ alter: false, force: false });
         
