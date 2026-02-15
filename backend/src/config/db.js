@@ -27,8 +27,8 @@ const inicializar = async () => {
         const models = inicializarModelos(sequelize);
         console.log('Modelos inicializados.');
 
-        // await sequelize.sync({ alter: true }); // Desactivado para modo producción/estable
-        console.log('Sincronización de modelos desactivada en modo estable.');
+        await sequelize.sync({ alter: false });
+        console.log('Sincronización de modelos completada.');
     } catch (error) {
         console.error('No se pudo conectar o sincronizar la base de datos:', error);
         process.exit(1); // Salir si la BD no está disponible

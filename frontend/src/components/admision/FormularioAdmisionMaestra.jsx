@@ -18,6 +18,8 @@ import { generarCodigoNormativo } from '../../utils/generador_codigo';
 import SeccionDatosAdicionales from './SeccionDatosAdicionales';
 import SeccionContactoEmergencia from './SeccionContactoEmergencia';
 import SeccionLlegadaMotivo from './SeccionLlegadaMotivo';
+import SeccionRepresentante from './SeccionRepresentante';
+import { calcularEdadDetallada } from '../../utils/calculosCronologicos';
 
 const FormularioAdmisionMaestra = () => {
     const navigate = useNavigate();
@@ -45,10 +47,17 @@ const FormularioAdmisionMaestra = () => {
         telefono_fijo: '', telefono: '', email: '',
         
         // Pestaña 2
-        id_nacionalidad: '',
-        provinciaNacimiento: '', cantonNacimiento: '', parroquiaNacimiento: '',
+        datosNacimiento: {
+            id_nacionalidad: '',
+            provincia_nacimiento_id: '',
+            canton_nacimiento_id: '',
+            parroquia_nacimiento_id: '',
+            fecha_nacimiento: '',
+            hora_parto: '',
+            id_lugar_parto: '',
+            cedula_madre: ''
+        },
         fecha_nacimiento: '', id_etnia: '', id_nacionalidad_etnica: '', id_pueblo: '',
-        
         // Pestaña 3
         paisResidencia: 'Ecuador', provinciaResidencia: '', cantonResidencia: '',
         id_parroquia: '', barrio: '', callePrincipal: '', calleSecundaria: '',
@@ -76,84 +85,38 @@ const FormularioAdmisionMaestra = () => {
     };
 
     const [formData, setFormData] = useState(initialFormData);
+    const [formErrors, setFormErrors] = useState({});
+    const [validacionTransitoria, setValidacionTransitoria] = useState(false); // Estado para manejar la validación transitoria del código 99
+    const [estaCargandoCodigo, setEstaCargandoCodigo] = useState(false); // Soberanía Lingüística: estado de carga para UI
 
-    // Cálculo de edad detallado (Años, Meses, Días, Horas) - Blindaje Senior
-    const edadInfo = useMemo(() => {
-        const LIMITE_VALIDACION_MADRE = 2; // Días para exigir validación de admisión materna
-        const LIMITE_NEONATO_MSP = 28;    // Días para flujo neonatal y Libro de Parto
-
-        if (!formData.fecha_nacimiento) return { anios: 0, meses: 0, dias: 0, horas: 0, minutos: 0, isLess24h: false, isNeonato: false };
-        
-        const now = new Date();
-        let birthDateStr = formData.fecha_nacimiento;
-        if (formData.hora_parto) {
-            birthDateStr += `T${formData.hora_parto}`;
-        } else {
-            birthDateStr += 'T00:00:00';
-        }
-        
-        const birth = new Date(birthDateStr);
-        if (birth > now) {
-            return { anios: 0, meses: 0, dias: 0, horas: 0, minutos: 0, isLess24h: false, isNeonato: false };
-        }
-
-        const diffMs = Math.max(0, now - birth);
-        const totalMinutes = Math.floor(diffMs / (1000 * 60));
-        const diffHours = Math.floor(totalMinutes / 60);
-        const diffMinutes = totalMinutes % 60;
-        
-        const isLess24h = diffHours < 24;
-
-        let anios = now.getFullYear() - birth.getFullYear();
-        let meses = now.getMonth() - birth.getMonth();
-        let dias = now.getDate() - birth.getDate();
-
-        if (dias < 0) {
-            meses -= 1;
-            const ultimoDiaMesAnterior = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
-            dias += ultimoDiaMesAnterior;
-        }
-        if (meses < 0) {
-            anios -= 1;
-            meses += 12;
-        }
-        
-        anios = Math.max(0, anios);
-        meses = Math.max(0, meses);
-        
-        if (isLess24h) {
-            dias = 0;
-        } else {
-            dias = Math.max(0, dias);
-        }
-
-        const isNeonato = anios === 0 && meses === 0 && dias < LIMITE_NEONATO_MSP;
-        const esPartoReciente = anios === 0 && meses === 0 && dias <= LIMITE_VALIDACION_MADRE;
-        const mostrarFlujoNeonatal = anios === 0 && meses === 0 && dias < LIMITE_NEONATO_MSP;
-
-        return {
-            anios,
-            meses,
-            dias,
-            horas: formData.hora_parto ? diffHours : 0,
-            minutos: diffMinutes,
-            isLess24h,
-            isNeonato,
-            esPartoReciente,
-            mostrarFlujoNeonatal
-        };
-    }, [formData.fecha_nacimiento, formData.hora_parto]);
+     // Cálculo de edad detallado (Años, Meses, Días, Horas) - Centralizado
+     const edadInfo = useMemo(() => {
+        // Aseguramos que se use la fecha y hora correctas desde el anidamiento datosNacimiento
+        // O fallback a nivel superior si existiera, pero la estructura principal es formData.datosNacimiento
+        const fecha = formData.datosNacimiento?.fecha_nacimiento || formData.fecha_nacimiento;
+        const hora = formData.datosNacimiento?.hora_parto || formData.hora_parto || '00:00';
+        return calcularEdadDetallada(fecha, hora);
+    }, [formData.datosNacimiento?.fecha_nacimiento, formData.fecha_nacimiento, formData.datosNacimiento?.hora_parto, formData.hora_parto]);
 
     const esMenor = edadInfo.anios < 18;
+
+    const fechaNacimientoValida = useMemo(() => {
+        if (!formData.fecha_nacimiento) return false;
+        const selectedDate = new Date(formData.fecha_nacimiento);
+        const now = new Date();
+        now.setHours(0, 0, 0, 0);
+        return selectedDate <= now;
+    }, [formData.fecha_nacimiento]);
 
     const tabs = [
         { id: 'personales', label: '1. Datos Personales', icon: User },
         { id: 'nacimiento', label: '2. NACIMIENTO', icon: Baby },
         { id: 'residencia', label: '3. Residencia', icon: MapPin },
         { id: 'adicionales', label: '4. Datos Adicionales', icon: ShieldCheck },
-        { id: 'contacto', label: '5. Contacto Emer.', icon: Users },
-        { id: 'llegada', label: '6. Arribo/Condición', icon: ClipboardList },
-        { id: 'motivo', label: '7. Motivo Consulta', icon: HeartPulse }
+        { id: 'representante', label: '5. Rep. Legal', icon: FileText, hidden: !fechaNacimientoValida },
+        { id: 'contacto', label: '6. Contacto Emer.', icon: Users },
+        { id: 'llegada', label: '7. Arribo/Condición', icon: ClipboardList },
+        { id: 'motivo', label: '8. Motivo Consulta', icon: HeartPulse }
     ];
 
     useEffect(() => {
@@ -177,6 +140,110 @@ const FormularioAdmisionMaestra = () => {
     }, [formData.provinciaResidencia]);
 
     useEffect(() => {
+        // Este efecto ya no es necesario, la lógica fue centralizada en el nuevo useEffect.
+    }, [
+        // formData.idProvinciaNacimiento, // Dependencia eliminada
+        formData.id_tipo_identificacion,
+        formData.primer_nombre,
+        formData.segundo_nombre,
+        formData.primer_apellido,
+        formData.segundo_apellido,
+        formData.fecha_nacimiento,
+        edadInfo.isLess24h,
+        catalogos.tiposIdentificacion
+    ]);
+
+    // Lógica Centralizada de Generación de Código Normativo MSP
+    useEffect(() => {
+        const tipoSeleccionado = catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion);
+        const esNoIdentificado = tipoSeleccionado?.nombre?.toUpperCase() === 'NO IDENTIFICADO';
+        
+        // Obtenemos el ID de la provincia de nacimiento
+        const idProvinciaNacimiento = formData.datosNacimiento.provincia_nacimiento_id;
+        
+        // Necesitamos el código INEC de la provincia para generar el código correctamente
+        // Usamos el ID como fallback si no hay código INEC explícito en el objeto, asumiendo que el ID coincide o se mapeará.
+        // En un escenario real, deberíamos asegurar que el backend envíe 'codigo_inec'.
+        const provinciaObj = catalogos.provincias?.find(p => p.id == idProvinciaNacimiento);
+        // Prioridad: 1. codigo_inec (si existe), 2. id (formateado), 3. null
+        const codigoProvinciaInec = provinciaObj ? (provinciaObj.codigo_inec || String(provinciaObj.id).padStart(2, '0')) : null;
+        const nombreProvincia = provinciaObj ? provinciaObj.nombre : '';
+
+        // Determinar si es extranjero para asignar código '99'
+        const nacionalidadObj = catalogos.nacionalidades?.find(n => n.id == formData.datosNacimiento.id_nacionalidad);
+        const esExtranjero = nacionalidadObj && !nacionalidadObj.nombre?.toUpperCase().includes('ECUATORIANA');
+
+        let debeGenerarCodigo = false;
+
+        // Caso 1: Es "NO IDENTIFICADO"
+        // La generación debe ocurrir dinámicamente.
+        if (esNoIdentificado) {
+            debeGenerarCodigo = true;
+        }
+        // Caso 2: Transición desde código '99' (Emergencia temporal)
+        else if (formData.numero_documento === '99' && validacionTransitoria && (idProvinciaNacimiento || esExtranjero)) {
+            debeGenerarCodigo = true;
+        }
+        // Caso 3: Reconexión explícita si el documento actual es un código generado previamente y cambia la fecha
+        else if (formData.numero_documento && formData.numero_documento.length > 10 && esNoIdentificado) {
+             debeGenerarCodigo = true;
+        }
+
+        if (debeGenerarCodigo) {
+            setEstaCargandoCodigo(true);
+            
+            // Generamos el código usando la utilidad centralizada
+            // Aseguramos el uso de la fecha correcta desde datosNacimiento
+            const fechaNacimientoReal = formData.datosNacimiento?.fecha_nacimiento || formData.fecha_nacimiento;
+            
+            const codigoGenerado = generarCodigoNormativo({
+                primer_nombre: formData.primer_nombre,
+                segundo_nombre: formData.segundo_nombre,
+                primer_apellido: formData.primer_apellido,
+                segundo_apellido: formData.segundo_apellido,
+                codigo_provincia: codigoProvinciaInec,
+                nombre_provincia: nombreProvincia,
+                es_extranjero: esExtranjero,
+                fecha_nacimiento: fechaNacimientoReal,
+                es_neonato_horas: edadInfo.isLess24h,
+                sexo_id: formData.id_sexo // Incluir sexo para mayor precisión si el generador lo soporta
+            });
+
+            // Solo actualizamos si el código es diferente y válido
+            if (codigoGenerado && formData.numero_documento !== codigoGenerado) {
+                setFormData(prev => ({ ...prev, numero_documento: codigoGenerado }));
+                
+                // Si veníamos de una validación transitoria (código 99), la limpiamos una vez generado un código válido más completo
+                if (validacionTransitoria && codigoGenerado.length > 10) {
+                    setValidacionTransitoria(false);
+                }
+            }
+            setEstaCargandoCodigo(false);
+        } else {
+             setEstaCargandoCodigo(false);
+        }
+        
+    }, [
+        // Dependencias críticas para la regeneración del código
+        formData.id_tipo_identificacion,
+        formData.primer_nombre,
+        formData.segundo_nombre,
+        formData.primer_apellido,
+        formData.segundo_apellido,
+        formData.fecha_nacimiento,
+        formData.datosNacimiento?.fecha_nacimiento, // CRÍTICO: Cambio de fecha en datosNacimiento dispara actualización dígito década
+        formData.datosNacimiento?.provincia_nacimiento_id,
+        formData.datosNacimiento?.id_nacionalidad,
+        formData.id_sexo,
+        catalogos.provincias,
+        catalogos.nacionalidades,
+        catalogos.tiposIdentificacion,
+        validacionTransitoria,
+        edadInfo.isLess24h
+    ]);
+
+
+    useEffect(() => {
         const fetchParroquias = async () => {
             if (formData.cantonResidencia) {
                 const data = await catalogService.getParroquias(formData.cantonResidencia);
@@ -185,6 +252,36 @@ const FormularioAdmisionMaestra = () => {
         };
         fetchParroquias();
     }, [formData.cantonResidencia]);
+
+   const idNacionalidadEcuatoriana = useMemo(() => {
+       // Asumiendo que el ID de ECUATORIANA es 1, basado en la estructura de la DB
+       // y la falta de un seeder específico. Esta es una suposición informada.
+       const nacionalidad = catalogos.nacionalidades?.find(n => n.nombre?.toUpperCase().includes('ECUATORIANA'));
+       return nacionalidad ? nacionalidad.id : 1;
+   }, [catalogos.nacionalidades]);
+
+   useEffect(() => {
+       const selectedNacionalidadId = Number(formData.datosNacimiento.id_nacionalidad);
+       // Si NO es ecuatoriana, limpiamos los campos geográficos de nacimiento.
+       // Si ES ecuatoriana, NO limpiamos nada para permitir que el usuario seleccione.
+       if (selectedNacionalidadId && selectedNacionalidadId !== idNacionalidadEcuatoriana) {
+           setFormData(prev => ({
+               ...prev,
+               datosNacimiento: {
+                   ...prev.datosNacimiento,
+                   provincia_nacimiento_id: '',
+                   canton_nacimiento_id: '',
+                   parroquia_nacimiento_id: '',
+               },
+               // Nota: No limpiamos residencia automáticamente aquí para no ser intrusivos
+               // a menos que sea una regla de negocio estricta.
+               // Se asume que si nace en otro país, podría residir en Ecuador.
+           }));
+           setCantonesFiltrados([]);
+           setParroquiasFiltradas([]);
+       }
+   }, [formData.datosNacimiento.id_nacionalidad, idNacionalidadEcuatoriana]);
+
 
     const limpiarFormularioCompleto = () => {
         setModalConfig({
@@ -233,83 +330,73 @@ const FormularioAdmisionMaestra = () => {
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target || e;
-
-        // Misión: Validación Silenciosa. No disparamos errores en handleChange para campos incompletos.
-        // La validación estricta se movió a validarTemporada (onBlur o submit).
-
+        const isDatosNacimiento = name.startsWith('datosNacimiento.');
+        const fieldName = isDatosNacimiento ? name.split('.')[1] : name;
+    
+        // Limpieza de errores para el campo que está cambiando
+        if (formErrors[name]) {
+            setFormErrors(prev => ({ ...prev, [name]: null }));
+        }
+        if (isDatosNacimiento && formErrors[fieldName]) {
+            setFormErrors(prev => ({ ...prev, [fieldName]: null }));
+        }
+    
+        if (fieldName === 'fecha_nacimiento' && value) {
+            const selectedDate = new Date(value);
+            const now = new Date();
+            now.setHours(0, 0, 0, 0);
+    
+            if (selectedDate > now) {
+                setModalConfig({
+                    show: true, type: 'error', title: 'Error de Validación',
+                    message: 'Error: La fecha de nacimiento no puede ser posterior a la fecha actual.',
+                    onClose: () => {
+                        setFormData(prev => ({ ...prev, datosNacimiento: { ...prev.datosNacimiento, fecha_nacimiento: '' } }));
+                        setModalConfig(p => ({ ...p, show: false }));
+                    }
+                });
+                return;
+            }
+        }
+    
         if (activeTab === 'personales' && name === 'id_sexo' && value && formData.primer_apellido && formData.primer_nombre) {
             setTimeout(() => setActiveTab('nacimiento'), 500);
         }
-        
-        if (name === 'id_tipo_identificacion') {
-            const tipoSeleccionado = catalogos.tiposIdentificacion?.find(t => t.id == value);
-            const esNoIdentificado = tipoSeleccionado?.nombre?.toUpperCase() === 'NO IDENTIFICADO';
-            
-            const resetData = {
-                ...initialFormData,
-                id_tipo_identificacion: value,
-                numero_documento: ''
-            };
-            
-            if (esNoIdentificado) {
-                resetData.primer_apellido = '';
-                resetData.primer_nombre = '';
-                resetData.segundo_apellido = '';
-                resetData.segundo_nombre = '';
-                resetData.motivo_consulta = 'EMERGENCIA';
-                
-                // Generar código normativo inicial para No Identificado
-                const codigoNormativo = generarCodigoNormativo({
-                    primer_nombre: '',
-                    primer_apellido: '',
-                    codigo_provincia: '99',
-                    fecha_nacimiento: resetData.fecha_nacimiento || new Date().toISOString().split('T')[0]
-                });
-                resetData.numero_documento = codigoNormativo;
-                
-                setFormData(resetData);
-                setFormHabilitado(true);
-                // Misión 1: Bloqueo de Salto en Pestañas
-                // No cambiamos activeTab para que el usuario complete nombres/apellidos
-            } else {
-                setFormData(resetData);
-                setFormHabilitado(false);
-                setActiveTab('personales');
-            }
-            
-            setCantonesFiltrados([]);
-            setParroquiasFiltradas([]);
-            setFormKey(prev => prev + 1);
-            return;
-        }
-
+    
         setFormData(prev => {
-            const newData = {
-                ...prev,
-                [name]: type === 'checkbox' ? checked : value
-            };
+            const newData = { ...prev };
+    
+            if (isDatosNacimiento) {
+                // Captura de Valor Numérico con parseInt para ID de nacionalidad y otros IDs
+                const valorProcesado = (fieldName.includes('id') || fieldName.includes('Id')) && value !== '' ? parseInt(value, 10) : value;
+                const newDatosNacimiento = { ...prev.datosNacimiento, [fieldName]: valorProcesado };
+    
+                if (fieldName === 'id_nacionalidad') {
+                    // No bloqueamos nada, simplemente aseguramos que el ID sea numérico.
+                    // La habilitación de campos de provincia se maneja en SeccionNacimiento y useEffects.
+                }
+                newData.datosNacimiento = newDatosNacimiento;
+    
+            } else {
+                newData[name] = type === 'checkbox' ? checked : value;
+            }
 
-            // Lógica de generación de código normativo en tiempo real para "No Identificado"
+            // Lógica para validacionTransitoria
+            if (name === 'numero_documento') {
+                if (value === '99') {
+                    setValidacionTransitoria(true);
+                } else {
+                    setValidacionTransitoria(false);
+                }
+            }
+    
             const tipoSeleccionado = catalogos.tiposIdentificacion?.find(t => t.id == newData.id_tipo_identificacion);
             const esNoIdentificado = tipoSeleccionado?.nombre?.toUpperCase() === 'NO IDENTIFICADO';
-
-            if (esNoIdentificado) {
-                // Obtener código de provincia del catálogo si está disponible
-                const provNac = catalogos.provincias?.find(p => p.id == newData.provinciaNacimiento);
-                const codProv = provNac?.codigo_inec || '99';
-
-                const nuevoCodigo = generarCodigoNormativo({
-                    primer_nombre: newData.primer_nombre,
-                    segundo_nombre: newData.segundo_nombre,
-                    primer_apellido: newData.primer_apellido,
-                    segundo_apellido: newData.segundo_apellido,
-                    codigo_provincia: codProv,
-                    fecha_nacimiento: newData.fecha_nacimiento,
-                    es_neonato_horas: edadInfo.isLess24h
-                });
-                newData.numero_documento = nuevoCodigo;
-            }
-
+    
+            // Eliminamos la generación manual aquí dentro del handleChange
+            // para delegar completamente la responsabilidad al useEffect centralizado.
+            // Esto evita que se genere el código dos veces o con estados desactualizados.
+    
             return newData;
         });
     };
@@ -435,38 +522,108 @@ const FormularioAdmisionMaestra = () => {
             });
         } finally { setLoading(false); }
     };
+ 
+     const validateTab = (tabId, isFinalValidation = false) => {
+         const newErrors = {};
+         if (tabId === 'personales') {
+             if (!formData.numero_documento) newErrors.numero_documento = 'El número de documento es obligatorio.';
+             if (!formData.primer_nombre) newErrors.primer_nombre = 'El primer nombre es obligatorio.';
+             if (!formData.primer_apellido) newErrors.primer_apellido = 'El primer apellido es obligatorio.';
 
-    const handleFinalize = async (e) => {
-        e.preventDefault();
-
-        // Validaciones de Reglas de Negocio (QA Senior)
-        const errores = validarAdmisionCompleta({
-            ...formData,
-            tipo_arribo: catalogos.formasLlegada.find(f => f.id === formData.id_forma_llegada)?.nombre
-        });
-
-        if (errores.length > 0) {
-            setModalConfig({
-                show: true,
-                type: 'error',
-                title: 'Incumplimiento de Reglas de Negocio',
-                message: errores.join(' ')
-            });
-            return;
-        }
-
-        const esNeonato = edadInfo.anios === 0 && edadInfo.meses === 0 && edadInfo.dias < 28;
-        if (esNeonato && !formData.cedula_madre) {
-            setModalConfig({
-                show: true,
-                type: 'error',
-                title: 'Validación de Neonato',
-                message: 'Para pacientes neonatos, es obligatorio ingresar la Cédula de la Madre en la sección de Nacimiento.'
-            });
-            return;
-        }
-
-        setLoading(true);
+             // Validación para el código 99, solo si no es la validación final
+             if (!isFinalValidation && formData.numero_documento === '99' && !validacionTransitoria) {
+                 // No se agrega error aquí, solo se permite el tránsito
+             }
+         }
+         
+         if (tabId === 'nacimiento') {
+             if (!formData.fecha_nacimiento) {
+                 newErrors.fecha_nacimiento = 'La fecha de nacimiento es obligatoria.';
+             } else if (!fechaNacimientoValida) {
+                 newErrors.fecha_nacimiento = 'La fecha de nacimiento no puede ser futura.';
+             }
+         }
+ 
+         setFormErrors(prev => ({ ...prev, ...newErrors }));
+         return Object.keys(newErrors).length === 0;
+     };
+ 
+     const handleNext = () => {
+         let isValid = true;
+         if (activeTab === 'personales') {
+             // Flexibilización de Navegación:
+             // Pestaña 1 solo valida filiación inmediata.
+             const newErrors = {};
+             
+             const tipoSeleccionado = catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion);
+             const esNoIdentificado = tipoSeleccionado?.nombre?.toUpperCase() === 'NO IDENTIFICADO';
+             
+             // Validación condicional: Si es "NO IDENTIFICADO", el número de documento se genera automáticamente
+             // y puede estar vacío inicialmente si falta la provincia. No bloqueamos por numero_documento en este caso
+             // si tenemos los nombres, para permitir avanzar a llenar datos de nacimiento.
+             if (!esNoIdentificado && !formData.numero_documento) {
+                 newErrors.numero_documento = 'El número de documento es obligatorio.';
+             }
+             
+             if (!formData.primer_nombre) newErrors.primer_nombre = 'El primer nombre es obligatorio.';
+             if (!formData.primer_apellido) newErrors.primer_apellido = 'El primer apellido es obligatorio.';
+             setFormErrors(prev => ({ ...prev, ...newErrors }));
+             
+             // Permitir paso si no hay errores básicos.
+             // Si el código es '99', se permite avanzar explícitamente siempre que haya nombres.
+             const esCodigoEmergencia = formData.numero_documento === '99';
+             const tieneNombres = formData.primer_nombre && formData.primer_apellido;
+             
+             isValid = Object.keys(newErrors).length === 0;
+ 
+             // Excepción explícita para código 99 con nombres completos
+             if (esCodigoEmergencia && tieneNombres) {
+                 isValid = true;
+                 setValidacionTransitoria(true);
+             }
+             
+             // Excepción explícita para "NO IDENTIFICADO" que va a la pestaña de nacimiento para completar datos
+             if (esNoIdentificado && tieneNombres) {
+                 isValid = true;
+             }
+         } else {
+             isValid = validateTab(activeTab);
+         }
+ 
+         if (isValid) {
+             const currentIndex = tabs.findIndex(t => t.id === activeTab);
+             if (currentIndex < tabs.length - 1) {
+                 setActiveTab(tabs[currentIndex + 1].id);
+             }
+         }
+     };
+ 
+     const handleFinalize = async (e) => {
+         e.preventDefault();
+ 
+         const allTabsValid = tabs.every(tab => validateTab(tab.id, true));
+         if (!allTabsValid) {
+             setModalConfig({
+                 show: true,
+                 type: 'error',
+                 title: 'Formulario Incompleto',
+                 message: 'Existen errores en el formulario. Por favor, revise todas las pestañas.'
+             });
+             return;
+         }
+ 
+         const esNeonato = edadInfo.anios === 0 && edadInfo.meses === 0 && edadInfo.dias < 28;
+         if (esNeonato && !formData.cedula_madre) {
+             setModalConfig({
+                 show: true,
+                 type: 'error',
+                 title: 'Validación de Neonato',
+                 message: 'Para pacientes neonatos, es obligatorio ingresar la Cédula de la Madre en la sección de Nacimiento.'
+             });
+             return;
+         }
+ 
+         setLoading(true);
         try {
             const payload = {
                 pacienteData: {
@@ -545,72 +702,28 @@ const FormularioAdmisionMaestra = () => {
             });
         } finally { setLoading(false); }
     };
-
-    const hasTemporalError = useMemo(() => {
-        const now = new Date();
-        const margenMs = 5 * 60 * 1000;
-        
-        if (formData.fecha_nacimiento) {
-            const [year, month, day] = formData.fecha_nacimiento.split('-').map(Number);
-            const fechaInicioDia = new Date(year, month - 1, day, 0, 0, 0);
-            
-            if (fechaInicioDia.getTime() > (now.getTime() + (24 * 60 * 60 * 1000))) return true;
-
-            // Misión: Forzar Cumplimiento de las 24 Horas Reales [2026-02-14]
-            // Bloqueo de Navegación Estricto: disabled si la hora está vacía para registros de < 24 horas
-            const enVentana24hAbsoluta = (now.getTime() - fechaInicioDia.getTime()) < (24 * 60 * 60 * 1000);
-
-            if (formData.hora_parto) {
-                const [hours, minutes] = formData.hora_parto.split(':').map(Number);
-                const birthTime = new Date(year, month - 1, day, hours, minutes);
-                
-                if (isNaN(birthTime.getTime())) return true;
-                if (birthTime.getTime() > (now.getTime() + margenMs)) return true;
-                
-                // Cálculo de Reaparición/Bloqueo: (Ahora - (Fecha + Hora)) < 24 Horas
-                const diffMs = now.getTime() - birthTime.getTime();
-                const diffHours = diffMs / (1000 * 60 * 60);
-                
-                const estSeleccionado = catalogos.establecimientos?.find(e => e.id == formData.id_lugar_parto);
-                const esTipoCChone = estSeleccionado?.nombre?.toUpperCase().includes('CENTRO DE SALUD TIPO C CHONE');
-                
-                // Si es Tipo C Chone, debe tener menos de 24 horas reales
-                if (esTipoCChone && diffHours > 24) return true;
-            } else if (enVentana24hAbsoluta) {
-                // Bloqueo Estricto: Si está en ventana de 24h (1440 min), la HORA es obligatoria para habilitar SIGUIENTE
-                return true;
-            }
-        }
-        
-        return false;
-    }, [formData.fecha_nacimiento, formData.hora_parto, catalogos.establecimientos, formData.id_lugar_parto]);
-
-    const TabButton = ({ tab }) => {
-        if (tab.hidden) return null;
-        const Icon = tab.icon;
-        const isActive = activeTab === tab.id;
-
-        // Bloqueo de navegación si hay error temporal o falta info crítica
-        const isBlocked = (tab.id !== 'personales' && tab.id !== 'nacimiento') && hasTemporalError;
-
-        return (
-            <button
-                type="button"
-                onClick={() => {
-                    if (isBlocked) {
-                        setModalConfig({
-                            show: true,
-                            type: 'error',
-                            title: 'Navegación Bloqueada',
-                            message: 'Debe corregir la Fecha/Hora de Nacimiento antes de continuar.'
-                        });
-                        return;
-                    }
-                    if (formHabilitado || tab.id === 'personales') setActiveTab(tab.id);
-                }}
-                className={`flex items-center justify-center px-3 transition-all border-b-2 h-full min-w-[100px] ${
-                    isActive ? 'border-blue-600 bg-blue-50 text-blue-700' : 'border-transparent text-gray-400 hover:text-gray-600'
-                }`}
+ 
+     useEffect(() => {
+         // Limpia los errores cuando se cambia de pestaña
+         setFormErrors({});
+     }, [activeTab]);
+ 
+     const TabButton = ({ tab }) => {
+         if (tab.hidden) return null;
+         const Icon = tab.icon;
+         const isActive = activeTab === tab.id;
+ 
+         return (
+             <button
+                 type="button"
+                 onClick={() => {
+                     if (formHabilitado || tab.id === 'personales') {
+                         setActiveTab(tab.id);
+                     }
+                 }}
+                 className={`flex items-center justify-center px-3 transition-all border-b-2 h-full min-w-[100px] ${
+                     isActive ? 'border-blue-600 bg-blue-50 text-blue-700' : 'border-transparent text-gray-400 hover:text-gray-600'
+                 }`}
             >
                 <Icon className={`w-4 h-4 mr-2 ${isActive ? 'text-blue-600' : 'text-gray-400'}`} />
                 <span className="text-[9px] font-black uppercase tracking-tighter truncate">{tab.label}</span>
@@ -630,12 +743,10 @@ const FormularioAdmisionMaestra = () => {
                             <h1 className="text-xl font-black tracking-tight leading-none uppercase">Admisión de Pacientes (008)</h1>
                         </div>
                     </div>
-                    <div className="bg-blue-800/50 border border-blue-400 rounded px-4 py-2 text-center animate-pulse">
+                    <div className="bg-blue-800/50 border border-blue-400 rounded px-4 py-2 text-center">
                         <p className="text-[9px] font-bold text-blue-300 uppercase tracking-tighter">Código Normativo de Identificación</p>
                         <p className="text-2xl font-black tracking-[0.2em] font-mono text-yellow-400">
-                            {formData.numero_documento && (catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion)?.nombre?.toUpperCase() === 'NO IDENTIFICADO')
-                                ? formData.numero_documento
-                                : generarCodigoTemporal(formData, catalogos.provincias)}
+                            {formData.numero_documento || '...'}
                         </p>
                     </div>
                     <div className="text-right hidden md:block">
@@ -658,6 +769,7 @@ const FormularioAdmisionMaestra = () => {
                                 handleBusquedaPaciente={handleBusquedaPaciente}
                                 catalogos={catalogos}
                                 formHabilitado={formHabilitado}
+                                errors={formErrors}
                             />
                         )}
 
@@ -671,6 +783,7 @@ const FormularioAdmisionMaestra = () => {
                                 edadInfo={edadInfo}
                                 setFormData={setFormData}
                                 setModalConfig={setModalConfig}
+                                errors={formErrors}
                             />
                         )}
 
@@ -691,6 +804,16 @@ const FormularioAdmisionMaestra = () => {
                                 handleChange={handleChange}
                                 catalogos={catalogos}
                                 formHabilitado={formHabilitado}
+                            />
+                        )}
+
+                        {activeTab === 'representante' && fechaNacimientoValida && (
+                            <SeccionRepresentante
+                                formData={formData}
+                                handleChange={handleChange}
+                                catalogos={catalogos}
+                                formHabilitado={formHabilitado}
+                                edadInfo={edadInfo}
                             />
                         )}
 
@@ -750,19 +873,11 @@ const FormularioAdmisionMaestra = () => {
                                 LIMPIAR TODO
                             </button>
 
-                            {(activeTab === 'personales' || activeTab === 'nacimiento') && (
+                            {activeTab !== 'motivo' && (
                                 <button
                                     type="button"
-                                    disabled={hasTemporalError}
-                                    onClick={() => {
-                                        const currentIndex = tabs.findIndex(t => t.id === activeTab);
-                                        setActiveTab(tabs[currentIndex + 1].id);
-                                    }}
-                                    className={`px-12 py-4 font-black rounded-lg shadow-lg transition-all transform uppercase text-xs ${
-                                        hasTemporalError
-                                            ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                                            : 'bg-green-600 text-white hover:bg-green-700'
-                                    }`}
+                                    onClick={handleNext}
+                                    className="px-12 py-4 font-black rounded-lg shadow-lg transition-all transform uppercase text-xs bg-green-600 text-white hover:bg-green-700"
                                 >
                                     Siguiente
                                 </button>
@@ -770,9 +885,9 @@ const FormularioAdmisionMaestra = () => {
                             
                             <button
                                 type="submit"
-                                disabled={loading || !formHabilitado || !formData.motivo_consulta || hasTemporalError}
+                                disabled={loading || !formHabilitado || !formData.motivo_consulta}
                                 className={`group flex items-center px-12 py-4 font-black rounded-lg shadow-2xl transition-all transform ${
-                                    loading || !formHabilitado || !formData.motivo_consulta || hasTemporalError
+                                    loading || !formHabilitado || !formData.motivo_consulta
                                     ? 'bg-gray-200 text-gray-400 cursor-not-allowed border border-gray-300'
                                     : 'bg-blue-600 text-white hover:bg-blue-700 hover:-translate-y-1 active:scale-95 border-b-4 border-blue-800'
                                 }`}

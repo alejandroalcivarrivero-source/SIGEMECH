@@ -1,17 +1,66 @@
 const { DataTypes, Model } = require('sequelize');
 
-module.exports = (sequelize) => {
-    class Pais extends Model {}
-    Pais.init({ /*...*/ }, { sequelize, modelName: 'Pais', tableName: 'cat_paises' });
+const defineModel = (sequelize, modelName, tableName, columns, options = {}) => {
+    class GenericModel extends Model { }
     
-    class Provincia extends Model {}
-    Provincia.init({ /*...*/ }, { sequelize, modelName: 'Provincia', tableName: 'cat_provincias' });
+    const baseColumns = {
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true,
+            field: 'id',
+        },
+        ...columns
+    };
 
-    class Canton extends Model {}
-    Canton.init({ /*...*/ }, { sequelize, modelName: 'Canton', tableName: 'cat_cantones' });
+    const hasTimestamps = options.timestamps !== false;
 
-    class Parroquia extends Model {}
-    Parroquia.init({ /*...*/ }, { sequelize, modelName: 'Parroquia', tableName: 'cat_parroquias' });
+    if (hasTimestamps) {
+        baseColumns.activo = {
+            type: DataTypes.BOOLEAN,
+            defaultValue: true,
+            field: 'activo'
+        };
+    }
+
+    const modelOptions = {
+        sequelize,
+        modelName,
+        tableName,
+        timestamps: hasTimestamps,
+        ...(hasTimestamps && { 
+            createdAt: 'fecha_creacion',
+            updatedAt: 'fecha_actualizacion' 
+        }),
+        freezeTableName: true,
+        ...options
+    };
+
+    GenericModel.init(baseColumns, modelOptions);
+    return GenericModel;
+};
+
+
+module.exports = (sequelize) => {
+    const Pais = defineModel(sequelize, 'Pais', 'cat_paises', {
+        nombre: { type: DataTypes.STRING(100), allowNull: false, field: 'nombre' },
+        codigo_iso: { type: DataTypes.STRING(2), allowNull: true, field: 'codigo_iso' },
+    }, { timestamps: false });
+
+    const Provincia = defineModel(sequelize, 'Provincia', 'cat_provincias', {
+        nombre: { type: DataTypes.STRING(100), allowNull: false, field: 'nombre' }
+    }, { timestamps: true });
+
+    const Canton = defineModel(sequelize, 'Canton', 'cat_cantones', {
+        nombre: { type: DataTypes.STRING(100), allowNull: false, field: 'nombre' },
+        provincia_id: { type: DataTypes.INTEGER, references: { model: 'Provincia', key: 'id' }, field: 'provincia_id' }
+    }, { timestamps: true });
+
+    const Parroquia = defineModel(sequelize, 'Parroquia', 'cat_parroquias', {
+        nombre: { type: DataTypes.STRING(100), allowNull: false, field: 'nombre' },
+        canton_id: { type: DataTypes.INTEGER, references: { model: 'Canton', key: 'id' }, field: 'canton_id' },
+        tipo: { type: DataTypes.STRING(50), allowNull: true, field: 'tipo' }
+    }, { timestamps: true });
 
     return { Pais, Provincia, Canton, Parroquia };
 };

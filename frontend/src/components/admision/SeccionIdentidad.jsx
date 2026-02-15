@@ -1,47 +1,10 @@
 import React, { useEffect } from 'react';
 import { Search } from 'lucide-react';
-import { generarCodigoTemporal } from '../../utils/pacienteUtils';
-import { generarCodigoNormativo } from '../../utils/generador_codigo';
+// import { generarCodigoNormativoIdentificacion } from '../../utils/generador_codigo'; // Centralizado en padre
 
-const SeccionIdentidad = ({ formData, handleChange, handleBusquedaPaciente, catalogos, formHabilitado }) => {
-    // Lógica para Generación Automática del Código de 17 caracteres (Normativa MSP)
-    useEffect(() => {
-        const tipoSeleccionado = catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion);
-        const esNoIdentificado = tipoSeleccionado?.nombre?.toUpperCase() === 'NO IDENTIFICADO';
-
-        if (esNoIdentificado) {
-            const provNac = catalogos.provincias?.find(p => p.id == formData.provinciaNacimiento);
-            const codProv = provNac?.codigo_inec || '99';
-
-            const nuevoCodigo = generarCodigoNormativo({
-                primer_nombre: formData.primer_nombre,
-                segundo_nombre: formData.segundo_nombre,
-                primer_apellido: formData.primer_apellido,
-                segundo_apellido: formData.segundo_apellido,
-                codigo_provincia: codProv,
-                fecha_nacimiento: formData.fecha_nacimiento
-            });
-
-            if (nuevoCodigo !== formData.numero_documento) {
-                handleChange({
-                    target: {
-                        name: 'numero_documento',
-                        value: nuevoCodigo
-                    }
-                });
-            }
-        }
-    }, [
-        formData.id_tipo_identificacion,
-        formData.primer_nombre,
-        formData.segundo_nombre,
-        formData.primer_apellido,
-        formData.segundo_apellido,
-        formData.fecha_nacimiento,
-        formData.provinciaNacimiento,
-        catalogos.provincias,
-        catalogos.tiposIdentificacion
-    ]);
+const SeccionIdentidad = ({ formData, handleChange, handleBusquedaPaciente, catalogos, formHabilitado, errors = {} }) => {
+    // La lógica de generación automática del código se ha centralizado en el componente padre (FormularioAdmisionMaestra)
+    // para evitar duplicidad de efectos y condiciones de carrera.
 
     // Estilos de compactación visual extrema
     const inputClasses = "w-full rounded border-gray-400 bg-white text-[11px] py-1 px-1.5 focus:border-blue-600 focus:outline-none font-medium h-7 border-2 shadow-sm transition-colors disabled:bg-gray-50 disabled:text-gray-500";
@@ -70,7 +33,9 @@ const SeccionIdentidad = ({ formData, handleChange, handleBusquedaPaciente, cata
                         required
                     >
                         <option value="">Seleccione</option>
-                        {(catalogos.tiposIdentificacion || []).map(t => <option key={t.id} value={t.id}>{t.nombre}</option>)}
+                        {(catalogos.tiposIdentificacion || [])
+                            .filter(t => ['CÉDULA DE IDENTIDAD', 'CEDULA', 'NO IDENTIFICADO'].includes(t.nombre?.toUpperCase()))
+                            .map(t => <option key={t.id} value={t.id}>{t.nombre}</option>)}
                     </select>
                 </div>
 
@@ -100,7 +65,7 @@ const SeccionIdentidad = ({ formData, handleChange, handleBusquedaPaciente, cata
                                         handleChange(e);
                                     }}
                                     onBlur={!esNoIdentificado ? (e) => handleBusquedaPaciente(e.target.value) : undefined}
-                                    placeholder={esNoIdentificado ? "GENERANDO CÓDIGO..." : "Ej: 1712345678"}
+                                    placeholder={esNoIdentificado ? "" : "Ej: 1712345678"}
                                     readOnly={esNoIdentificado}
                                     className={`${inputClasses} pr-6 font-bold ${
                                         esNoIdentificado
@@ -113,6 +78,7 @@ const SeccionIdentidad = ({ formData, handleChange, handleBusquedaPaciente, cata
                         })()}
                         <Search className="absolute right-1 top-1.5 h-3.5 w-3.5 text-gray-400" />
                     </div>
+                    {errors.numero_documento && <p className="text-red-500 text-xs mt-1">{errors.numero_documento}</p>}
                 </div>
 
                 <div className={containerClasses}>
@@ -169,6 +135,7 @@ const SeccionIdentidad = ({ formData, handleChange, handleBusquedaPaciente, cata
                                     className={`${inputClasses} uppercase font-bold`}
                                     required
                                 />
+                                {errors.primer_apellido && <p className="text-red-500 text-xs mt-1">{errors.primer_apellido}</p>}
                             </div>
                             <div className={`${containerClasses} col-span-1`}>
                                 <label className={labelClasses}>
@@ -197,6 +164,7 @@ const SeccionIdentidad = ({ formData, handleChange, handleBusquedaPaciente, cata
                                     className={`${inputClasses} uppercase font-bold`}
                                     required
                                 />
+                                {errors.primer_nombre && <p className="text-red-500 text-xs mt-1">{errors.primer_nombre}</p>}
                             </div>
                             <div className={`${containerClasses} col-span-1`}>
                                 <label className={labelClasses}>

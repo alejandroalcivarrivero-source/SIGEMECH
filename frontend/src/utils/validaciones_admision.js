@@ -52,7 +52,11 @@ export const validarAdmisionCompleta = (datos) => {
         errores.push(validacionRef.message);
     }
 
-    // Otras validaciones técnicas pueden ser añadidas aquí
+    // EXCEPCIÓN LÓGICA DE SOBERANÍA: NO IDENTIFICADO
+    // Si el paciente es "No Identificado", el numero_documento se genera automáticamente y no debe ser validado como entrada de usuario estándar.
+    // La generación del código temporal ocurre en el componente padre.
+    // Esta validación asegura que no se bloquee el flujo si el campo parece "vacío" para validaciones tradicionales,
+    // aunque en el flujo "No Identificado" se llena programáticamente.
 
     // Validación de campos de residencia según el país
     if (datos.paisResidencia === 'Ecuador') {

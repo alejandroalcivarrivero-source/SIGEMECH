@@ -15,7 +15,7 @@ module.exports = (sequelize) => {
             allowNull: false,
             field: 'paciente_id',
             references: {
-                model: 'pac_pacientes',
+                model: 'pacientes',
                 key: 'id'
             }
         },
@@ -23,8 +23,10 @@ module.exports = (sequelize) => {
     }, {
         sequelize,
         modelName: 'Representante',
-        tableName: 'pac_representantes',
+        tableName: 'paciente_representantes',
         timestamps: true,
+        createdAt: 'fecha_creacion',
+        updatedAt: 'fecha_actualizacion',
         underscored: true,
         freezeTableName: true
     });

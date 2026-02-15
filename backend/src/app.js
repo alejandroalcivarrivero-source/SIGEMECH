@@ -11,6 +11,7 @@ const pacientesRoutes = require('./modules/pacientes/pacientes_routes');
 const soporteRoutes = require('./modules/soporte/soporte_routes');
 const catalogsRoutes = require('./modules/catalogs/catalogs_routes');
 const admissionsRoutes = require('./modules/admissions/admissions_routes');
+const errorHandler = require('./middlewares/error_handler');
 
 dotenv.config();
 const port = process.env.PORT || 3002;
@@ -54,6 +55,9 @@ app.get('/api/health', async (req, res) => {
         });
     }
 });
+
+// Middleware de manejo de errores (debe ser el último middleware)
+app.use(errorHandler);
 
 const iniciarServidor = async () => {
     try {

@@ -23,9 +23,17 @@ const colores = {
 winston.addColors(colores);
 
 const formatoLog = winston.format.combine(
-  winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+  winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
   winston.format.printf(
-    (info) => `[${info.timestamp}] ${info.level.toUpperCase()}: ${info.message}`
+    (info) => `[${info.timestamp}] ${info.level}: ${info.message}`
+  )
+);
+
+const formatoConsola = winston.format.combine(
+  winston.format.colorize(),
+  winston.format.timestamp({ format: "HH:mm:ss" }),
+  winston.format.printf(
+    (info) => `${info.level}: ${info.message}`
   )
 );
 
@@ -48,10 +56,7 @@ const logger = winston.createLogger({
 // En desarrollo, mostrar también por consola con colores
 if (process.env.NODE_ENV !== 'production') {
   logger.add(new winston.transports.Console({
-    format: winston.format.combine(
-      winston.format.colorize(),
-      winston.format.simple()
-    ),
+    format: formatoConsola,
     level: 'depuracion'
   }));
 }

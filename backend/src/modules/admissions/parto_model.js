@@ -15,7 +15,7 @@ module.exports = (sequelize) => {
             allowNull: false,
             field: 'admision_id',
             references: {
-                model: 'adm_admisiones',
+                model: 'admisiones_emergencia',
                 key: 'id'
             }
         },
@@ -24,7 +24,7 @@ module.exports = (sequelize) => {
             allowNull: false,
             field: 'paciente_id',
             references: {
-                model: 'pac_pacientes',
+                model: 'pacientes',
                 key: 'id'
             }
         },
@@ -44,6 +44,8 @@ module.exports = (sequelize) => {
         modelName: 'Parto',
         tableName: 'adm_partos',
         timestamps: true,
+        createdAt: 'fecha_creacion',
+        updatedAt: 'fecha_actualizacion',
         underscored: true,
         freezeTableName: true
     });

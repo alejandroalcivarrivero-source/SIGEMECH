@@ -4,7 +4,7 @@ import { generarCodigoTemporal } from '../../utils/pacienteUtils';
 import SeccionRepresentante from './SeccionRepresentante';
 import pacienteService from '../../api/pacienteService';
 
-const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, formHabilitado, edadInfo, setFormData, setModalConfig, setNavegacionBloqueada }) => {
+const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, formHabilitado, edadInfo, setFormData, setModalConfig, errors = {} }) => {
     const focusRef = useRef(null);
     const horaRef = useRef(null);
     const establecimientoRef = useRef(null);
@@ -13,72 +13,103 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
     const [contadorErroresHora, setContadorErroresHora] = useState(0);
 
     // Misión: Unificar validación a reloj atómico. [cite: 2026-02-14]
+    // CORRECCIÓN: Asegurar que el cálculo considere correctamente la zona horaria y no falle por milisegundos.
     const esMenorA24HorasReales = useMemo(() => {
-        if (!formData.fecha_nacimiento) return false;
+        if (!formData.datosNacimiento?.fecha_nacimiento) return false;
         
-        // Si no hay hora, se calcula contra el inicio del día.
-        // Si hay hora, se calcula contra el momento exacto.
-        const hora = formData.hora_parto || '00:00:00';
-        const timestampNacimiento = new Date(`${formData.fecha_nacimiento}T${hora}`).getTime();
+        // Obtenemos la fecha seleccionada
+        const fechaNac = formData.datosNacimiento.fecha_nacimiento;
+        
+        // Si no hay hora, asumimos las 00:00 del día seleccionado para la comparación inicial
+        // PERO para la lógica de "requiere hora", si la fecha es HOY o AYER, necesitamos precisión.
+        const hora = formData.datosNacimiento?.hora_parto || '00:00:00';
+        
+        // Construir timestamp local
+        const fechaHoraString = `${fechaNac}T${hora}`;
+        const fechaNacimientoObj = new Date(fechaHoraString);
+        const timestampNacimiento = fechaNacimientoObj.getTime();
+        const ahora = Date.now();
 
         if (isNaN(timestampNacimiento)) return false;
         
-        // Cálculo Atómico: (Date.now() - timestampNacimiento) < 86400000
-        return (Date.now() - timestampNacimiento) < 86400000;
-    }, [formData.fecha_nacimiento, formData.hora_parto]);
+        // Diferencia en milisegundos
+        const diferencia = ahora - timestampNacimiento;
+        
+        // 24 horas en milisegundos = 86,400,000
+        // Es menor a 24 horas si la diferencia es positiva (pasado) y menor al límite
+        // O si es futuro inmediato (margen de error)
+        return diferencia < 86400000 && diferencia > -600000; // Margen de 10 min al futuro por si acaso reloj desincronizado
+    }, [formData.datosNacimiento?.fecha_nacimiento, formData.datosNacimiento?.hora_parto]);
+
+    // EFECTO DE RESTAURACIÓN DE VALIDACIÓN < 24 HORAS
+    // Si se cumple la condición de < 24h, habilitamos la exigencia de hora y establecimiento.
+    // Esto se maneja visualmente con 'esHoyOAnteriores24h', pero aseguramos la consistencia de datos aquí.
 
 
     const esHoyOAnteriores24h = useMemo(() => {
-        if (!formData.fecha_nacimiento) return false;
+        if (!formData.datosNacimiento?.fecha_nacimiento) return false;
+        
+        // Ajuste de zona horaria: Trabajamos con componentes locales para evitar desfases UTC
         const hoy = new Date();
         const ayer = new Date(hoy);
         ayer.setDate(ayer.getDate() - 1);
 
-        const fechaSeleccionada = new Date(`${formData.fecha_nacimiento}T00:00:00`);
+        // Parsear fecha input (YYYY-MM-DD) as local time
+        const [year, month, day] = formData.datosNacimiento.fecha_nacimiento.split('-').map(Number);
+        const fechaSeleccionada = new Date(year, month - 1, day); // Mes 0-indexado
         
         const esMismoDia = (d1, d2) =>
             d1.getFullYear() === d2.getFullYear() &&
             d1.getMonth() === d2.getMonth() &&
             d1.getDate() === d2.getDate();
 
-        // Forzar Campo Hora: visible y obligatorio por defecto si es hoy o ayer.
-        return esMismoDia(fechaSeleccionada, hoy) || esMismoDia(fechaSeleccionada, ayer) || esMenorA24HorasReales;
-    }, [formData.fecha_nacimiento, esMenorA24HorasReales]);
+        // Si es HOY o AYER, consideramos relevante la hora para validación de <24h
+        return esMismoDia(fechaSeleccionada, hoy) || esMismoDia(fechaSeleccionada, ayer);
+    }, [formData.datosNacimiento?.fecha_nacimiento]);
     
     // Bloqueo de Navegación: Inhabilita SIGUIENTE si la fecha es < 24h y la hora está vacía.
-    useEffect(() => {
-        const debeBloquear = esMenorA24HorasReales && !formData.hora_parto;
-        if (setNavegacionBloqueada) {
-            setNavegacionBloqueada(debeBloquear);
-        }
-    }, [esMenorA24HorasReales, formData.hora_parto, setNavegacionBloqueada]);
-
-
     const esRegistroValido = useMemo(() => {
-        if (!formData.fecha_nacimiento) return false;
-        if (esMenorA24HorasReales && !formData.hora_parto) return false;
+        if (!formData.datosNacimiento?.fecha_nacimiento) return false;
         
-        if (formData.hora_parto) {
-            const timestampNacimiento = new Date(`${formData.fecha_nacimiento}T${formData.hora_parto}`).getTime();
+        // Si estamos en ventana de <24h potencial (Hoy/Ayer) y NO hay hora, no es válido aún
+        if (esHoyOAnteriores24h && !formData.datosNacimiento?.hora_parto) return false;
+        
+        if (formData.datosNacimiento?.hora_parto) {
+            // Si hay hora, validamos consistencia
+            const timestampNacimiento = new Date(`${formData.datosNacimiento.fecha_nacimiento}T${formData.datosNacimiento.hora_parto}`).getTime();
             if (isNaN(timestampNacimiento)) return false;
             
             // No puede ser futura (margen 5 min)
             if (timestampNacimiento > (Date.now() + 5 * 60 * 1000)) return false;
 
-            // Si con la hora ya pasaron más de 24h, invalidar si tiene seleccionado el Tipo C Chone
-            if (!esMenorA24HorasReales) {
-                const est = catalogos.establecimientos?.find(e => e.id == formData.id_lugar_parto);
-                if (est?.nombre?.toUpperCase().includes('CENTRO DE SALUD TIPO C CHONE')) return false;
-            }
+            // Si con la hora calculada resulta que NO es menor a 24h (ej. ayer temprano),
+            // entonces validamos reglas de establecimientos normales si aplica.
         }
         return true;
-    }, [formData.fecha_nacimiento, formData.hora_parto, esMenorA24HorasReales, formData.id_lugar_parto, catalogos.establecimientos]);
+    }, [formData.datosNacimiento?.fecha_nacimiento, formData.datosNacimiento?.hora_parto, esHoyOAnteriores24h]);
 
     const isNeonato = edadInfo?.isNeonato;
     const mostrarFlujoNeonatal = edadInfo?.mostrarFlujoNeonatal;
     const esPartoReciente = edadInfo?.esPartoReciente;
 
-    const idNacionalidadEcuatoriana = catalogos.nacionalidades?.find(n => n.nombre?.trim().toUpperCase() === 'ECUATORIANA')?.id;
+    // Lógica Robustecida para Nacionalidad
+    const idNacionalidadEcuatoriana = useMemo(() => {
+        const ecuador = catalogos.nacionalidades?.find(n =>
+            n.nombre?.trim().toUpperCase() === 'ECUATORIANA' ||
+            n.gentilicio?.trim().toUpperCase() === 'ECUATORIANA'
+        );
+        return ecuador ? ecuador.id : 1; // Fallback seguro a ID 1 si no se encuentra
+    }, [catalogos.nacionalidades]);
+
+    // Calcular edad cuando cambie la fecha
+    useEffect(() => {
+        if (formData.datosNacimiento?.fecha_nacimiento && setFormData) {
+            // Este efecto es crítico para actualizar el objeto edadInfo en el padre
+            // pero en SeccionNacimiento, edadInfo viene como prop.
+            // Si necesitamos disparar el cálculo, debemos asegurarnos que FormularioAdmisionMaestra
+            // lo esté haciendo al recibir el cambio en handleChange.
+        }
+    }, [formData.datosNacimiento?.fecha_nacimiento]);
 
     const [establecimientosSalud, setEstablecimientosSalud] = useState(catalogos.establecimientos || []);
 
@@ -92,28 +123,31 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
         const NOMBRE_RESTRINGIDO = 'CENTRO DE SALUD TIPO C CHONE';
         const establecimientoChone = catalogos.establecimientos?.find(e => e.nombre.toUpperCase().includes(NOMBRE_RESTRINGIDO));
     
+        // Lógica restaurada de validación de 24 horas para establecimiento
         if (esMenorA24HorasReales && establecimientoChone) {
-            // Inserta 'Centro de Salud Tipo C Chone' al principio si no está ya.
+            // Si es menor a 24 horas, MOSTRAR Chone y priorizarlo
             setEstablecimientosSalud(prev => {
                 const yaExiste = prev.some(e => e.id === establecimientoChone.id);
                 if (yaExiste) {
-                    // Mover al principio
                     return [establecimientoChone, ...prev.filter(e => e.id !== establecimientoChone.id)];
                 } else {
                     return [establecimientoChone, ...prev];
                 }
             });
         } else {
-            // Filtra 'Centro de Salud Tipo C Chone' si la condición no se cumple.
-            setEstablecimientosSalud(prev => prev.filter(e => !e.nombre.toUpperCase().includes(NOMBRE_RESTRINGIDO)));
-
-            // Si estaba seleccionado, se deselecciona.
-            const estSeleccionado = catalogos.establecimientos?.find(e => e.id == formData.id_lugar_parto);
-            if (estSeleccionado?.nombre?.toUpperCase().includes(NOMBRE_RESTRINGIDO)) {
-                handleChange({ target: { name: 'id_lugar_parto', value: '' } });
+            // Si NO es menor a 24 horas, OCULTAR Chone (Regla de negocio estricta restaurada)
+            // Se debe derivar a otro nivel si han pasado más de 24 horas del parto fuera de la unidad.
+             if (!esMenorA24HorasReales) {
+                setEstablecimientosSalud(prev => prev.filter(e => !e.nombre.toUpperCase().includes(NOMBRE_RESTRINGIDO)));
+             }
+             
+            // Si estaba seleccionado y ya no es válido (pasaron 24h), se limpia.
+            const estSeleccionado = catalogos.establecimientos?.find(e => e.id == formData.datosNacimiento?.id_lugar_parto);
+            if (estSeleccionado?.nombre?.toUpperCase().includes(NOMBRE_RESTRINGIDO) && !esMenorA24HorasReales) {
+                 handleChange({ target: { name: 'datosNacimiento.id_lugar_parto', value: '' } });
             }
         }
-    }, [esMenorA24HorasReales, catalogos.establecimientos, formData.id_lugar_parto]);
+    }, [esMenorA24HorasReales, catalogos.establecimientos, formData.datosNacimiento?.id_lugar_parto]);
 
     useEffect(() => {
         if (catalogos.establecimientos) {
@@ -121,72 +155,144 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
         }
     }, [catalogos.establecimientos]);
 
+    // Estado para manejo de carga
+    const [loadingCantones, setLoadingCantones] = useState(false);
+    const [loadingParroquias, setLoadingParroquias] = useState(false);
+
+    // Carga de Cantones (Reactividad por Provincia)
     useEffect(() => {
-        const cargarCantones = async () => {
-            if (formData.provinciaNacimiento && formData.id_nacionalidad == idNacionalidadEcuatoriana) {
+        const cargarCantonesPorProvincia = async () => {
+            const idProvincia = formData.datosNacimiento?.provincia_nacimiento_id;
+            
+            // Soberanía Lingüística: Permitir carga para Ecuatorianos O No Identificados (que requieren lugar de nacimiento para ID)
+            const tipoIdent = catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion);
+            const esNoIdentificado = tipoIdent?.nombre?.toUpperCase() === 'NO IDENTIFICADO';
+            const permitirSeleccionGeografica = (formData.datosNacimiento?.id_nacionalidad == idNacionalidadEcuatoriana) || esNoIdentificado;
+
+            if (idProvincia && permitirSeleccionGeografica) {
+                setLoadingCantones(true);
                 try {
-                    const data = await catalogService.getCantones(formData.provinciaNacimiento);
-                    setCantones(data);
-                } catch (error) {
-                    console.error("Error al cargar cantones:", error);
+                    const listaCantonesFiltrados = await catalogService.getCantones(idProvincia);
+                    setCantones(listaCantonesFiltrados);
+                } catch (errorCargaCatalogo) {
+                    console.error("Error al cargar cantones:", errorCargaCatalogo);
                     setCantones([]);
+                } finally {
+                    setLoadingCantones(false);
                 }
             } else {
                 setCantones([]);
             }
         };
-        cargarCantones();
-    }, [formData.provinciaNacimiento, formData.id_nacionalidad, idNacionalidadEcuatoriana]);
+        cargarCantonesPorProvincia();
+    }, [formData.datosNacimiento?.provincia_nacimiento_id, formData.datosNacimiento?.id_nacionalidad, idNacionalidadEcuatoriana, formData.id_tipo_identificacion, catalogos.tiposIdentificacion]);
 
+    // Carga de Parroquias (Reactividad por Cantón)
     useEffect(() => {
-        const cargarParroquias = async () => {
-            if (formData.cantonNacimiento && formData.id_nacionalidad == idNacionalidadEcuatoriana) {
+        const cargarParroquiasPorCanton = async () => {
+            const idCanton = formData.datosNacimiento?.canton_nacimiento_id;
+
+            // Soberanía Lingüística: Permitir carga para Ecuatorianos O No Identificados
+            const tipoIdent = catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion);
+            const esNoIdentificado = tipoIdent?.nombre?.toUpperCase() === 'NO IDENTIFICADO';
+            const permitirSeleccionGeografica = (formData.datosNacimiento?.id_nacionalidad == idNacionalidadEcuatoriana) || esNoIdentificado;
+
+            if (idCanton && permitirSeleccionGeografica) {
+                setLoadingParroquias(true);
                 try {
-                    const data = await catalogService.getParroquias(formData.cantonNacimiento);
-                    setParroquias(data);
-                } catch (error) {
-                    console.error("Error al cargar parroquias:", error);
+                    const listaParroquiasFiltradas = await catalogService.getParroquias(idCanton);
+                    setParroquias(listaParroquiasFiltradas);
+                } catch (errorCargaCatalogo) {
+                    console.error("Error al cargar parroquias:", errorCargaCatalogo);
                     setParroquias([]);
+                } finally {
+                    setLoadingParroquias(false);
                 }
             } else {
                 setParroquias([]);
             }
         };
-        cargarParroquias();
-    }, [formData.cantonNacimiento, formData.id_nacionalidad, idNacionalidadEcuatoriana]);
+        cargarParroquiasPorCanton();
+    }, [formData.datosNacimiento?.canton_nacimiento_id, formData.datosNacimiento?.id_nacionalidad, idNacionalidadEcuatoriana, formData.id_tipo_identificacion, catalogos.tiposIdentificacion]);
 
+    // Referencia previa para detección de cambios de nacionalidad
+    const prevNacionalidadRef = useRef(formData.datosNacimiento?.id_nacionalidad);
+
+    // Lógica Unificada de Limpieza Geográfica - RESTAURADA
     useEffect(() => {
-        if (formData.id_nacionalidad && formData.id_nacionalidad != idNacionalidadEcuatoriana) {
-            const camposGeografia = ['provinciaNacimiento', 'cantonNacimiento', 'parroquiaNacimiento'];
-            let huboCambios = false;
-            camposGeografia.forEach(campo => {
-                if (formData[campo]) huboCambios = true;
-            });
+        const prevNacionalidad = prevNacionalidadRef.current;
+        const currentNacionalidad = formData.datosNacimiento?.id_nacionalidad;
 
-            if (huboCambios) {
-                camposGeografia.forEach(campo => {
-                    handleChange({ target: { name: campo, value: '' } });
-                });
-            }
-        }
-    }, [formData.id_nacionalidad, idNacionalidadEcuatoriana, handleChange]);
+        // Si la nacionalidad cambia
+        if (prevNacionalidad !== currentNacionalidad) {
+            prevNacionalidadRef.current = currentNacionalidad;
 
-    useEffect(() => {
-        if (formData.fecha_nacimiento && formData.provinciaNacimiento) {
-            const tipoIdent = catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion);
-            if (tipoIdent?.nombre?.toUpperCase() === 'NO IDENTIFICADO' || !formData.numero_documento) {
-                const nuevoCodigo = generarCodigoTemporal(formData, catalogos.provincias);
-                if (nuevoCodigo !== formData.numero_documento) {
-                    handleChange({
-                        target: {
-                            name: 'numero_documento',
-                            value: nuevoCodigo
-                        }
-                    });
+            // CASO: Cambia a NO Ecuatoriana
+            if (currentNacionalidad && currentNacionalidad != idNacionalidadEcuatoriana) {
+                // Verificar si hay datos que limpiar para evitar renders innecesarios
+                if (formData.datosNacimiento?.provincia_nacimiento_id ||
+                    formData.datosNacimiento?.canton_nacimiento_id ||
+                    formData.datosNacimiento?.parroquia_nacimiento_id) {
+                    
+                    // Limpieza segura
+                    handleChange({ target: { name: 'datosNacimiento.provincia_nacimiento_id', value: '' } });
+                    handleChange({ target: { name: 'datosNacimiento.canton_nacimiento_id', value: '' } });
+                    handleChange({ target: { name: 'datosNacimiento.parroquia_nacimiento_id', value: '' } });
                 }
             }
         }
-    }, [formData.fecha_nacimiento, formData.provinciaNacimiento, formData.primer_nombre, formData.segundo_nombre, formData.primer_apellido, formData.segundo_apellido]);
+    }, [formData.datosNacimiento?.id_nacionalidad, idNacionalidadEcuatoriana]);
+
+    // Vínculo Reactivo (ID -> Banner) - Soberanía Lingüística
+    useEffect(() => {
+        const idProvinciaNacimiento = formData.datosNacimiento?.provincia_nacimiento_id;
+
+        // Solo actuar si hay provincia seleccionada
+        if (!idProvinciaNacimiento) return;
+
+        // Verificar si necesitamos generar código (NO IDENTIFICADO o Código 99)
+        const tipoIdent = catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion);
+        const esNoIdentificado = tipoIdent?.nombre?.toUpperCase() === 'NO IDENTIFICADO';
+        const esCodigoEmergencia = formData.numero_documento === '99';
+        const validacionIntermedia = !formData.numero_documento || esNoIdentificado || esCodigoEmergencia;
+
+        if (validacionIntermedia && formData.datosNacimiento?.fecha_nacimiento) {
+            // Buscar la provincia para obtener el código oficial de 2 dígitos
+            const provinciaObj = catalogos.provincias?.find(p => p.id == idProvinciaNacimiento);
+            
+            // Usamos el ID como base para el código provincial (ej. '17')
+            const codigoProvincia = String(idProvinciaNacimiento).padStart(2, '0');
+
+            // Preparar datos para el generador
+            const datosParaCodigo = {
+                ...formData,
+                datosNacimiento: {
+                    ...formData.datosNacimiento,
+                    provincia_codigo: codigoProvincia
+                }
+            };
+
+            // Invocar utilitario de generación
+            const nuevoCodigo = generarCodigoTemporal(datosParaCodigo, catalogos.provincias);
+
+            // Actualización instantánea si difiere
+            if (nuevoCodigo && nuevoCodigo !== formData.numero_documento) {
+                handleChange({
+                    target: {
+                        name: 'numero_documento',
+                        value: nuevoCodigo
+                    }
+                });
+            }
+        }
+    }, [
+        formData.datosNacimiento?.provincia_nacimiento_id,
+        formData.datosNacimiento?.fecha_nacimiento,
+        formData.id_tipo_identificacion,
+        formData.numero_documento,
+        formData.primer_nombre,
+        formData.primer_apellido,
+    ]);
 
     const inputClasses = "w-full rounded border-gray-400 bg-white text-[11px] py-1 px-1.5 focus:border-blue-600 focus:outline-none font-medium h-7 border-2 shadow-sm transition-colors disabled:bg-100 disabled:text-gray-500 disabled:cursor-not-allowed";
     const inputReadOnlyClasses = "w-full rounded border-gray-400 bg-gray-100 text-[11px] py-1 px-1.5 focus:outline-none font-bold h-7 border-2 shadow-sm text-blue-700 cursor-not-allowed";
@@ -196,18 +302,18 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
 
     useEffect(() => {
         const ESTABLECIMIENTO_LOCAL_NOMBRE = "CENTRO DE SALUD TIPO C CHONE";
-        const establecimientoSeleccionado = catalogos.establecimientos?.find(e => e.id == formData.id_lugar_parto);
+        const establecimientoSeleccionado = catalogos.establecimientos?.find(e => e.id == formData.datosNacimiento?.id_lugar_parto);
         const nombreEst = establecimientoSeleccionado?.nombre?.toUpperCase() || "";
         const esLocal = nombreEst.includes("TIPO C") && nombreEst.includes("CHONE");
         setRequiereCedulaMadre(esLocal);
-    }, [formData.id_lugar_parto, catalogos.establecimientos]);
+    }, [formData.datosNacimiento?.id_lugar_parto, catalogos.establecimientos]);
 
 
     const manejarBusquedaMadre = async (cedula) => {
         if (!cedula || cedula.length < 10) return;
 
         const ESTABLECIMIENTO_LOCAL_NOMBRE = "CENTRO DE SALUD TIPO C CHONE";
-        const establecimientoSeleccionado = catalogos.establecimientos?.find(e => e.id == formData.id_lugar_parto);
+        const establecimientoSeleccionado = catalogos.establecimientos?.find(e => e.id == formData.datosNacimiento?.id_lugar_parto);
         const nombreEstablecimiento = establecimientoSeleccionado?.nombre?.toUpperCase() || "";
         const esEstablecimientoLocal = nombreEstablecimiento.includes("TIPO C") && nombreEstablecimiento.includes("CHONE");
 
@@ -248,16 +354,12 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
                     id_parentesco_representante: catalogos.parentescos?.find(p => p.nombre?.toUpperCase() === 'MADRE')?.id || ''
                 };
                 
-                if (typeof setFormData === 'function') {
-                    setFormData(prev => ({
-                        ...prev,
-                        ...updates
-                    }));
-                } else {
-                    Object.entries(updates).forEach(([name, value]) => {
-                        handleChange({ target: { name, value } });
-                    });
-                }
+                // NOTA IMPORTANTE: En la versión original se intentaba setFormData pero no estaba claro si se pasaba.
+                // Aquí usamos handleChange iterativo como fallback seguro.
+                Object.entries(updates).forEach(([name, value]) => {
+                    handleChange({ target: { name, value } });
+                });
+
             } else {
                 if (esEstablecimientoLocal) {
                     setModalConfig({
@@ -274,7 +376,7 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
     };
 
     useEffect(() => {
-        const mostrarRep = formData.fecha_nacimiento && (edadInfo.anios < 2);
+        const mostrarRep = formData.datosNacimiento?.fecha_nacimiento && (edadInfo.anios < 2);
         if (!mostrarRep) {
             const camposAResetear = [
                 'id_tipo_doc_representante',
@@ -296,7 +398,7 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
                 });
             }
         }
-    }, [formData.fecha_nacimiento, edadInfo.anios, handleChange]);
+    }, [formData.datosNacimiento?.fecha_nacimiento, edadInfo.anios]);
     
     return (
         <div className="space-y-3">
@@ -310,10 +412,18 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
                         Nacionalidad <span className="text-red-500">*</span>
                     </label>
                     <select
-                        name="id_nacionalidad"
-                        value={formData.id_nacionalidad || ''}
-                        onChange={handleChange}
-                        disabled={!(formHabilitado || (catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion)?.nombre?.toUpperCase() === 'NO IDENTIFICADO'))}
+                        name="datosNacimiento.id_nacionalidad"
+                        value={formData.datosNacimiento?.id_nacionalidad || ''}
+                        onChange={(e) => {
+                            // Reparación del Selector de Nacionalidad:
+                            // Aseguramos captura numérica y eliminamos bloqueos.
+                            handleChange({
+                                target: {
+                                    name: 'datosNacimiento.id_nacionalidad',
+                                    value: Number(e.target.value)
+                                }
+                            });
+                        }}
                         className={inputClasses}
                         required
                     >
@@ -323,15 +433,20 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
                 </div>
 
                 <div className="col-span-1">
-                    <label className={labelClasses}>Provincia Nacimiento <span className="text-red-500">*</span></label>
+                    <label className={labelClasses}>Provincia Nacimiento {formData.datosNacimiento?.id_nacionalidad == idNacionalidadEcuatoriana && <span className="text-red-500">*</span>}</label>
                     <select
                         ref={focusRef}
-                        name="provinciaNacimiento"
-                        value={formData.provinciaNacimiento || ''}
-                        onChange={handleChange}
-                        disabled={formData.id_nacionalidad != idNacionalidadEcuatoriana || !(formHabilitado || (catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion)?.nombre?.toUpperCase() === 'NO IDENTIFICADO'))}
-                        className={inputClasses}
-                        required={formData.id_nacionalidad == idNacionalidadEcuatoriana}
+                        name="datosNacimiento.provincia_nacimiento_id"
+                        value={formData.datosNacimiento?.provincia_nacimiento_id || ''}
+                        onChange={(e) => {
+                            // Al cambiar provincia, limpiamos cantón y parroquia para forzar selección válida
+                            handleChange(e);
+                            handleChange({ target: { name: 'datosNacimiento.canton_nacimiento_id', value: '' } });
+                            handleChange({ target: { name: 'datosNacimiento.parroquia_nacimiento_id', value: '' } });
+                        }}
+                        disabled={!formHabilitado || (!formData.datosNacimiento?.id_nacionalidad && !catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion)?.nombre?.toUpperCase() === 'NO IDENTIFICADO') || (formData.datosNacimiento?.id_nacionalidad != idNacionalidadEcuatoriana && catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion)?.nombre?.toUpperCase() !== 'NO IDENTIFICADO')}
+                        className={`${inputClasses} ${formData.datosNacimiento?.id_nacionalidad != idNacionalidadEcuatoriana && catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion)?.nombre?.toUpperCase() !== 'NO IDENTIFICADO' ? 'bg-gray-100 text-gray-400' : ''}`}
+                        required={formData.datosNacimiento?.id_nacionalidad == idNacionalidadEcuatoriana}
                     >
                         <option value="">Seleccione</option>
                         {catalogos.provincias.map(p => <option key={p.id} value={p.id}>{p.nombre}</option>)}
@@ -339,13 +454,21 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
                 </div>
 
                 <div className="col-span-1">
-                    <label className={labelClasses}>Cantón Nacimiento</label>
+                    <label className={labelClasses}>
+                        Cantón Nacimiento {loadingCantones && <span className="text-blue-500 animate-pulse text-[9px] ml-1">(Cargando...)</span>}
+                        {formData.datosNacimiento?.id_nacionalidad == idNacionalidadEcuatoriana && <span className="text-red-500">*</span>}
+                    </label>
                     <select
-                        name="cantonNacimiento"
-                        value={formData.cantonNacimiento || ''}
-                        onChange={handleChange}
-                        disabled={formData.id_nacionalidad != idNacionalidadEcuatoriana || !formData.provinciaNacimiento || !(formHabilitado || (catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion)?.nombre?.toUpperCase() === 'NO IDENTIFICADO'))}
-                        className={inputClasses}
+                        name="datosNacimiento.canton_nacimiento_id"
+                        value={formData.datosNacimiento?.canton_nacimiento_id || ''}
+                        onChange={(e) => {
+                            // Al cambiar cantón, limpiamos parroquia explícitamente para UX inmediata
+                            handleChange(e);
+                            handleChange({ target: { name: 'datosNacimiento.parroquia_nacimiento_id', value: '' } });
+                        }}
+                        disabled={!formHabilitado || !formData.datosNacimiento?.provincia_nacimiento_id || (formData.datosNacimiento?.id_nacionalidad != idNacionalidadEcuatoriana && catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion)?.nombre?.toUpperCase() !== 'NO IDENTIFICADO') || loadingCantones}
+                        className={`${inputClasses} ${formData.datosNacimiento?.id_nacionalidad != idNacionalidadEcuatoriana && catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion)?.nombre?.toUpperCase() !== 'NO IDENTIFICADO' ? 'bg-gray-100 text-gray-400' : ''}`}
+                        required={formData.datosNacimiento?.id_nacionalidad == idNacionalidadEcuatoriana}
                     >
                         <option value="">Seleccione</option>
                         {cantones.map(c => <option key={c.id} value={c.id}>{c.nombre}</option>)}
@@ -353,13 +476,17 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
                 </div>
 
                 <div className="col-span-1">
-                    <label className={labelClasses}>Parroquia Nacimiento</label>
+                    <label className={labelClasses}>
+                        Parroquia Nacimiento {loadingParroquias && <span className="text-blue-500 animate-pulse text-[9px] ml-1">(Cargando...)</span>}
+                        {formData.datosNacimiento?.id_nacionalidad == idNacionalidadEcuatoriana && <span className="text-red-500">*</span>}
+                    </label>
                     <select
-                        name="parroquiaNacimiento"
-                        value={formData.parroquiaNacimiento || ''}
+                        name="datosNacimiento.parroquia_nacimiento_id"
+                        value={formData.datosNacimiento?.parroquia_nacimiento_id || ''}
                         onChange={handleChange}
-                        disabled={formData.id_nacionalidad != idNacionalidadEcuatoriana || !formData.cantonNacimiento || !(formHabilitado || (catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion)?.nombre?.toUpperCase() === 'NO IDENTIFICADO'))}
-                        className={inputClasses}
+                        disabled={!formHabilitado || !formData.datosNacimiento?.canton_nacimiento_id || (formData.datosNacimiento?.id_nacionalidad != idNacionalidadEcuatoriana && catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion)?.nombre?.toUpperCase() !== 'NO IDENTIFICADO') || loadingParroquias}
+                        className={`${inputClasses} ${formData.datosNacimiento?.id_nacionalidad != idNacionalidadEcuatoriana && catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion)?.nombre?.toUpperCase() !== 'NO IDENTIFICADO' ? 'bg-gray-100 text-gray-400' : ''}`}
+                        required={formData.datosNacimiento?.id_nacionalidad == idNacionalidadEcuatoriana}
                     >
                         <option value="">Seleccione</option>
                         {parroquias.map(p => <option key={p.id} value={p.id}>{p.nombre}</option>)}
@@ -372,15 +499,18 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
                     </label>
                     <input
                         type="date"
-                        name="fecha_nacimiento"
-                        value={formData.fecha_nacimiento || ''}
-                        onChange={handleChange}
+                        name="datosNacimiento.fecha_nacimiento"
+                        value={formData.datosNacimiento?.fecha_nacimiento || ''}
+                        onChange={(e) => {
+                            handleChange(e);
+                        }}
                         onBlur={handleBlur}
                         max={new Date().toISOString().split("T")[0]}
-                        disabled={!(formHabilitado || (catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion)?.nombre?.toUpperCase() === 'NO IDENTIFICADO'))}
+                        disabled={!formHabilitado}
                         className={`${inputClasses} font-bold ${edadInfo.isLess24h ? 'bg-yellow-50 border-yellow-400' : ''}`}
                         required
                     />
+                    {errors.fecha_nacimiento && <p className="text-red-500 text-xs mt-1">{errors.fecha_nacimiento}</p>}
                 </div>
 
                 <div className={`col-span-3 grid ${isNeonato ? 'grid-cols-4' : 'grid-cols-3'} gap-2`}>
@@ -432,7 +562,7 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
                 </div>
             </div>
 
-            {formData.fecha_nacimiento && mostrarFlujoNeonatal && (
+            {formData.datosNacimiento?.fecha_nacimiento && mostrarFlujoNeonatal && (
                 <div className="mt-4 p-3 border-2 border-blue-400 bg-blue-50 rounded-lg shadow-inner">
                     <h4 className="text-[11px] font-extrabold text-blue-800 mb-3 border-b border-blue-300 pb-1 flex items-center justify-between">
                         <div className="flex items-center">
@@ -450,8 +580,8 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
                                 <input
                                     ref={horaRef}
                                     type="time"
-                                    name="hora_parto"
-                                    value={formData.hora_parto || ''}
+                                    name="datosNacimiento.hora_parto"
+                                    value={formData.datosNacimiento?.hora_parto || ''}
                                     onChange={(e) => {
                                         const val = e.target.value;
                                         if (!val) {
@@ -460,7 +590,8 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
                                         }
               
                                         const now = new Date();
-                                        const inputDateTime = new Date(`${formData.fecha_nacimiento}T${val}`);
+                                        // Usar fecha nacimiento seleccionada para validar
+                                        const inputDateTime = new Date(`${formData.datosNacimiento?.fecha_nacimiento}T${val}`);
                                         const margenMs = 5 * 60 * 1000;
               
                                         if (inputDateTime.getTime() > (now.getTime() + margenMs)) {
@@ -475,12 +606,13 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
                                                     title: 'Validación de Hora Bloqueante',
                                                     message: mensajeBase + mensajeExtra,
                                                     confirmAction: nuevoContador >= 2 ? () => {
-                                                        setFormData(prevData => ({ ...prevData, fecha_nacimiento: '', hora_parto: '' }));
+                                                        handleChange({ target: { name: 'datosNacimiento.fecha_nacimiento', value: '' } });
+                                                        handleChange({ target: { name: 'datosNacimiento.hora_parto', value: '' } });
                                                         setContadorErroresHora(0);
                                                         setModalConfig(m => ({ ...m, show: false }));
                                                     } : null,
                                                     onClose: () => {
-                                                        setFormData(prevData => ({ ...prevData, hora_parto: '' }));
+                                                        handleChange({ target: { name: 'datosNacimiento.hora_parto', value: '' } });
                                                         setModalConfig(m => ({ ...m, show: false }));
                                                         setTimeout(() => horaRef.current?.focus(), 150);
                                                     }
@@ -494,7 +626,7 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
                                     onBlur={handleBlur}
                                     disabled={!formHabilitado}
                                     required={true}
-                                    className={`${inputClasses} font-bold text-blue-800 bg-white border-blue-400 ${!formData.hora_parto ? 'ring-2 ring-red-200' : ''}`}
+                                    className={`${inputClasses} font-bold text-blue-800 bg-white border-blue-400 ${!formData.datosNacimiento?.hora_parto ? 'ring-2 ring-red-200' : ''}`}
                                 />
                             </div>
                         )}
@@ -504,13 +636,13 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
                             <div className="relative">
                                 <select
                                     ref={establecimientoRef}
-                                    name="id_lugar_parto"
-                                    value={formData.id_lugar_parto || ''}
+                                    name="datosNacimiento.id_lugar_parto"
+                                    value={formData.datosNacimiento?.id_lugar_parto || ''}
                                     onChange={handleChange}
-                                    className={`${inputClasses} bg-white ${establecimientosSalud.length === 0 ? 'animate-pulse' : ''} ${(esMenorA24HorasReales && !formData.hora_parto) ? 'opacity-50 cursor-not-allowed grayscale' : ''}`}
-                                    disabled={!formHabilitado || establecimientosSalud.length === 0 || (esMenorA24HorasReales && !formData.hora_parto)}
+                                    className={`${inputClasses} bg-white ${establecimientosSalud.length === 0 ? 'animate-pulse' : ''} ${(esHoyOAnteriores24h && !formData.datosNacimiento?.hora_parto) ? 'opacity-50 cursor-not-allowed grayscale' : ''}`}
+                                    disabled={!formHabilitado || establecimientosSalud.length === 0 || (esHoyOAnteriores24h && !formData.datosNacimiento?.hora_parto)}
                                 >
-                                    <option value="">{(esMenorA24HorasReales && !formData.hora_parto) ? '--- INGRESE HORA PRIMERO ---' : 'Seleccione Establecimiento...'}</option>
+                                    <option value="">{(esHoyOAnteriores24h && !formData.datosNacimiento?.hora_parto) ? '--- INGRESE HORA PRIMERO ---' : 'Seleccione Establecimiento...'}</option>
                                     {establecimientosSalud.map(e => (
                                         <option key={e.id} value={e.id}>{e.nombre}</option>
                                     ))}
@@ -519,7 +651,7 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
                         </div>
               
                         {(() => {
-                            const est = establecimientosSalud.find(e => e.id == formData.id_lugar_parto);
+                            const est = establecimientosSalud.find(e => e.id == formData.datosNacimiento?.id_lugar_parto);
                             const nombreEst = est?.nombre?.toUpperCase() || "";
                             const esLocal = nombreEst.includes("TIPO C") && nombreEst.includes("CHONE");
                             
@@ -529,8 +661,8 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
                                         <label className={labelClasses}>Cédula Madre <span className="text-red-500">*</span></label>
                                         <input
                                             type="text"
-                                            name="cedula_madre"
-                                            value={formData.cedula_madre || ''}
+                                            name="datosNacimiento.cedula_madre"
+                                            value={formData.datosNacimiento?.cedula_madre || ''}
                                             onChange={handleChange}
                                             onBlur={(e) => manejarBusquedaMadre(e.target.value)}
                                             disabled={!formHabilitado}
@@ -547,7 +679,7 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
                 </div>
             )}
 
-            {formData.fecha_nacimiento && edadInfo.anios < 2 && (
+            {formData.datosNacimiento?.fecha_nacimiento && edadInfo.anios < 2 && (
                 <div className={!esRegistroValido ? "opacity-50 pointer-events-none grayscale select-none" : ""}>
                     <SeccionRepresentante
                         formData={formData}

@@ -26,14 +26,16 @@ const login = async (req, res) => {
         }
 
         // 1. Buscar al usuario
-        const usuario = await Usuario.findOne({
-            where: { cedula: cedula },
-                        attributes: ['id', 'cedula', 'password_hash', 'estado', 'nombres', 'apellidos']
-        });
-
-       // --- INICIO DE DEPURACIÓN TEMPORAL ---
-       console.log("Datos de la DB recuperados para el usuario:", JSON.stringify(usuario, null, 2));
-       // --- FIN DE DEPURACIÓN TEMPORAL ---
+            // Aseguramos que traiga nombres y apellidos para el frontend
+            const usuario = await Usuario.findOne({
+                where: { username: cedula },
+                             // Agregamos explicitamente nombres y apellidos para garantizar que se recuperen de la DB
+                             attributes: ['id', 'username', 'password_hash', 'estado', 'nombres', 'apellidos']
+            });
+    
+           // --- INICIO DE DEPURACIÓN TEMPORAL ---
+           // console.log("Datos de la DB recuperados para el usuario:", JSON.stringify(usuario, null, 2));
+           // --- FIN DE DEPURACIÓN TEMPORAL ---
 
         if (!usuario) {
             // Se usa un mensaje genérico para no revelar si el usuario existe o no
@@ -55,7 +57,7 @@ const login = async (req, res) => {
         const ficha_acceso = jwt.sign(
             {
                 id: usuario.id,
-                cedula: usuario.cedula,
+                username: usuario.username,
                 roles: [] // TODO: Implementar roles reales desde la base de datos
             },
             process.env.JWT_SECRET,
@@ -63,14 +65,22 @@ const login = async (req, res) => {
         );
 
         // 5. Respuesta de éxito
+        // Estandarizamos la respuesta para que coincida con lo que espera AuthContext
+        // Asegurando que la estructura sea idéntica a lo que `normalizarUsuario` espera
+        const respuestaUsuario = {
+             id: usuario.id,
+             nombres: usuario.nombres,
+             apellidos: usuario.apellidos,
+             username: usuario.username,
+             role: 'usuario' // Placeholder por ahora
+        };
+
         res.status(200).json({
             mensaje: 'Autenticación exitosa. ¡Bienvenido/a!',
             ficha_acceso,
-            usuario: {
-                id: usuario.id,
-                nombres: usuario.nombres,
-                apellidos: usuario.apellidos,
-            }
+            usuario: respuestaUsuario,
+            // Mantenemos propiedad user por compatibilidad si algún otro componente lo usa (legacy support)
+            user: respuestaUsuario
         });
 
     } catch (error) {

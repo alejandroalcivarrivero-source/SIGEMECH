@@ -11,12 +11,12 @@ module.exports = (sequelize) => {
             autoIncrement: true,
             field: 'id'
         },
-        cedula: {
-                    type: DataTypes.STRING(20),
-                    allowNull: false,
-                    unique: true,
-                    field: 'cedula'
-                },
+        username: {
+            type: DataTypes.STRING(50),
+            allowNull: false,
+            unique: true,
+            field: 'cedula'
+        },
         nombres: {
             type: DataTypes.STRING(100),
             allowNull: false,
@@ -45,17 +45,14 @@ module.exports = (sequelize) => {
             type: DataTypes.ENUM('activo', 'inactivo', 'pendiente'),
             defaultValue: 'pendiente',
             field: 'estado'
-        },
-        mfa_secret: {
-            type: DataTypes.STRING(255),
-            allowNull: true,
-            field: 'mfa_secret'
         }
     }, {
         sequelize,
         modelName: 'Usuario',
         tableName: 'usuarios',
         timestamps: true,
+        createdAt: 'fecha_creacion',
+        updatedAt: 'fecha_actualizacion',
         underscored: true,
         freezeTableName: true,
         hooks: {

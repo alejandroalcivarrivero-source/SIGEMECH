@@ -35,42 +35,70 @@ const FormularioAdmisionMaestra = () => {
     const [modalConfig, setModalConfig] = useState({ show: false, type: 'info', title: '', message: '', confirmAction: null });
 
     const [formData, setFormData] = useState({
-        // Pestaña 1: Datos Personales
-        tipoIdentificacion: '', cedula: '', primerApellido: '', segundoApellido: '',
-        primerNombre: '', segundoNombre: '', estadoCivil: '', sexo: '',
-        telefonoFijo: '', telefonoCelular: '', email: '',
-        
-        // Pestaña 2: Nacimiento y Etnia
-        nacionalidad: '', provinciaNacimiento: '', cantonNacimiento: '', parroquiaNacimiento: '',
-        fechaNacimiento: '', autoidentificacionEtnica: '', puebloEtnico: '',
-        
-        // Pestaña 3: Residencia
-        paisResidencia: 'Ecuador', provinciaResidencia: '', cantonResidencia: '',
-        parroquiaResidencia: '', barrio: '', callePrincipal: '', calleSecundaria: '',
-        numeroCasa: '', referenciaResidencia: '',
-        
-        // Pestaña 4: Datos Adicionales
-        nivelEducacion: '', ocupacion: '', seguroSaludPrincipal: '', 
-        tipoBono: '', tieneDiscapacidad: false, tipoDiscapacidad: '',
-        porcentajeDiscapacidad: '', carnetDiscapacidad: '',
-        
-        // Pestaña 5: Datos de Contacto
-        contactoEmergenciaNombre: '', contactoEmergenciaParentesco: '', 
-        contactoEmergenciaTelefono: '', contactoEmergenciaDireccion: '',
-        
-        // Pestaña 6: Forma y Condición de Llegada
-        formaLlegada: '', fuenteInformacion: '', personaEntrega: '', condicionLlegada: '',
-        
-        // Pestaña 7: Motivo de Consulta
-        motivoAtencion: '', motivoAtencionDetalle: '',
-
-        // Otros
+        datosIdentidad: {
+            id_tipo_identificacion: null,
+            numero_documento: '',
+            primer_apellido: '',
+            segundo_apellido: '',
+            primer_nombre: '',
+            segundo_nombre: '',
+            nombre_social: '',
+        },
+        datosNacimiento: {
+            provincia_nacimiento_id: null,
+            canton_nacimiento_id: null,
+            parroquia_nacimiento_id: null,
+            id_nacionalidad: null,
+            fecha_nacimiento: '',
+            hora_parto: '',
+            id_lugar_parto: null,
+            cedula_madre: '',
+        },
+        datosResidencia: {
+            pais_id: 'EC',
+            provincia_id: null,
+            canton_id: null,
+            parroquia_id: null,
+            barrio: '',
+            calle_principal: '',
+            calle_secundaria: '',
+            numero_casa: '',
+            referencia: '',
+        },
+        datosAdicionales: {
+            id_instruccion: null,
+            id_etnia: null,
+            id_pueblo: null,
+            id_seguro_salud: null,
+            ocupacion: '',
+            tipo_bono: '',
+            tiene_discapacidad: false,
+            id_tipo_discapacidad: null,
+            porcentaje_discapacidad: '',
+            carnet_discapacidad: '',
+        },
+        datosContacto: {
+            nombre_completo: '',
+            id_parentesco: null,
+            telefono: '',
+            direccion: '',
+        },
+        datosLlegada: {
+            id_forma_llegada: null,
+            id_fuente_informacion: null,
+            persona_entrega: '',
+            id_condicion_llegada: null,
+        },
+        datosMotivo: {
+            motivo_atencion: '',
+            detalle: '',
+        }
     });
 
     // Cálculo de edad (Años/Meses/Días)
     const edadInfo = useMemo(() => {
-        if (!formData.fechaNacimiento) return { anios: 0, meses: 0, dias: 0 };
-        const birth = new Date(formData.fechaNacimiento + 'T00:00:00');
+        if (!formData.datosNacimiento.fecha_nacimiento) return { anios: 0, meses: 0, dias: 0 };
+        const birth = new Date(formData.datosNacimiento.fecha_nacimiento + 'T00:00:00');
         const now = new Date();
         
         let anios = now.getFullYear() - birth.getFullYear();
@@ -87,7 +115,7 @@ const FormularioAdmisionMaestra = () => {
             meses += 12;
         }
         return { anios, meses, dias };
-    }, [formData.fechaNacimiento]);
+    }, [formData.datosNacimiento.fecha_nacimiento]);
 
     const esMenor = edadInfo.anios < 18;
 
@@ -113,29 +141,29 @@ const FormularioAdmisionMaestra = () => {
 
     useEffect(() => {
         const fetchCantones = async () => {
-            if (formData.provinciaResidencia) {
-                const data = await catalogService.getCantones(formData.provinciaResidencia);
+            if (formData.datosResidencia.provincia_id) {
+                const data = await catalogService.getCantones(formData.datosResidencia.provincia_id);
                 setCantonesFiltrados(data);
             }
         };
         fetchCantones();
-    }, [formData.provinciaResidencia]);
+    }, [formData.datosResidencia.provincia_id]);
 
     useEffect(() => {
         const fetchParroquias = async () => {
-            if (formData.cantonResidencia) {
-                const data = await catalogService.getParroquias(formData.cantonResidencia);
+            if (formData.datosResidencia.canton_id) {
+                const data = await catalogService.getParroquias(formData.datosResidencia.canton_id);
                 setParroquiasFiltradas(data);
             }
         };
         fetchParroquias();
-    }, [formData.cantonResidencia]);
+    }, [formData.datosResidencia.canton_id]);
 
     const handleChange = (e) => {
-        const { name, value, type, checked } = e.target || e;
+        const { name, value, type, checked } = e.target;
+        const [seccion, campo] = name.split('.');
 
-        // Validación onChange: Solo fechas futuras (bloqueo inmediato)
-        if (name === 'fechaNacimiento' || name === 'fecha_hora_parto') {
+        if (seccion === 'datosNacimiento' && campo === 'fecha_nacimiento') {
             if (value && value.length === 10) {
                 const selectedDate = new Date(value);
                 const now = new Date();
@@ -157,34 +185,24 @@ const FormularioAdmisionMaestra = () => {
             }
         }
         
-        if (name === 'tipoIdentificacion') {
-            setFormIteration(prev => prev + 1);
-            localStorage.removeItem('sigemech_form_draft');
-            
-            // Simulación de reset() ya que no usamos react-hook-form actualmente
-            setFormData({
-                tipoIdentificacion: value,
-                cedula: '', primerApellido: '', segundoApellido: '',
-                primerNombre: '', segundoNombre: '', estadoCivil: '', sexo: '',
-                telefonoFijo: '', telefonoCelular: '', email: '',
-                nacionalidad: '', provinciaNacimiento: '', cantonNacimiento: '', parroquiaNacimiento: '',
-                fechaNacimiento: '', autoidentificacionEtnica: '', puebloEtnico: '',
-                paisResidencia: 'Ecuador', provinciaResidencia: '', cantonResidencia: '',
-                parroquiaResidencia: '', barrio: '', callePrincipal: '', calleSecundaria: '',
-                numeroCasa: '', referenciaResidencia: '',
-                nivelEducacion: '', ocupacion: '', seguroSaludPrincipal: '',
-                tipoBono: '', tieneDiscapacidad: false, tipoDiscapacidad: '',
-                porcentajeDiscapacidad: '', carnetDiscapacidad: '',
-                contactoEmergenciaNombre: '', contactoEmergenciaParentesco: '',
-                contactoEmergenciaTelefono: '', contactoEmergenciaDireccion: '',
-                formaLlegada: '', fuenteInformacion: '', personaEntrega: '', condicionLlegada: '',
-                motivoAtencion: '', motivoAtencionDetalle: ''
-            });
-            setFormHabilitado(false);
-            return;
-        }
+        // This logic is incorrect for the new state structure. It will be removed.
+        // if (name === 'datosIdentidad.id_tipo_identificacion') {
+        // ...
+        // }
 
-        setFormData(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
+        setFormData(prev => {
+            const keys = name.split('.');
+            if (keys.length === 2) {
+                return {
+                    ...prev,
+                    [keys[0]]: {
+                        ...prev[keys[0]],
+                        [keys[1]]: type === 'checkbox' ? checked : value
+                    }
+                };
+            }
+            return { ...prev, [name]: type === 'checkbox' ? checked : value };
+        });
     };
 
     const handleBlur = (e) => {
@@ -217,10 +235,10 @@ const FormularioAdmisionMaestra = () => {
     };
 
     const handleBusquedaPaciente = async () => {
-        if (!formData.cedula || formData.cedula.length < 10) return;
+        if (!formData.datosIdentidad.numero_documento || formData.datosIdentidad.numero_documento.length < 10) return;
         setLoading(true);
         try {
-            const response = await pacienteService.findByCedula(formData.cedula);
+            const response = await pacienteService.findByCedula(formData.datosIdentidad.numero_documento);
             if (response.found) {
                 setFormData(prev => ({ ...prev, ...response.paciente }));
                 setFormHabilitado(true);
@@ -234,11 +252,29 @@ const FormularioAdmisionMaestra = () => {
         } catch (error) { console.error('Error al buscar paciente'); } finally { setLoading(false); }
     };
 
+    const codigoNormativo = useMemo(() => {
+        const UCE = "102114"; // Fijo: CS TIPO C CHONE
+        const anio = new Date().getFullYear().toString().slice(-2);
+        const secuencial = Date.now().toString().slice(-7).padStart(7, '0');
+        
+        const codigoProvinciaIdentidad = formData.datosNacimiento.provincia_nacimiento_id
+            ? String(formData.datosNacimiento.provincia_nacimiento_id).padStart(2, '0')
+            : '99';
+
+        return `${UCE}${codigoProvinciaIdentidad}${anio}${secuencial}`;
+    }, [formData.datosNacimiento.provincia_nacimiento_id]);
+
     const handleFinalize = async (e) => {
         e.preventDefault();
         setLoading(true);
+        
+        console.log("Código Normativo Generado:", codigoNormativo);
+
+        // Aquí iría la lógica para guardar la admisión junto con el código
+        // await pacienteService.guardarAdmision({ ...formData, codigoNormativo });
+
         try {
-            if (formData.motivoAtencion === 'EMERGENCIA' || formData.motivoAtencion === 'TRIAGE') {
+            if (formData.datosMotivo.motivo_atencion === 'EMERGENCIA' || formData.datosMotivo.motivo_atencion === 'TRIAGE') {
                 navigate('/dashboard/triaje-signos');
             } else {
                 navigate('/dashboard/consultas');
@@ -277,9 +313,11 @@ const FormularioAdmisionMaestra = () => {
                             <h1 className="text-xl font-black tracking-tight leading-none uppercase">Admisión Maestra de Pacientes</h1>
                         </div>
                     </div>
-                    <div className="text-right hidden md:block">
-                        <p className="text-[10px] font-bold opacity-80 uppercase">Establecimiento:</p>
-                        <p className="text-sm font-black">CENTRO DE SALUD TIPO C - CHONE</p>
+                    <div className="flex flex-col items-end">
+                        <span className="text-[9px] font-bold opacity-70">CÓDIGO NORMATIVO DE IDENTIFICACIÓN</span>
+                        <div className="bg-black bg-opacity-20 px-3 py-1 rounded">
+                            <p className="text-lg font-mono font-black tracking-widest text-yellow-300">{codigoNormativo}</p>
+                        </div>
                     </div>
                 </div>
 
@@ -292,7 +330,7 @@ const FormularioAdmisionMaestra = () => {
                     <div key={formIteration} className="animate-in fade-in slide-in-from-left-4 duration-500">
                         {activeTab === 'personales' && (
                             <SeccionIdentidad
-                                formData={formData}
+                                formData={formData.datosIdentidad}
                                 handleChange={handleChange}
                                 handleBusquedaPaciente={handleBusquedaPaciente}
                                 catalogos={catalogos}
@@ -302,7 +340,7 @@ const FormularioAdmisionMaestra = () => {
 
                         {activeTab === 'nacimiento' && (
                             <SeccionNacimiento
-                                formData={formData}
+                                formData={formData.datosNacimiento}
                                 handleChange={handleChange}
                                 handleBlur={handleBlur}
                                 catalogos={catalogos}
@@ -314,7 +352,7 @@ const FormularioAdmisionMaestra = () => {
 
                         {activeTab === 'residencia' && (
                             <SeccionResidencia
-                                formData={formData}
+                                formData={formData.datosResidencia}
                                 handleChange={handleChange}
                                 catalogos={catalogos}
                                 cantonesFiltrados={cantonesFiltrados}
@@ -325,7 +363,7 @@ const FormularioAdmisionMaestra = () => {
 
                         {activeTab === 'adicionales' && (
                             <SeccionBioSocial
-                                formData={formData}
+                                formData={formData.datosAdicionales}
                                 handleChange={handleChange}
                                 catalogos={catalogos}
                                 formHabilitado={formHabilitado}
@@ -334,7 +372,7 @@ const FormularioAdmisionMaestra = () => {
 
                         {activeTab === 'contacto' && (
                             <SeccionContactoEmergencia
-                                formData={formData}
+                                formData={formData.datosContacto}
                                 handleChange={handleChange}
                                 catalogos={catalogos}
                                 formHabilitado={formHabilitado}
@@ -343,7 +381,7 @@ const FormularioAdmisionMaestra = () => {
 
                         {activeTab === 'llegada' && (
                             <SeccionLlegadaMotivo
-                                formData={formData}
+                                formData={formData.datosLlegada}
                                 handleChange={handleChange}
                                 catalogos={catalogos}
                                 formHabilitado={formHabilitado}
@@ -353,7 +391,7 @@ const FormularioAdmisionMaestra = () => {
 
                         {activeTab === 'motivo' && (
                             <SeccionLlegadaMotivo
-                                formData={formData}
+                                formData={formData.datosMotivo}
                                 handleChange={handleChange}
                                 catalogos={catalogos}
                                 formHabilitado={formHabilitado}
@@ -413,9 +451,9 @@ const FormularioAdmisionMaestra = () => {
                             
                             <button
                                 type="submit" 
-                                disabled={loading || !formHabilitado || !formData.motivoAtencion} 
+                                disabled={loading || !formHabilitado || !formData.datosMotivo.motivo_atencion}
                                 className={`group flex items-center px-12 py-4 font-black rounded-lg shadow-2xl transition-all transform ${
-                                    loading || !formHabilitado || !formData.motivoAtencion
+                                    loading || !formHabilitado || !formData.datosMotivo.motivo_atencion
                                     ? 'bg-gray-200 text-gray-400 cursor-not-allowed border border-gray-300' 
                                     : 'bg-blue-600 text-white hover:bg-blue-700 hover:-translate-y-1 active:scale-95 border-b-4 border-blue-800'
                                 }`}

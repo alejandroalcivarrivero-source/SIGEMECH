@@ -1,4 +1,4 @@
-const sequelize = require('../config/db');
+const { sequelize } = require('../config/db');
 
 /**
  * Script de limpieza para eliminar tablas en inglés creadas por error
@@ -11,12 +11,10 @@ const cleanDatabase = async () => {
         await sequelize.query('SET FOREIGN_KEY_CHECKS = 0');
         
         const tablesToDelete = [
-            'emergency_admissions',
-            'patients',
-            'users',
-            'parishes',
-            'cantons',
-            'provinces'
+            'Users',
+            'Admissions',
+            'Patients',
+            'Nationalities'
         ];
 
         for (const table of tablesToDelete) {

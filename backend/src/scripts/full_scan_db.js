@@ -1,9 +1,9 @@
-const sequelize = require('../config/db');
+const { sequelize } = require('../config/db');
 
 async function fullScan() {
     try {
         console.log('--- ESCANEO INTEGRAL DE BASE DE DATOS ---');
-        await sequelize.authenticate();
+        await sequelize.query('SELECT 1');
         
         const tablas = await sequelize.query('SHOW TABLES', { type: sequelize.QueryTypes.SELECT });
         const nombresTablas = tablas.map(t => Object.values(t)[0]);

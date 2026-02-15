@@ -47,8 +47,10 @@ const Header = ({ logoPath, onLogout, user, toggleSidebar, isSidebarOpen, active
             </div>
             <div className="flex items-center gap-4 text-sm">
                 <div className="text-right hidden md:block">
-                    <p className="font-semibold">{user.name}</p>
-                    <p className="text-blue-200 text-xs uppercase">{user.roles.join(', ') || user.role}</p>
+                    <p className="font-semibold">{user?.nombreUsuario ? `${user.nombreUsuario} ${user.apellidoUsuario || ''}` : (user?.name || 'Usuario')}</p>
+                    <p className="text-blue-200 text-xs uppercase">
+                        {Array.isArray(user?.roles) ? user.roles.join(', ') : (user?.role || 'Invitado')}
+                    </p>
                 </div>
                 <button 
                     onClick={onLogout}

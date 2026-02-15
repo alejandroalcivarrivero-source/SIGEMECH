@@ -25,7 +25,6 @@ router.get('/condiciones-llegada', catalogsController.getCondicionesLlegada);
 router.get('/tipos-identificacion', catalogsController.getTiposIdentificacion);
 
 // Cascada de Autoidentificación Étnica (Soporta query params y URL params)
-router.get('/etnias', catalogsController.getEtnias);
 router.get('/autoidentificaciones-etnicas', catalogsController.getEthnicNationalities);
 router.get('/pueblos', catalogsController.getEthnicGroups);
 
@@ -37,5 +36,6 @@ router.get('/establecimientos-salud', catalogsController.getEstablecimientosSalu
 
 // Ruta para obtener países
 router.get('/paises', catalogsController.getPaises);
+router.get('/seguros-salud', catalogsController.getSegurosSalud);
 
 module.exports = router;
