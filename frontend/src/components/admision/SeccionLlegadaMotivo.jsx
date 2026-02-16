@@ -1,143 +1,284 @@
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
 
-const SeccionLlegadaMotivo = ({ formData, handleChange, catalogos, formHabilitado, soloLlegada = false, soloMotivo = false }) => {
+const SeccionLlegadaMotivo = ({ formData, handleChange, catalogos, formHabilitado, soloLlegada = false, soloMotivo = false, setFormData }) => {
+    const tipoSeleccionado = catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion);
+    const esNoIdentificado = tipoSeleccionado?.nombre?.toUpperCase()?.includes('NO IDENTIFICADO');
+    const habilitadoParaNN = formHabilitado || esNoIdentificado;
+
     const inputClasses = "w-full rounded border-gray-400 bg-white text-[11px] py-1 px-1.5 focus:border-blue-600 focus:outline-none font-medium h-7 border-2 shadow-sm transition-colors";
     const labelClasses = "block text-[10px] font-bold text-gray-700 mb-0.5 uppercase truncate";
+    const selectClasses = "w-full rounded border-blue-800 bg-white text-[11px] py-1 px-1.5 focus:ring-2 focus:ring-yellow-400 focus:outline-none font-bold h-7 border-2 shadow-sm transition-colors text-blue-900";
+
+    // Lógica de herencia y protocolo
+    useEffect(() => {
+        if (!formData.id_forma_llegada) return;
+
+        const formaLlegada = catalogos.formasLlegada?.find(f => f.id == formData.id_forma_llegada);
+        if (!formaLlegada) return;
+
+        const nombreForma = formaLlegada.nombre.toUpperCase();
+
+        if (nombreForma === 'AMBULATORIO') {
+            // fuente_informacion = "DIRECTA"
+            const fuenteDirecta = catalogos.fuentesInformacion?.find(f => f.nombre.toUpperCase() === 'DIRECTA');
+            
+            const personaCalculada = `${formData.primer_apellido || ''} ${formData.primer_nombre || ''}`.trim().toUpperCase();
+            const telefonoCalculado = formData.celular || formData.telefono || '';
+            const idFuente = fuenteDirecta ? fuenteDirecta.id : formData.id_fuente_informacion;
+
+            if (formData.id_fuente_informacion !== idFuente ||
+                formData.persona_entrega !== personaCalculada ||
+                formData.telefono_entrega !== telefonoCalculado) {
+                
+                setFormData(prev => ({
+                    ...prev,
+                    id_fuente_informacion: idFuente,
+                    persona_entrega: personaCalculada,
+                    telefono_entrega: telefonoCalculado
+                }));
+            }
+        } else if (nombreForma.includes('AMBULANCIA') || nombreForma === 'OTRO') {
+            const fuenteIndirecta = catalogos.fuentesInformacion?.find(f => f.nombre.toUpperCase() === 'INDIRECTA');
+            
+            // Solo limpiar si no es AMBULATORIO (para evitar bucles o sobreescritura incorrecta)
+            setFormData(prev => {
+                if (prev.id_fuente_informacion === (fuenteIndirecta?.id || prev.id_fuente_informacion) &&
+                    prev.persona_entrega === '' && prev.telefono_entrega === '') return prev;
+
+                return {
+                    ...prev,
+                    id_fuente_informacion: fuenteIndirecta ? fuenteIndirecta.id : prev.id_fuente_informacion,
+                    persona_entrega: '',
+                    telefono_entrega: ''
+                };
+            });
+        }
+    }, [formData.id_forma_llegada, catalogos.fuentesInformacion, catalogos.formasLlegada, setFormData, formData.primer_apellido, formData.primer_nombre, formData.celular, formData.telefono]);
+
+    const nombreFormaActual = catalogos.formasLlegada?.find(f => f.id == formData.id_forma_llegada)?.nombre?.toUpperCase() || '';
+    const esAmbulatorio = nombreFormaActual === 'AMBULATORIO';
+    const esAmbulancia = nombreFormaActual.includes('AMBULANCIA');
+    const esReferido = nombreFormaActual === 'REFERIDO' || nombreFormaActual.includes('REFERENCIA');
+
+    // Filtrado dinámico de establecimientos por capacidad técnica
+    const establecimientosFiltrados = useMemo(() => {
+        let lista = catalogos.establecimientos || [];
+        if (esAmbulancia) {
+            // Filtrar solo los que tienen ambulancia (tiene_ambulancia === 1)
+            return lista.filter(e => e.tiene_ambulancia === 1);
+        }
+        return lista;
+    }, [catalogos.establecimientos, esAmbulancia]);
+
+    const handleInputChangeUpperCase = (e) => {
+        const { name, value } = e.target;
+        handleChange({
+            target: {
+                name,
+                value: value.toUpperCase()
+            }
+        });
+    };
 
     return (
+        <>
         <div className="space-y-3">
             <h3 className="text-xs font-extrabold text-blue-900 border-b border-blue-200 pb-0.5 mb-2 uppercase tracking-tight">
-                {soloLlegada ? '6. Forma y Condición de Llegada' : soloMotivo ? '7. Motivo de Consulta y Destino' : '6/7. Logística y Motivo'}
+                {soloLlegada ? '6. FORMA Y CONDICIÓN DE LLEGADA' : soloMotivo ? '7. MOTIVO DE CONSULTA Y DESTINO' : '6/7. LOGÍSTICA Y MOTIVO'}
             </h3>
             
-            <div className="grid grid-cols-4 gap-x-2 gap-y-2">
+            <div className="space-y-4">
                 {soloLlegada && (
-                    <>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        {/* RENGLÓN 1: [FORMA DE LLEGADA] [FUENTE DE INFORMACIÓN] [ESTABLECIMIENTO DE ORIGEN] */}
                         <div className="col-span-1">
-                            <label className={labelClasses}>Fecha Ingreso <span className="text-red-500">*</span></label>
-                            <input
-                                type="date"
-                                name="fecha_ingreso"
-                                value={formData.fecha_ingreso || ''}
-                                onChange={handleChange}
-                                disabled={!formHabilitado}
-                                className={inputClasses}
-                                required
-                            />
-                        </div>
-
-                        <div className="col-span-2">
-                            <label className={labelClasses}>Establ. Origen {formData.id_forma_llegada && catalogos.formasLlegada.find(f => f.id === formData.id_forma_llegada)?.nombre === 'Referido' && <span className="text-red-500">*</span>}</label>
-                            <input
-                                type="text"
-                                name="establecimiento_origen"
-                                value={formData.establecimiento_origen || ''}
-                                onChange={handleChange}
-                                disabled={!formHabilitado}
-                                placeholder="Especifique si es referido"
-                                className={`${inputClasses} uppercase`}
-                            />
-                        </div>
-
-                        <div className="col-span-1">
-                            <label className={labelClasses}>Acompañante</label>
-                            <input
-                                type="text"
-                                name="persona_entrega"
-                                value={formData.persona_entrega || ''}
-                                onChange={handleChange}
-                                disabled={!formHabilitado}
-                                placeholder="Nombre"
-                                className={`${inputClasses} uppercase`}
-                            />
-                        </div>
-
-                        <div className="col-span-2">
-                            <label className={labelClasses}>
-                                Fuente Info. <span className="text-red-500">*</span>
-                            </label>
+                            <label className={labelClasses}>FORMA DE LLEGADA <span className="text-red-500">*</span></label>
                             <select
-                                name="id_fuente_informacion"
-                                value={formData.id_fuente_informacion}
+                                tabIndex="601"
+                                name="id_forma_llegada"
+                                value={formData.id_forma_llegada}
                                 onChange={handleChange}
-                                disabled={!formHabilitado}
-                                className={inputClasses}
+                                disabled={!habilitadoParaNN}
+                                className={selectClasses}
                                 required
                             >
-                                <option value="">Seleccione</option>
-                                {catalogos.fuentesInformacion.map(f => <option key={f.id} value={f.id}>{f.nombre}</option>)}
+                                <option value="">SELECCIONE</option>
+                                {catalogos.formasLlegada.map(f => <option key={f.id} value={f.id}>{f.nombre.toUpperCase()}</option>)}
                             </select>
                         </div>
 
-                        <div className="col-span-4 mt-1 p-2 bg-amber-50 rounded border border-amber-200 grid grid-cols-2 gap-4">
-                            <div>
-                                <label className="block text-[9px] font-black text-amber-900 mb-1 uppercase">
-                                    Forma Llegada <span className="text-red-500">*</span>
-                                </label>
-                                <div className="grid grid-cols-2 gap-1">
-                                    {catalogos.formasLlegada.map(f => (
-                                        <button
-                                            key={f.id}
-                                            type="button"
-                                            onClick={() => handleChange({ target: { name: 'id_forma_llegada', value: f.id } })}
-                                            className={`px-1 py-1 text-[9px] font-bold rounded border transition-all ${
-                                                formData.id_forma_llegada === f.id
-                                                ? 'bg-amber-600 border-amber-700 text-white'
-                                                : 'bg-white border-amber-200 text-amber-800 hover:bg-amber-100'
-                                            }`}
-                                        >
-                                            {f.nombre}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-
-                            <div>
-                                <label className="block text-[9px] font-black text-amber-900 mb-1 uppercase">
-                                    Condición <span className="text-red-500">*</span>
-                                </label>
-                                <div className="grid grid-cols-2 gap-1">
-                                    {catalogos.condicionesLlegada.map(c => (
-                                        <button
-                                            key={c.id}
-                                            type="button"
-                                            onClick={() => handleChange({ target: { name: 'id_condicion_llegada', value: c.id } })}
-                                            className={`px-1 py-1 text-[9px] font-bold rounded border transition-all ${
-                                                formData.id_condicion_llegada === c.id
-                                                ? 'bg-red-600 border-red-700 text-white'
-                                                : 'bg-white border-red-100 text-red-800 hover:bg-red-50'
-                                            }`}
-                                        >
-                                            {c.nombre}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
+                        <div className="col-span-1">
+                            <label className={labelClasses}>FUENTE DE INFORMACIÓN <span className="text-red-500">*</span></label>
+                            <select
+                                tabIndex="602"
+                                name="id_fuente_informacion"
+                                value={formData.id_fuente_informacion}
+                                onChange={handleChange}
+                                disabled={!habilitadoParaNN || esAmbulatorio}
+                                className={`${selectClasses} ${esAmbulatorio ? 'bg-gray-200 cursor-not-allowed opacity-80' : ''}`}
+                                required
+                            >
+                                <option value="">SELECCIONE</option>
+                                {catalogos.fuentesInformacion.map(f => <option key={f.id} value={f.id}>{f.nombre.toUpperCase()}</option>)}
+                            </select>
                         </div>
-                    </>
+
+                        <div className="col-span-1">
+                            <div className="flex justify-between items-center mb-0.5">
+                                <label className={labelClasses}>ESTABLECIMIENTO DE ORIGEN {esReferido && <span className="text-red-500">*</span>}</label>
+                                {esReferido && formData.id_establecimiento_origen && (
+                                    (() => {
+                                        const est = catalogos.establecimientos?.find(e => e.id == formData.id_establecimiento_origen);
+                                        const nivel = est?.nivel_complejidad || est?.nivel;
+                                        if (!nivel) return null;
+                                        return (
+                                            <span className="px-1.5 py-0.5 rounded-full text-[8px] font-bold bg-blue-100 text-blue-800 border border-blue-200 uppercase">
+                                                Nivel {nivel}
+                                            </span>
+                                        );
+                                    })()
+                                )}
+                            </div>
+                            <select
+                                tabIndex="603"
+                                name="id_establecimiento_origen"
+                                value={formData.id_establecimiento_origen || ''}
+                                onChange={handleChange}
+                                disabled={!habilitadoParaNN}
+                                className={selectClasses}
+                                required={esReferido}
+                            >
+                                <option value="">SELECCIONE ESTABLECIMIENTO</option>
+                                {establecimientosFiltrados.map(e => (
+                                    <option key={e.id} value={e.id}>
+                                        {e.nombre.toUpperCase()} {e.tiene_ambulancia === 1 ? '🚑' : ''}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+
+                        {/* RENGLÓN 2: [INSTITUCIÓN O PERSONA QUE ENTREGA] [N° TELÉFONO DEL ENTREGADOR] [CONDICIÓN DE LLEGADA] */}
+                        <div className="col-span-1">
+                            <label className={labelClasses}>INSTITUCIÓN O PERSONA QUE ENTREGA <span className="text-red-500">*</span></label>
+                            <input
+                                tabIndex="604"
+                                type="text"
+                                name="persona_entrega"
+                                value={formData.persona_entrega || ''}
+                                onChange={handleInputChangeUpperCase}
+                                disabled={!habilitadoParaNN || esAmbulatorio}
+                                placeholder="NOMBRE COMPLETO"
+                                className={`${inputClasses} uppercase ${esAmbulatorio ? 'bg-gray-200 cursor-not-allowed opacity-80' : ''}`}
+                                required
+                            />
+                        </div>
+
+                        <div className="col-span-1">
+                            <label className={labelClasses}>N° TELÉFONO DEL ENTREGADOR <span className="text-red-500">*</span></label>
+                            <input
+                                tabIndex="605"
+                                type="text"
+                                name="telefono_entrega"
+                                value={formData.telefono_entrega || ''}
+                                onChange={(e) => {
+                                    const value = e.target.value.replace(/\D/g, '');
+                                    handleChange({ target: { name: 'telefono_entrega', value } });
+                                }}
+                                disabled={!habilitadoParaNN || esAmbulatorio}
+                                placeholder="SOLO NÚMEROS"
+                                maxLength="10"
+                                className={`${inputClasses} ${esAmbulatorio ? 'bg-gray-200 cursor-not-allowed opacity-80' : ''}`}
+                                required
+                            />
+                        </div>
+
+                        <div className="col-span-1">
+                            <label className={labelClasses}>CONDICIÓN DE LLEGADA <span className="text-red-500">*</span></label>
+                            <select
+                                tabIndex="606"
+                                name="id_condicion_llegada"
+                                value={formData.id_condicion_llegada}
+                                onChange={handleChange}
+                                disabled={!habilitadoParaNN}
+                                className={selectClasses}
+                                required
+                            >
+                                <option value="">SELECCIONE</option>
+                                {catalogos.condicionesLlegada.map(c => <option key={c.id} value={c.id}>{c.nombre.toUpperCase()}</option>)}
+                            </select>
+                        </div>
+
+                        {/* RENGLÓN 3: [ACOMPAÑANTE] [PARENTESCO] [TELÉFONO ACOMPAÑANTE] */}
+                        <div className="col-span-1">
+                            <label className={labelClasses}>Acompañante</label>
+                            <input
+                                tabIndex="607"
+                                type="text"
+                                name="acompanante_nombre"
+                                value={formData.acompanante_nombre || ''}
+                                onChange={handleInputChangeUpperCase}
+                                disabled={!habilitadoParaNN}
+                                placeholder="NOMBRE DEL ACOMPAÑANTE"
+                                className={`${inputClasses} uppercase`}
+                            />
+                        </div>
+
+                        <div className="col-span-1">
+                            <label className={labelClasses}>Parentesco</label>
+                            <input
+                                tabIndex="608"
+                                type="text"
+                                name="acompanante_parentesco"
+                                value={formData.acompanante_parentesco || ''}
+                                onChange={handleInputChangeUpperCase}
+                                disabled={!habilitadoParaNN}
+                                placeholder="PARENTESCO"
+                                className={`${inputClasses} uppercase`}
+                            />
+                        </div>
+
+                        <div className="col-span-1">
+                            <label className={labelClasses}>Teléfono Acompañante</label>
+                            <input
+                                tabIndex="609"
+                                type="text"
+                                name="acompanante_telefono"
+                                value={formData.acompanante_telefono || ''}
+                                onChange={(e) => {
+                                    const value = e.target.value.replace(/\D/g, '');
+                                    handleChange({ target: { name: 'acompanante_telefono', value } });
+                                }}
+                                disabled={!habilitadoParaNN}
+                                placeholder="SOLO NÚMEROS"
+                                maxLength="10"
+                                className={inputClasses}
+                            />
+                        </div>
+                    </div>
                 )}
 
                 {soloMotivo && (
-                    <>
-                        <div className="col-span-4">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="col-span-1 md:col-span-3">
                             <label className={labelClasses}>
-                                Motivo Principal <span className="text-red-500">*</span>
+                                MOTIVO PRINCIPAL <span className="text-red-500">*</span>
                             </label>
                             <textarea
+                                tabIndex="701"
                                 name="motivo_detalle"
                                 value={formData.motivo_detalle || ''}
-                                onChange={handleChange}
-                                disabled={!formHabilitado}
+                                onChange={handleInputChangeUpperCase}
+                                disabled={!habilitadoParaNN}
                                 rows="3"
-                                placeholder="Describa el síntoma principal..."
-                                className="w-full rounded border-gray-400 bg-white text-[11px] py-1 px-1.5 focus:border-blue-600 focus:outline-none font-medium border-2 shadow-sm transition-colors"
+                                placeholder="DESCRIBA EL SÍNTOMA PRINCIPAL..."
+                                className="w-full rounded border-gray-400 bg-white text-[11px] py-1 px-1.5 focus:border-blue-600 focus:outline-none font-medium border-2 shadow-sm transition-colors uppercase"
                                 required
                             ></textarea>
                         </div>
 
-                        <div className="col-span-4 mt-2 p-2 bg-blue-50 rounded border border-blue-200">
+                        <div className="col-span-1 md:col-span-3 mt-2 p-2 bg-blue-50 rounded border border-blue-200">
                             <label className="block text-[10px] font-black text-blue-900 mb-2 uppercase text-center">
-                                Destino Inicial <span className="text-red-500">*</span>
+                                DESTINO INICIAL <span className="text-red-500">*</span>
                             </label>
                             <div className="grid grid-cols-3 gap-2">
                                 {[
@@ -154,6 +295,7 @@ const SeccionLlegadaMotivo = ({ formData, handleChange, catalogos, formHabilitad
                                         }`}
                                     >
                                         <input
+                                            tabIndex="702"
                                             type="radio"
                                             name="motivo_consulta"
                                             value={destino.id}
@@ -166,10 +308,11 @@ const SeccionLlegadaMotivo = ({ formData, handleChange, catalogos, formHabilitad
                                 ))}
                             </div>
                         </div>
-                    </>
+                    </div>
                 )}
             </div>
         </div>
+        </>
     );
 };
 

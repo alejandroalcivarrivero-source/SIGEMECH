@@ -6,7 +6,7 @@ function inicializarModelos(sequelize) {
     const Admision = require('./modules/admissions/admission_model')(sequelize);
     // Asumo que los modelos de catalogo y localizacion ahora se exportan como funciones que reciben sequelize
     const { Pais, Provincia, Canton, Parroquia } = require('./modules/catalogs/location_models')(sequelize);
-    const { TipoIdentificacion, Ocupacion, EstadoCivil, Parentesco, FormaLlegada, CondicionLlegada, EstablecimientoSalud } = require('./modules/catalogs/catalog_models')(sequelize);
+    const { TipoIdentificacion, Ocupacion, EstadoCivil, Parentesco, FormaLlegada, CondicionLlegada, EstablecimientoSalud, Pueblo, NacionalidadEtnica } = require('./modules/catalogs/catalog_models')(sequelize);
     const { Nacionalidad, Instruccion, Etnia, Sexo, Genero, FuenteInformacion } = require('./modules/catalogs/catalog_models')(sequelize);
 
     // Asociaciones
@@ -56,7 +56,9 @@ function inicializarModelos(sequelize) {
         Parentesco,
         FormaLlegada,
         CondicionLlegada,
-        EstablecimientoSalud
+        EstablecimientoSalud,
+        Pueblo,
+        NacionalidadEtnica
     };
 }
 

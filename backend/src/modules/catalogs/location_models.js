@@ -48,7 +48,8 @@ module.exports = (sequelize) => {
     }, { timestamps: false });
 
     const Provincia = defineModel(sequelize, 'Provincia', 'cat_provincias', {
-        nombre: { type: DataTypes.STRING(100), allowNull: false, field: 'nombre' }
+        nombre: { type: DataTypes.STRING(100), allowNull: false, field: 'nombre' },
+        codigo_inec: { type: DataTypes.STRING(2), allowNull: false, field: 'codigo_inec' }
     }, { timestamps: true });
 
     const Canton = defineModel(sequelize, 'Canton', 'cat_cantones', {

@@ -25,14 +25,14 @@ const admissionController = {
             // --- REGLAS DE NEGOCIO (Soberanía de Datos - QA Senior) ---
             
             // 1. Validación de Fecha de Ingreso (No Futura)
-            const fechaIngreso = admissionData.fecha_ingreso ? new Date(admissionData.fecha_ingreso) : new Date();
-            if (fechaIngreso > new Date()) {
-                throw new Error('Validación Técnica: La fecha de ingreso no puede ser posterior a la fecha actual.');
-            }
+            // 1. Captura automática de Fecha de Ingreso (Timestamp Backend)
+            // Se ignora cualquier fecha enviada por el frontend para cumplir con el estándar de auditoría.
+            const fechaIngreso = new Date();
 
             // 2. Validación de Referencia (Obligatoriedad de Establecimiento de Origen)
-            if (admissionData.id_forma_llegada) {
-                const formaLlegada = await sequelize.models.FormaLlegada.findByPk(admissionData.id_forma_llegada);
+            const id_forma_llegada = admissionData.id_forma_llegada;
+            if (id_forma_llegada) {
+                const formaLlegada = await sequelize.models.FormaLlegada.findByPk(id_forma_llegada);
                 if (formaLlegada && formaLlegada.nombre === 'Referido') {
                     if (!admissionData.establecimiento_origen || admissionData.establecimiento_origen.trim() === '') {
                         throw new Error('Validación de Proceso: Para pacientes referidos, el campo "Establecimiento de Origen" es mandatorio.');
@@ -41,26 +41,10 @@ const admissionController = {
             }
 
             // --- BLINDAJE DE INTEGRIDAD REFERENCIAL (CATÁLOGOS UBICACIÓN) ---
-            const { parishId } = pacienteData;
-            const { canton_id, parroquia_id } = admissionData; // En caso de que vengan en admissionData también
+            // Los campos ya vienen en minúsculas en el payload según el mapeo del frontend.
 
-            // Validación de IDs de ubicación (deben ser Strings no vacíos)
-            const validateStringId = (id, fieldName) => {
-                if (id !== undefined && id !== null) {
-                    if (typeof id !== 'string' || id.trim() === '') {
-                        throw new Error(`Integridad Referencial: El campo ${fieldName} debe ser un String válido.`);
-                    }
-                }
-            };
-
-            validateStringId(parishId, 'parishId (Residencia)');
-            validateStringId(canton_id, 'canton_id');
-            validateStringId(parroquia_id, 'parroquia_id');
-            // ----------------------------------------------------------------
-
-            // Mapeo de motivoAtencion -> reasonForConsultation (o motivo_consulta si se usa en el modelo)
-            // Según admission_model.js es reasonForConsultation mapeado a reason_for_consultation
-            const motivoConsulta = admissionData.motivoAtencion || admissionData.motivo_consulta || admissionData.reasonForConsultation;
+            // Mapeo de motivoAtencion -> motivo_consulta
+            const motivoConsulta = admissionData.motivo_consulta || admissionData.motivoAtencion || admissionData.reasonForConsultation;
             
             if (!motivoConsulta) {
                 throw new Error('Falta motivo de consulta (motivoAtencion)');
@@ -73,39 +57,46 @@ const admissionController = {
                 paciente = await Paciente.findByPk(pacienteData.id, { transaction: t });
                 if (paciente) {
                     console.log(`[ADMISION] Actualizando paciente existente ID: ${paciente.id}`);
-                    await paciente.update(pacienteData, { transaction: t });
+                    // Misión: Persistencia de carné (Herencia de Cédula si es discapacidad)
+                    const finalUpdateData = { ...pacienteData };
+                    await paciente.update(finalUpdateData, { transaction: t });
                 }
             }
             
             if (!paciente) {
                 // Si viene documento, buscar por documento para evitar duplicados
-                if (pacienteData.documentNumber) {
+                if (pacienteData.numero_documento) {
                     paciente = await Paciente.findOne({
-                        where: { documentNumber: pacienteData.documentNumber },
+                        where: { numero_documento: pacienteData.numero_documento },
                         transaction: t
                     });
                 }
 
                 if (paciente) {
-                    console.log(`[ADMISION] Paciente encontrado por documento: ${pacienteData.documentNumber}, actualizando...`);
-                    await paciente.update(pacienteData, { transaction: t });
+                    console.log(`[ADMISION] Paciente encontrado por documento: ${pacienteData.numero_documento}, actualizando...`);
+                    // Misión: Persistencia de carné (Herencia de Cédula si es discapacidad)
+                    const finalUpdateData = { ...pacienteData };
+                    await paciente.update(finalUpdateData, { transaction: t });
                 } else {
                     console.log('[ADMISION] Creando nuevo paciente...');
+                    // Misión: Persistencia de carné (Herencia de Cédula si es discapacidad)
+                    const finalPacienteData = { ...pacienteData };
+                    
                     paciente = await Paciente.create({
-                        ...pacienteData,
-                        createdBy: userId
+                        ...finalPacienteData,
+                        creado_por: userId
                     }, { transaction: t });
                 }
             }
 
             // 2. Gestión del Representante (si aplica)
-            if (representanteData && representanteData.identificacion) {
+            if (representanteData && representanteData.documento_representante) {
                 console.log(`[ADMISION] Procesando representante para paciente ID: ${paciente.id}...`);
                 const [representante, created] = await Representante.findOrCreate({
-                    where: { pacienteId: paciente.id },
+                    where: { id_paciente: paciente.id },
                     defaults: {
                         ...representanteData,
-                        pacienteId: paciente.id
+                        id_paciente: paciente.id
                     },
                     transaction: t
                 });
@@ -120,10 +111,11 @@ const admissionController = {
             console.log(`[ADMISION] Registrando admisión para paciente ID: ${paciente.id}...`);
             const admission = await Admision.create({
                 ...admissionData,
-                reasonForConsultation: motivoConsulta,
-                pacienteId: paciente.id,
-                admittedBy: userId,
-                status: 'EN_ESPERA'
+                fecha_ingreso: fechaIngreso, // Forzar timestamp del servidor
+                motivo_consulta: motivoConsulta,
+                id_paciente: paciente.id,
+                id_usuario_admision: userId,
+                estado: 'EN_ESPERA'
             }, { transaction: t });
 
             // 4. Registro de Datos de Parto (Paso 2 de la tarea: Solo para neonatos si existe el objeto)
@@ -184,15 +176,15 @@ const admissionController = {
 
             // Buscar al paciente por cédula
             const paciente = await Paciente.findOne({
-                where: { documentNumber: cedula }
+                where: { numero_documento: cedula }
             });
 
             if (!paciente) {
                 return res.status(404).json({ message: 'Paciente no encontrada con esa cédula.' });
             }
 
-            // Validar sexo (sexo_id: 2 asumiendo que 2 es Femenino/Mujer)
-            if (paciente.sexId !== 2) {
+            // Validar sexo (id_sexo: 2 asumiendo que 2 es Femenino/Mujer)
+            if (paciente.id_sexo !== 2) {
                 return res.status(400).json({ message: 'La cédula ingresada no corresponde a una paciente de sexo femenino.' });
             }
 
@@ -201,7 +193,7 @@ const admissionController = {
 
             const admisionReciente = await Admision.findOne({
                 where: {
-                    pacienteId: paciente.id,
+                    id_paciente: paciente.id,
                     createdAt: {
                         [Op.gte]: hace48Horas
                     }
@@ -219,7 +211,7 @@ const admissionController = {
                 paciente: {
                     id: paciente.id,
                     nombre: `${paciente.firstName1} ${paciente.lastName1}`,
-                    cedula: paciente.documentNumber
+                    cedula: paciente.numero_documento
                 },
                 admision: {
                     id: admisionReciente.id,

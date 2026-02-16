@@ -75,7 +75,6 @@ const FormularioAdmisionMaestra = () => {
             tiene_discapacidad: false,
             id_tipo_discapacidad: null,
             porcentaje_discapacidad: '',
-            carnet_discapacidad: '',
         },
         datosContacto: {
             nombre_completo: '',
@@ -161,6 +160,14 @@ const FormularioAdmisionMaestra = () => {
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
+        
+        // Transformar texto a MAYÚSCULAS si no es un tipo especial (como fecha o email si hubiera)
+        // y si el valor es un string
+        let valorFinal = value;
+        if (type === 'text' || type === 'textarea') {
+            valorFinal = value ? value.toUpperCase() : value;
+        }
+
         const [seccion, campo] = name.split('.');
 
         if (seccion === 'datosNacimiento' && campo === 'fecha_nacimiento') {
@@ -197,11 +204,11 @@ const FormularioAdmisionMaestra = () => {
                     ...prev,
                     [keys[0]]: {
                         ...prev[keys[0]],
-                        [keys[1]]: type === 'checkbox' ? checked : value
+                        [keys[1]]: type === 'checkbox' ? checked : valorFinal
                     }
                 };
             }
-            return { ...prev, [name]: type === 'checkbox' ? checked : value };
+            return { ...prev, [name]: type === 'checkbox' ? checked : valorFinal };
         });
     };
 

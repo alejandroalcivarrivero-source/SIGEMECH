@@ -1,234 +1,310 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { Search, Briefcase, HeartPulse, Building2, Accessibility } from 'lucide-react';
 import catalogService from '../../api/catalogService';
 
-const SeccionBioSocial = ({ formData, handleChange, catalogos, formHabilitado }) => {
+const SeccionBioSocial = ({ formData, handleChange, catalogos, formHabilitado, setFormData, setModalConfig }) => {
     const [nacionalidadesEtnicas, setNacionalidadesEtnicas] = useState([]);
     const [pueblosEtnicos, setPueblosEtnicos] = useState([]);
+    
 
-    const idIndigena = catalogos.etnias?.find(e => e.nombre?.trim().toUpperCase() === 'INDÍGENA')?.id || 1;
-    const idKichwa = nacionalidadesEtnicas?.find(n => n.nombre?.trim().toUpperCase() === 'KICHWA')?.id;
+    const etniaSeleccionada = catalogos.etnias?.find(e => String(e.id) === String(formData.id_etnia));
+    const nombreEtnia = etniaSeleccionada?.nombre?.trim().toUpperCase();
+    
+    const aplicaCascadaEtnica = nombreEtnia === 'INDÍGENA' || nombreEtnia === 'MONTUBIO';
+
+    const cargarNacionalidades = useCallback(async (etniaId) => {
+        try {
+            const data = await catalogService.getEthnicNationalities(etniaId);
+            setNacionalidadesEtnicas(data || []);
+        } catch (error) {
+            console.error("Error al cargar nacionalidades étnicas:", error);
+            setNacionalidadesEtnicas([]);
+        }
+    }, []);
+
+    const cargarPueblos = useCallback(async (nacionalidadId) => {
+        try {
+            const data = await catalogService.getEthnicTowns(nacionalidadId);
+            setPueblosEtnicos(data || []);
+        } catch (error) {
+            console.error("Error al cargar pueblos étnicos:", error);
+            setPueblosEtnicos([]);
+        }
+    }, []);
 
     useEffect(() => {
-        const cargarNacionalidadesEtnicas = async () => {
-            if (formData.id_etnia == idIndigena) {
-                try {
-                    const data = await catalogService.getEthnicNationalities(formData.id_etnia);
-                    setNacionalidadesEtnicas(data);
-                } catch (error) {
-                    console.error("Error al cargar nacionalidades étnicas:", error);
-                    setNacionalidadesEtnicas([]);
-                }
-            } else {
-                setNacionalidadesEtnicas([]);
-                if (formData.id_nacionalidad_etnica || formData.id_pueblo) {
-                    handleChange({ target: { name: 'id_nacionalidad_etnica', value: '' } });
-                    handleChange({ target: { name: 'id_pueblo', value: '' } });
-                }
+        if (aplicaCascadaEtnica && formData.id_etnia) {
+            cargarNacionalidades(formData.id_etnia);
+        } else {
+            setNacionalidadesEtnicas([]);
+            if (formData.id_nacionalidad_etnica) {
+                handleChange({ target: { name: 'id_nacionalidad_etnica', value: null, type: 'text' } });
             }
-        };
-        cargarNacionalidadesEtnicas();
-    }, [formData.id_etnia, idIndigena]);
+            if (formData.id_pueblo) {
+                handleChange({ target: { name: 'id_pueblo', value: null, type: 'text' } });
+            }
+        }
+    }, [formData.id_etnia, aplicaCascadaEtnica, cargarNacionalidades]);
 
     useEffect(() => {
-        const cargarPueblosEtnicos = async () => {
-            if (formData.id_nacionalidad_etnica && formData.id_nacionalidad_etnica == idKichwa) {
-                try {
-                    const data = await catalogService.getEthnicGroups(formData.id_nacionalidad_etnica);
-                    setPueblosEtnicos(data);
-                } catch (error) {
-                    console.error("Error al cargar pueblos étnicos:", error);
-                    setPueblosEtnicos([]);
-                }
-            } else {
-                setPueblosEtnicos([]);
-                if (formData.id_pueblo) {
-                    handleChange({ target: { name: 'id_pueblo', value: '' } });
-                }
+        if (formData.id_nacionalidad_etnica) {
+            cargarPueblos(formData.id_nacionalidad_etnica);
+        } else {
+            setPueblosEtnicos([]);
+            if (formData.id_pueblo) {
+                handleChange({ target: { name: 'id_pueblo', value: null, type: 'text' } });
             }
-        };
-        cargarPueblosEtnicos();
-    }, [formData.id_nacionalidad_etnica, idKichwa]);
+        }
+    }, [formData.id_nacionalidad_etnica, cargarPueblos]);
 
-    const inputClasses = "w-full rounded border-gray-400 bg-white text-[11px] py-1 px-1.5 focus:border-blue-600 focus:outline-none font-medium h-7 border-2 shadow-sm transition-colors";
+
+    const inputClasses = "w-full rounded border-gray-400 bg-white text-[11px] py-1 px-1.5 focus:border-blue-600 focus:outline-none font-medium h-8 border-2 shadow-sm transition-colors uppercase";
     const labelClasses = "block text-[10px] font-bold text-gray-600 mb-0.5 uppercase truncate";
+    const containerClasses = "bg-white p-3 rounded-lg border border-gray-200 shadow-sm space-y-4";
 
     return (
-        <div className="space-y-3">
-            <h3 className="text-xs font-extrabold text-blue-900 border-b border-blue-200 pb-0.5 mb-2 uppercase tracking-tight">
-                4. Datos Adicionales (Socio-Económicos)
-            </h3>
+        <div className="space-y-4 animate-in fade-in duration-500">
+            <div className="flex items-center space-x-2 border-b-2 border-blue-900 pb-2 mb-4">
+                <Briefcase className="w-5 h-5 text-blue-900" />
+                <h3 className="text-sm font-black text-blue-900 uppercase tracking-tighter">
+                    4. DATOS ADICIONALES (SOCIO-ECONÓMICOS)
+                </h3>
+            </div>
             
-            <div className="grid grid-cols-4 gap-x-2 gap-y-2">
-                <div className="col-span-1">
-                    <label className={labelClasses}>
-                        Autoidentificación <span className="text-red-500">*</span>
-                    </label>
-                    <select
-                        name="id_etnia"
-                        value={formData.id_etnia || ''}
-                        onChange={handleChange}
-                        disabled={!formHabilitado}
-                        className={inputClasses}
-                        required
-                    >
-                        <option value="">Seleccione</option>
-                        {catalogos.etnias?.map(e => <option key={e.id} value={e.id}>{e.nombre}</option>)}
-                    </select>
-                </div>
-
-                <div className="col-span-1">
-                    <label className={labelClasses}>
-                        Nacionalidad Étnica
-                    </label>
-                    <select
-                        name="id_nacionalidad_etnica"
-                        value={formData.id_nacionalidad_etnica || ''}
-                        onChange={handleChange}
-                        disabled={formData.id_etnia != idIndigena || !formHabilitado}
-                        className={inputClasses}
-                    >
-                        <option value="">Seleccione</option>
-                        {nacionalidadesEtnicas.map(n => <option key={n.id} value={n.id}>{n.nombre}</option>)}
-                    </select>
-                </div>
-
-                <div className="col-span-2">
-                    <label className={labelClasses}>
-                        Pueblo / Centro
-                    </label>
-                    <select
-                        name="id_pueblo"
-                        value={formData.id_pueblo || ''}
-                        onChange={handleChange}
-                        disabled={formData.id_nacionalidad_etnica != idKichwa || !formHabilitado}
-                        className={inputClasses}
-                    >
-                        <option value="">Seleccione</option>
-                        {pueblosEtnicos.map(p => <option key={p.id} value={p.id}>{p.nombre}</option>)}
-                    </select>
-                </div>
-
-                <div className="col-span-2">
-                    <label className={labelClasses}>
-                        Nivel de Educación <span className="text-red-500">*</span>
-                    </label>
-                    <select
-                        name="id_instruccion"
-                        value={formData.id_instruccion}
-                        onChange={handleChange}
-                        disabled={!formHabilitado}
-                        className={inputClasses}
-                        required
-                    >
-                        <option value="">Seleccione</option>
-                        {catalogos.nivelesEducacion.map(n => <option key={n.id} value={n.id}>{n.nombre}</option>)}
-                    </select>
-                </div>
-
-                <div className="col-span-2">
-                    <label className={labelClasses}>
-                        Ocupación (CIUO) <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                        type="text"
-                        name="ocupacion"
-                        value={formData.ocupacion}
-                        onChange={handleChange}
-                        disabled={!formHabilitado}
-                        placeholder="Buscar ocupación..."
-                        className={inputClasses}
-                        required
-                    />
-                </div>
-
-                <div className="col-span-2">
-                    <label className={labelClasses}>
-                        Seguro Salud <span className="text-red-500">*</span>
-                    </label>
-                    <select
-                        name="id_seguro_salud"
-                        value={formData.id_seguro_salud}
-                        onChange={handleChange}
-                        disabled={!formHabilitado}
-                        className={inputClasses}
-                        required
-                    >
-                        <option value="">Seleccione</option>
-                        {catalogos.segurosSalud.map(s => <option key={s.id} value={s.id}>{s.nombre}</option>)}
-                    </select>
-                </div>
-
-                <div className="col-span-2">
-                    <label className={labelClasses}>Tipo de Empresa</label>
-                    <input
-                        type="text"
-                        name="tipo_empresa"
-                        value={formData.tipo_empresa || ''}
-                        onChange={handleChange}
-                        disabled={!formHabilitado}
-                        className={inputClasses}
-                        placeholder="Pública, Privada, etc."
-                    />
-                </div>
-
-                <div className="col-span-4 p-2 bg-slate-50 rounded border border-slate-200">
-                    <div className="flex items-center mb-2">
-                        <input
-                            type="checkbox"
-                            name="tiene_discapacidad"
-                            id="tiene_discapacidad"
-                            checked={formData.tiene_discapacidad}
+            <div className={containerClasses}>
+                {/* Renglón 1: Autoidentificación */}
+                <div className="grid grid-cols-3 gap-4">
+                    <div className="col-span-1">
+                        <label className={labelClasses}>AUTOIDENTIFICACIÓN <span className="text-red-500">*</span></label>
+                        <select
+                            name="id_etnia"
+                            value={formData.id_etnia || ''}
                             onChange={handleChange}
                             disabled={!formHabilitado}
-                            className="w-3.5 h-3.5 rounded border-gray-400 text-blue-600 focus:ring-blue-500 border-2"
-                        />
-                        <label htmlFor="tiene_discapacidad" className="ml-2 text-[10px] font-bold text-gray-700 uppercase">
-                            ¿Tiene Discapacidad?
-                        </label>
+                            className={inputClasses}
+                            required
+                        >
+                            <option value="">SELECCIONE</option>
+                            {catalogos.etnias?.map(e => (
+                                <option key={e.id} value={e.id}>{e.nombre.toUpperCase()}</option>
+                            ))}
+                        </select>
                     </div>
-                    
-                    {formData.tiene_discapacidad && (
-                        <div className="grid grid-cols-3 gap-2 animate-in fade-in slide-in-from-top-2">
-                            <div>
-                                <label className={labelClasses}>Tipo</label>
-                                <select
-                                    name="tipo_discapacidad"
-                                    value={formData.tipo_discapacidad}
-                                    onChange={handleChange}
-                                    className={inputClasses}
-                                >
-                                    <option value="">Seleccione</option>
-                                    <option value="FISICA">Física</option>
-                                    <option value="INTELECTUAL">Intelectual</option>
-                                    <option value="AUDITIVA">Auditiva</option>
-                                    <option value="VISUAL">Visual</option>
-                                    <option value="PSICOSOCIAL">Psicosocial</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label className={labelClasses}>%</label>
-                                <input
-                                    type="number"
-                                    name="porcentaje_discapacidad"
-                                    value={formData.porcentaje_discapacidad}
-                                    onChange={handleChange}
-                                    className={inputClasses}
-                                    min="0" max="100"
-                                />
-                            </div>
-                            <div>
-                                <label className={labelClasses}>Nro. Carnet</label>
-                                <input
-                                    type="text"
-                                    name="carnet_discapacidad"
-                                    value={formData.carnet_discapacidad}
-                                    onChange={handleChange}
-                                    className={inputClasses}
-                                />
-                            </div>
-                        </div>
-                    )}
+
+                    <div className="col-span-1">
+                        <label className={labelClasses}>NACIONALIDAD ÉTNICA</label>
+                        <select
+                            name="id_nacionalidad_etnica"
+                            value={formData.id_nacionalidad_etnica || ''}
+                            onChange={handleChange}
+                            disabled={!aplicaCascadaEtnica || !formHabilitado}
+                            className={`${inputClasses} ${!aplicaCascadaEtnica ? 'bg-gray-100 italic text-gray-500' : ''}`}
+                        >
+                            <option value="">{aplicaCascadaEtnica ? 'SELECCIONE' : 'NO APLICA'}</option>
+                            {nacionalidadesEtnicas.map(n => (
+                                <option key={n.id} value={n.id}>{n.nombre.toUpperCase()}</option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className="col-span-1">
+                        <label className={labelClasses}>PUEBLO / CENTRO</label>
+                        <select
+                            name="id_pueblo"
+                            value={formData.id_pueblo || ''}
+                            onChange={handleChange}
+                            disabled={!aplicaCascadaEtnica || !formData.id_nacionalidad_etnica || !formHabilitado}
+                            className={`${inputClasses} ${!aplicaCascadaEtnica ? 'bg-gray-100 italic text-gray-500' : ''}`}
+                        >
+                            <option value="">{aplicaCascadaEtnica ? 'SELECCIONE' : 'NO APLICA'}</option>
+                            {pueblosEtnicos.map(p => (
+                                <option key={p.id} value={p.id}>{p.nombre.toUpperCase()}</option>
+                            ))}
+                        </select>
+                    </div>
                 </div>
+
+                {/* Renglón 2: Instrucción y Ocupación */}
+                <div className="grid grid-cols-3 gap-4">
+                    <div className="col-span-1">
+                        <label className={labelClasses}>INSTRUCCIÓN <span className="text-red-500">*</span></label>
+                        <select
+                            name="id_instruccion"
+                            value={formData.id_instruccion || ''}
+                            onChange={handleChange}
+                            disabled={!formHabilitado}
+                            className={inputClasses}
+                            required
+                        >
+                            <option value="">SELECCIONE</option>
+                            {catalogos.nivelesEducacion?.map(n => (
+                                <option key={n.id} value={n.id}>{n.nombre.toUpperCase()}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="col-span-1">
+                        <label className={labelClasses}>ESTADO <span className="text-red-500">*</span></label>
+                        <select
+                            name="id_estado_instruccion"
+                            value={formData.id_estado_instruccion || ''}
+                            onChange={handleChange}
+                            disabled={!formHabilitado}
+                            className={inputClasses}
+                            required
+                        >
+                            <option value="">SELECCIONE</option>
+                            {catalogos.estadosInstruccion?.map(n => (
+                                <option key={n.id} value={n.id}>{n.nombre.toUpperCase()}</option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className="col-span-1">
+                        <label className={labelClasses}>OCUPACIÓN (CIUO) <span className="text-red-500">*</span></label>
+                        <select
+                            name="id_ocupacion"
+                            value={formData.id_ocupacion || ''}
+                            onChange={(e) => {
+                                const selectedId = e.target.value;
+                                const ocu = catalogos.ocupaciones?.find(o => String(o.id) === String(selectedId));
+                                setFormData(prev => ({
+                                    ...prev,
+                                    id_ocupacion: selectedId,
+                                    ocupacion_nombre: ocu ? ocu.nombre.toUpperCase() : ''
+                                }));
+                            }}
+                            disabled={!formHabilitado}
+                            className={inputClasses}
+                            required
+                        >
+                            <option value="">SELECCIONE</option>
+                            {catalogos.ocupaciones?.map(o => (
+                                <option key={o.id} value={o.id}>{o.nombre.toUpperCase()}</option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
+
+                {/* Renglón 3: SIMETRÍA TOTAL (Seguro, Empresa, Discapacidad) */}
+                <div className="grid grid-cols-3 gap-4">
+                    <div className="flex flex-col">
+                        <label className={labelClasses}>SEGURO DE SALUD <span className="text-red-500">*</span></label>
+                        <select
+                            name="id_seguro_salud"
+                            value={formData.id_seguro_salud || ''}
+                            onChange={handleChange}
+                            disabled={!formHabilitado}
+                            className={inputClasses}
+                            required
+                        >
+                            <option value="">SELECCIONE</option>
+                            {catalogos.segurosSalud?.map(s => (
+                                <option key={s.id} value={s.id}>{s.nombre.toUpperCase()}</option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className="flex flex-col">
+                        <label className={labelClasses}>TIPO DE EMPRESA <span className="text-red-500">*</span></label>
+                        <select
+                            name="tipo_empresa"
+                            value={formData.tipo_empresa || ''}
+                            onChange={handleChange}
+                            disabled={!formHabilitado}
+                            className={inputClasses}
+                            required
+                        >
+                            <option value="">SELECCIONE</option>
+                            {catalogos.tiposEmpresa?.map(t => (
+                                <option key={t.id} value={t.nombre.toUpperCase()}>{t.nombre.toUpperCase()}</option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className="flex flex-col">
+                        <label className={labelClasses}>¿PRESENTA DISCAPACIDAD? <span className="text-red-500">*</span></label>
+                        <select
+                            name="tiene_discapacidad"
+                            value={formData.tiene_discapacidad || ''}
+                            onChange={(e) => {
+                                const val = e.target.value;
+                                if (val === 'NO') {
+                                    setFormData(prev => ({
+                                        ...prev,
+                                        tiene_discapacidad: 'NO',
+                                        id_tipo_discapacidad: '',
+                                        porcentaje_discapacidad: ''
+                                    }));
+                                } else if (val === 'SI') {
+                                    setFormData(prev => ({
+                                        ...prev,
+                                        tiene_discapacidad: 'SI'
+                                    }));
+                                } else {
+                                    handleChange(e);
+                                }
+                            }}
+                            disabled={!formHabilitado}
+                            className={`${inputClasses} ${formData.tiene_discapacidad === 'SI' ? 'border-yellow-500 bg-yellow-50' : ''}`}
+                            required
+                        >
+                            <option value="">SELECCIONE</option>
+                            <option value="SI">SÍ</option>
+                            <option value="NO">NO</option>
+                        </select>
+                    </div>
+                </div>
+
+                {/* Renglón Condicional: Detalles de Discapacidad */}
+                {formData.tiene_discapacidad === 'SI' && (
+                    <div className="grid grid-cols-3 gap-4 p-3 bg-yellow-50 rounded border-2 border-yellow-200 animate-in slide-in-from-top-2 duration-300">
+                        <div>
+                            <label className={labelClasses}>TIPO DE DISCAPACIDAD <span className="text-red-500">*</span></label>
+                            <select
+                                name="id_tipo_discapacidad"
+                                value={formData.id_tipo_discapacidad || ''}
+                                onChange={handleChange}
+                                className={inputClasses}
+                                required
+                            >
+                                <option value="">SELECCIONE</option>
+                                {catalogos.tiposDiscapacidad?.map(t => (
+                                    <option key={t.id} value={t.id}>{t.nombre.toUpperCase()}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div>
+                            <label className={labelClasses}>PORCENTAJE (%) <span className="text-red-500">*</span></label>
+                            <input
+                                type="number"
+                                name="porcentaje_discapacidad"
+                                value={formData.porcentaje_discapacidad || ''}
+                                onChange={(e) => {
+                                    const val = parseInt(e.target.value, 10);
+                                    handleChange(e);
+                                }}
+                                className={inputClasses}
+                                min="30" max="100"
+                                required
+                                onBlur={(e) => {
+                                    const val = parseInt(e.target.value, 10);
+                                    if (val > 0 && val < 30) {
+                                        setModalConfig({
+                                            show: true,
+                                            type: 'warning',
+                                            title: 'VALIDACIÓN DE DISCAPACIDAD',
+                                            message: 'NORMATIVA LEGAL: REGISTRO DESDE EL 30%',
+                                            onClose: () => {
+                                                setFormData(prev => ({ ...prev, porcentaje_discapacidad: '' }));
+                                                setModalConfig(p => ({ ...p, show: false }));
+                                            }
+                                        });
+                                    }
+                                }}
+                            />
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );

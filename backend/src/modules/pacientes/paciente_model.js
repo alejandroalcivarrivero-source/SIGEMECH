@@ -148,11 +148,6 @@ module.exports = (sequelize) => {
         allowNull: true,
         field: 'porcentaje_discapacidad'
     },
-    carnet_discapacidad: {
-        type: DataTypes.STRING(50),
-        allowNull: true,
-        field: 'carnet_discapacidad'
-    },
     nombre_representante: {
         type: DataTypes.STRING(255),
         allowNull: true,

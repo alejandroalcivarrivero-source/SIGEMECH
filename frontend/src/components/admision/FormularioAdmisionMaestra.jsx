@@ -23,13 +23,14 @@ import { calcularEdadDetallada } from '../../utils/calculosCronologicos';
 
 const FormularioAdmisionMaestra = () => {
     const navigate = useNavigate();
+    const fechaRef = useRef(null);
     
     const [catalogos, setCatalogos] = useState({
         provincias: [], cantones: [], parroquias: [], nacionalidades: [],
-        etnias: [], nivelesEducacion: [], segurosSalud: [], sexos: [],
+        etnias: [], nivelesEducacion: [], estadosInstruccion: [], segurosSalud: [], sexos: [],
         estadosCiviles: [], generos: [], parentescos: [], formasLlegada: [],
         fuentesInformacion: [], tiposDocumento: [], condicionesLlegada: [],
-        tiposIdentificacion: []
+        tiposIdentificacion: [], paises: [], tiposDiscapacidad: [], ocupaciones: [], bonos: []
     });
 
     const [cantonesFiltrados, setCantonesFiltrados] = useState([]);
@@ -64,9 +65,9 @@ const FormularioAdmisionMaestra = () => {
         numeroCasa: '', referencia_domicilio: '',
         
         // Pestaña 4
-        id_instruccion: '', ocupacion: '', id_seguro_salud: '',
-        tipo_empresa: '', tiene_discapacidad: false, tipo_discapacidad: '',
-        porcentaje_discapacidad: '', carnet_discapacidad: '',
+        id_instruccion: '', id_estado_instruccion: '', id_ocupacion: '', ocupacion_nombre: '', id_seguro_salud: '',
+        id_tipo_empresa: '', id_bono: '', tiene_discapacidad: '', id_tipo_discapacidad: '',
+        porcentaje_discapacidad: '',
         
         // Pestaña 5
         nombre_representante: '', id_parentesco_representante: '',
@@ -109,21 +110,27 @@ const FormularioAdmisionMaestra = () => {
     }, [formData.fecha_nacimiento]);
 
     const tabs = [
-        { id: 'personales', label: '1. Datos Personales', icon: User },
-        { id: 'nacimiento', label: '2. NACIMIENTO', icon: Baby },
+        { id: 'personales', label: '1. Personales', icon: User },
+        { id: 'nacimiento', label: '2. Nacimiento', icon: Baby },
         { id: 'residencia', label: '3. Residencia', icon: MapPin },
-        { id: 'adicionales', label: '4. Datos Adicionales', icon: ShieldCheck },
-        { id: 'representante', label: '5. Rep. Legal', icon: FileText, hidden: !fechaNacimientoValida },
-        { id: 'contacto', label: '6. Contacto Emer.', icon: Users },
-        { id: 'llegada', label: '7. Arribo/Condición', icon: ClipboardList },
-        { id: 'motivo', label: '8. Motivo Consulta', icon: HeartPulse }
+        { id: 'adicionales', label: '4. Adicionales', icon: ShieldCheck },
+        { id: 'contacto', label: '5. Contacto Emergencia', icon: Users },
+        { id: 'llegada', label: '6. Arribo/Condición', icon: ClipboardList },
+        { id: 'motivo', label: '7. Motivo Consulta', icon: HeartPulse },
+        { id: 'representante', label: 'Rep. Legal', icon: FileText, hidden: !fechaNacimientoValida }
     ];
 
     useEffect(() => {
         const fetchCatalogs = async () => {
             try {
                 const data = await catalogService.getAllCatalogs();
-                setCatalogos(data);
+                const ocupaciones = await catalogService.getOcupaciones();
+                // Aseguramos que tiposIdentificacion use cat_tipos_identificacion (id, nombre en minúsculas)
+                setCatalogos({
+                    ...data,
+                    tiposIdentificacion: data.tiposIdentificacion || [],
+                    ocupaciones: ocupaciones || []
+                });
             } catch (error) { console.error('Error cargando catálogos'); }
         };
         fetchCatalogs();
@@ -156,17 +163,21 @@ const FormularioAdmisionMaestra = () => {
     // Lógica Centralizada de Generación de Código Normativo MSP
     useEffect(() => {
         const tipoSeleccionado = catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion);
-        const esNoIdentificado = tipoSeleccionado?.nombre?.toUpperCase() === 'NO IDENTIFICADO';
+        const esNoIdentificado = tipoSeleccionado?.nombre?.toUpperCase()?.includes('NO IDENTIFICADO');
         
         // Obtenemos el ID de la provincia de nacimiento
-        const idProvinciaNacimiento = formData.datosNacimiento.provincia_nacimiento_id;
+        const idProvinciaNacimiento = formData.datosNacimiento?.provincia_nacimiento_id;
         
         // Necesitamos el código INEC de la provincia para generar el código correctamente
         // Usamos el ID como fallback si no hay código INEC explícito en el objeto, asumiendo que el ID coincide o se mapeará.
         // En un escenario real, deberíamos asegurar que el backend envíe 'codigo_inec'.
         const provinciaObj = catalogos.provincias?.find(p => p.id == idProvinciaNacimiento);
         // Prioridad: 1. codigo_inec (si existe), 2. id (formateado), 3. null
-        const codigoProvinciaInec = provinciaObj ? (provinciaObj.codigo_inec || String(provinciaObj.id).padStart(2, '0')) : null;
+        // Si no hay provincia (ej. NN en etapa temprana), enviamos '00' para permitir generación parcial
+        const codigoProvinciaInec = provinciaObj
+            ? (provinciaObj.codigo_inec || String(provinciaObj.id).padStart(2, '0'))
+            : '00';
+        
         const nombreProvincia = provinciaObj ? provinciaObj.nombre : '';
 
         // Determinar si es extranjero para asignar código '99'
@@ -176,8 +187,11 @@ const FormularioAdmisionMaestra = () => {
         let debeGenerarCodigo = false;
 
         // Caso 1: Es "NO IDENTIFICADO"
-        // La generación debe ocurrir dinámicamente.
-        if (esNoIdentificado) {
+        // La generación debe ocurrir dinámicamente siempre que tengamos fecha de nacimiento.
+        // La fecha es crítica para las posiciones 9-16 y el dígito década.
+        const fechaNacimientoReal = formData.datosNacimiento?.fecha_nacimiento || formData.fecha_nacimiento;
+
+        if (esNoIdentificado && fechaNacimientoReal) {
             debeGenerarCodigo = true;
         }
         // Caso 2: Transición desde código '99' (Emergencia temporal)
@@ -213,6 +227,11 @@ const FormularioAdmisionMaestra = () => {
             if (codigoGenerado && formData.numero_documento !== codigoGenerado) {
                 setFormData(prev => ({ ...prev, numero_documento: codigoGenerado }));
                 
+                // Si se generó el código de 17 dígitos, habilitamos el formulario automáticamente
+                if (codigoGenerado.length === 17) {
+                    setFormHabilitado(true);
+                }
+
                 // Si veníamos de una validación transitoria (código 99), la limpiamos una vez generado un código válido más completo
                 if (validacionTransitoria && codigoGenerado.length > 10) {
                     setValidacionTransitoria(false);
@@ -232,6 +251,7 @@ const FormularioAdmisionMaestra = () => {
         formData.segundo_apellido,
         formData.fecha_nacimiento,
         formData.datosNacimiento?.fecha_nacimiento, // CRÍTICO: Cambio de fecha en datosNacimiento dispara actualización dígito década
+        formData.datosNacimiento?.hora_parto, // También si cambia la hora (por si influye en el cálculo de neonato)
         formData.datosNacimiento?.provincia_nacimiento_id,
         formData.datosNacimiento?.id_nacionalidad,
         formData.id_sexo,
@@ -260,27 +280,6 @@ const FormularioAdmisionMaestra = () => {
        return nacionalidad ? nacionalidad.id : 1;
    }, [catalogos.nacionalidades]);
 
-   useEffect(() => {
-       const selectedNacionalidadId = Number(formData.datosNacimiento.id_nacionalidad);
-       // Si NO es ecuatoriana, limpiamos los campos geográficos de nacimiento.
-       // Si ES ecuatoriana, NO limpiamos nada para permitir que el usuario seleccione.
-       if (selectedNacionalidadId && selectedNacionalidadId !== idNacionalidadEcuatoriana) {
-           setFormData(prev => ({
-               ...prev,
-               datosNacimiento: {
-                   ...prev.datosNacimiento,
-                   provincia_nacimiento_id: '',
-                   canton_nacimiento_id: '',
-                   parroquia_nacimiento_id: '',
-               },
-               // Nota: No limpiamos residencia automáticamente aquí para no ser intrusivos
-               // a menos que sea una regla de negocio estricta.
-               // Se asume que si nace en otro país, podría residir en Ecuador.
-           }));
-           setCantonesFiltrados([]);
-           setParroquiasFiltradas([]);
-       }
-   }, [formData.datosNacimiento.id_nacionalidad, idNacionalidadEcuatoriana]);
 
 
     const limpiarFormularioCompleto = () => {
@@ -329,7 +328,15 @@ const FormularioAdmisionMaestra = () => {
     };
 
     const handleChange = (e) => {
-        const { name, value, type, checked } = e.target || e;
+        let { name, value, type, checked } = e.target || e;
+        
+        // Aplicar toUpperCase a todos los campos de texto y textarea (Soberanía de Datos)
+        if (type === 'text' || type === 'email' || e.target?.tagName === 'INPUT' || e.target?.tagName === 'TEXTAREA') {
+            if (typeof value === 'string') {
+                value = value.toUpperCase();
+            }
+        }
+
         const isDatosNacimiento = name.startsWith('datosNacimiento.');
         const fieldName = isDatosNacimiento ? name.split('.')[1] : name;
     
@@ -353,6 +360,11 @@ const FormularioAdmisionMaestra = () => {
                     onClose: () => {
                         setFormData(prev => ({ ...prev, datosNacimiento: { ...prev.datosNacimiento, fecha_nacimiento: '' } }));
                         setModalConfig(p => ({ ...p, show: false }));
+                        // Mantener foco en el campo de fecha tras presionar ENTER para corrección rápida
+                        setTimeout(() => {
+                            const el = document.getElementsByName('datosNacimiento.fecha_nacimiento')[0];
+                            if (el) el.focus();
+                        }, 150);
                     }
                 });
                 return;
@@ -374,6 +386,11 @@ const FormularioAdmisionMaestra = () => {
                 if (fieldName === 'id_nacionalidad') {
                     // No bloqueamos nada, simplemente aseguramos que el ID sea numérico.
                     // La habilitación de campos de provincia se maneja en SeccionNacimiento y useEffects.
+                }
+                
+                // Si cambia la fecha de nacimiento en datosNacimiento, asegurar que el foco pueda fluir
+                if (fieldName === 'fecha_nacimiento' && value) {
+                     // El efecto de foco está en SeccionNacimiento vía onKeyDown Tab
                 }
                 newData.datosNacimiento = newDatosNacimiento;
     
@@ -418,8 +435,11 @@ const FormularioAdmisionMaestra = () => {
                     message: 'No se permiten fechas de nacimiento futuras.',
                     onClose: () => {
                         setModalConfig(m => ({ ...m, show: false }));
-                        // Devolver foco a fecha_nacimiento
-                        document.getElementsByName('fecha_nacimiento')[0]?.focus();
+                        // Devolver foco a fecha_nacimiento usando ref o selector
+                        setTimeout(() => {
+                            const el = document.getElementsByName('datosNacimiento.fecha_nacimiento')[0];
+                            if (el) el.focus();
+                        }, 100);
                     }
                 });
                 setFormData(prev => ({ ...prev, [name]: '' }));
@@ -623,38 +643,50 @@ const FormularioAdmisionMaestra = () => {
              return;
          }
  
+         // Validación TAREA 3.1: Porcentaje de discapacidad mínimo 30
+         if (formData.tiene_discapacidad === 'SI' && formData.porcentaje_discapacidad && parseInt(formData.porcentaje_discapacidad, 10) < 30) {
+             setModalConfig({
+                 show: true,
+                 type: 'error',
+                 title: 'VALIDACIÓN NORMATIVA',
+                 message: 'El porcentaje de discapacidad debe ser igual o mayor al 30% según la normativa legal.'
+             });
+             return;
+         }
+ 
          setLoading(true);
-        try {
-            const payload = {
-                pacienteData: {
-                    id: formData.id,
-                    id_tipo_identificacion: formData.id_tipo_identificacion,
-                    numero_documento: formData.numero_documento,
-                    primer_nombre: formData.primer_nombre,
-                    segundo_nombre: formData.segundo_nombre,
-                    primer_apellido: formData.primer_apellido,
-                    segundo_apellido: formData.segundo_apellido,
-                    fecha_nacimiento: formData.fecha_nacimiento,
-                    id_sexo: formData.id_sexo,
-                    id_estado_civil: formData.id_estado_civil,
-                    id_nacionalidad: formData.id_nacionalidad,
-                    id_parroquia: formData.id_parroquia,
-                    direccion: formData.callePrincipal + ' ' + formData.calleSecundaria,
-                    telefono: formData.telefono,
-                    email: formData.email,
-                    id_etnia: formData.id_etnia,
-                    id_nacionalidad_etnica: formData.id_nacionalidad_etnica,
-                    id_pueblo: formData.id_pueblo,
-                    id_instruccion: formData.id_instruccion,
-                    id_seguro_salud: formData.id_seguro_salud,
-                    ocupacion: formData.ocupacion,
-                    tipo_empresa: formData.tipo_empresa,
-                    referencia_domicilio: formData.referencia_domicilio,
-                    tiene_discapacidad: formData.tiene_discapacidad,
-                    tipo_discapacidad: formData.tipo_discapacidad,
-                    porcentaje_discapacidad: formData.porcentaje_discapacidad,
-                    carnet_discapacidad: formData.carnet_discapacidad
-                },
+         try {
+             const payload = {
+                 pacienteData: {
+                     id: formData.id,
+                     id_tipo_identificacion: formData.id_tipo_identificacion,
+                     numero_documento: formData.numero_documento,
+                     primer_nombre: formData.primer_nombre,
+                     segundo_nombre: formData.segundo_nombre,
+                     primer_apellido: formData.primer_apellido,
+                     segundo_apellido: formData.segundo_apellido,
+                     fecha_nacimiento: formData.fecha_nacimiento,
+                     id_sexo: formData.id_sexo,
+                     id_estado_civil: formData.id_estado_civil,
+                     id_nacionalidad: formData.id_nacionalidad,
+                     id_parroquia: formData.id_parroquia,
+                     direccion: formData.callePrincipal + ' ' + formData.calleSecundaria,
+                     telefono: formData.telefono,
+                     email: formData.email,
+                     id_etnia: formData.id_etnia,
+                     id_nacionalidad_etnica: formData.id_nacionalidad_etnica,
+                     id_pueblo: formData.id_pueblo,
+                     id_instruccion: formData.id_instruccion,
+                     id_estado_instruccion: formData.id_estado_instruccion,
+                     id_seguro_salud: formData.id_seguro_salud,
+                     id_ocupacion: formData.id_ocupacion,
+                     id_tipo_empresa: formData.id_tipo_empresa,
+                     id_bono: formData.id_bono,
+                     referencia_domicilio: formData.referencia_domicilio,
+                     tiene_discapacidad: formData.tiene_discapacidad === 'SI',
+                     id_tipo_discapacidad: formData.id_tipo_discapacidad,
+                     porcentaje_discapacidad: formData.porcentaje_discapacidad,
+                 },
                 admissionData: {
                     motivo_consulta: formData.motivo_consulta,
                     motivo_detalle: formData.motivo_detalle,
@@ -717,7 +749,19 @@ const FormularioAdmisionMaestra = () => {
              <button
                  type="button"
                  onClick={() => {
-                     if (formHabilitado || tab.id === 'personales') {
+                     // Lógica de desbloqueo en cascada para "Identificado" (Cédula o Código NN de 17 dígitos)
+                     const tipoSeleccionado = catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion);
+                     const esNoIdentificado = tipoSeleccionado?.nombre?.toUpperCase()?.includes('NO IDENTIFICADO');
+                     
+                     const esIdentificado = formHabilitado || (formData.numero_documento && formData.numero_documento.length === 17);
+                     
+                     // Habilitación total para NN: pestañas 3 a 7
+                     const esPestañaNNPermitida = esNoIdentificado && ['residencia', 'adicionales', 'contacto', 'llegada', 'motivo', 'representante'].includes(tab.id);
+
+                     // Permitir navegación a personales, nacimiento o si está identificado
+                     const puedeNavegar = tab.id === 'personales' || tab.id === 'nacimiento' || esIdentificado || esPestañaNNPermitida;
+ 
+                     if (puedeNavegar) {
                          setActiveTab(tab.id);
                      }
                  }}
@@ -732,15 +776,18 @@ const FormularioAdmisionMaestra = () => {
     };
 
     return (
-        <div className="w-full max-w-7xl mx-auto p-4 bg-slate-100 min-h-screen font-sans antialiased">
-            <div className="bg-white rounded-lg shadow-xl overflow-hidden border border-gray-200">
+        <div className="w-full max-w-7xl mx-auto p-0 sm:p-2 bg-slate-100 font-sans antialiased mt-6">
+            <div className="bg-white shadow-xl overflow-hidden border-x border-b border-gray-200">
                 <div className="bg-gradient-to-r from-blue-900 to-blue-700 p-4 text-white flex justify-between items-center border-b-4 border-yellow-400">
                     <div className="flex items-center space-x-4">
                         <div className="bg-white p-1 rounded">
                             <ShieldCheck className="w-8 h-8 text-blue-900" />
                         </div>
                         <div>
-                            <h1 className="text-xl font-black tracking-tight leading-none uppercase">Admisión de Pacientes (008)</h1>
+                            <h1 className="text-xl font-black tracking-tight leading-none uppercase">ADMISION DE PACIENTES</h1>
+                            <p className="text-[10px] md:text-xs font-medium opacity-90 text-blue-100 mt-1">
+                                Registro completo de filiación según Formulario 001 MSP.
+                            </p>
                         </div>
                     </div>
                     <div className="bg-blue-800/50 border border-blue-400 rounded px-4 py-2 text-center">
@@ -751,7 +798,7 @@ const FormularioAdmisionMaestra = () => {
                     </div>
                     <div className="text-right hidden md:block">
                         <p className="text-[10px] font-bold opacity-80 uppercase">Establecimiento:</p>
-                        <p className="text-sm font-black">CENTRO DE SALUD TIPO C - CHONE</p>
+                        <p className="text-sm font-black">CENTRO DE SALUD CHONE TIPO C</p>
                     </div>
                 </div>
 
@@ -770,6 +817,7 @@ const FormularioAdmisionMaestra = () => {
                                 catalogos={catalogos}
                                 formHabilitado={formHabilitado}
                                 errors={formErrors}
+                                setFormData={setFormData}
                             />
                         )}
 
@@ -778,6 +826,7 @@ const FormularioAdmisionMaestra = () => {
                                 formData={formData}
                                 handleChange={handleChange}
                                 handleBlur={handleBlur}
+                                fechaRef={fechaRef}
                                 catalogos={catalogos}
                                 formHabilitado={formHabilitado}
                                 edadInfo={edadInfo}
@@ -795,6 +844,7 @@ const FormularioAdmisionMaestra = () => {
                                 cantonesFiltrados={cantonesFiltrados}
                                 parroquiasFiltradas={parroquiasFiltradas}
                                 formHabilitado={formHabilitado}
+                                setFormData={setFormData}
                             />
                         )}
 
@@ -804,6 +854,8 @@ const FormularioAdmisionMaestra = () => {
                                 handleChange={handleChange}
                                 catalogos={catalogos}
                                 formHabilitado={formHabilitado}
+                                setFormData={setFormData}
+                                setModalConfig={setModalConfig}
                             />
                         )}
 
@@ -814,6 +866,7 @@ const FormularioAdmisionMaestra = () => {
                                 catalogos={catalogos}
                                 formHabilitado={formHabilitado}
                                 edadInfo={edadInfo}
+                                setFormData={setFormData}
                             />
                         )}
 
@@ -823,6 +876,7 @@ const FormularioAdmisionMaestra = () => {
                                 handleChange={handleChange}
                                 catalogos={catalogos}
                                 formHabilitado={formHabilitado}
+                                setFormData={setFormData}
                             />
                         )}
 
@@ -833,6 +887,7 @@ const FormularioAdmisionMaestra = () => {
                                 catalogos={catalogos}
                                 formHabilitado={formHabilitado}
                                 soloLlegada={true}
+                                setFormData={setFormData}
                             />
                         )}
 
@@ -843,6 +898,7 @@ const FormularioAdmisionMaestra = () => {
                                 catalogos={catalogos}
                                 formHabilitado={formHabilitado}
                                 soloMotivo={true}
+                                setFormData={setFormData}
                             />
                         )}
                     </div>

@@ -13,29 +13,24 @@ const SeccionIdentidad = ({ formData, handleChange, handleBusquedaPaciente, cata
 
     return (
         <div className="space-y-3">
-            <h3 className="text-xs font-extrabold text-blue-900 border-b border-blue-200 pb-0.5 mb-2 uppercase tracking-tight">
-                1. Identificación y Datos Personales
-            </h3>
-            
-            <div className="grid grid-cols-4 gap-x-2 gap-y-2">
-                {/* Fila 1: Identificación Crítica */}
+            <div className="grid grid-cols-2 gap-x-6 gap-y-4">
+                {/* Fila 1: Identificación */}
                 <div className={containerClasses}>
                     <label className={labelClasses}>
                         Tipo Id. <span className="text-red-500">*</span>
                     </label>
                     <select
+                        tabIndex="101"
                         name="id_tipo_identificacion"
                         value={formData.id_tipo_identificacion}
-                        onChange={(e) => {
-                            handleChange(e);
-                        }}
+                        onChange={handleChange}
                         className={inputClasses}
                         required
                     >
                         <option value="">Seleccione</option>
-                        {(catalogos.tiposIdentificacion || [])
-                            .filter(t => ['CÉDULA DE IDENTIDAD', 'CEDULA', 'NO IDENTIFICADO'].includes(t.nombre?.toUpperCase()))
-                            .map(t => <option key={t.id} value={t.id}>{t.nombre}</option>)}
+                        {(catalogos.tiposIdentificacion || []).map(t => (
+                            <option key={t.id} value={t.id}>{t.nombre}</option>
+                        ))}
                     </select>
                 </div>
 
@@ -50,6 +45,7 @@ const SeccionIdentidad = ({ formData, handleChange, handleBusquedaPaciente, cata
                             
                             return (
                                 <input
+                                    tabIndex="102"
                                     type="text"
                                     name="numero_documento"
                                     value={formData.numero_documento}
@@ -81,52 +77,19 @@ const SeccionIdentidad = ({ formData, handleChange, handleBusquedaPaciente, cata
                     {errors.numero_documento && <p className="text-red-500 text-xs mt-1">{errors.numero_documento}</p>}
                 </div>
 
-                <div className={containerClasses}>
-                    <label className={labelClasses}>
-                        Estado Civil <span className="text-red-500">*</span>
-                    </label>
-                    <select
-                        name="id_estado_civil"
-                        value={formData.id_estado_civil}
-                        onChange={handleChange}
-                        disabled={!(formHabilitado || (catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion)?.nombre?.toUpperCase() === 'NO IDENTIFICADO'))}
-                        className={`${inputClasses} bg-white`}
-                        required
-                    >
-                        <option value="">Seleccione</option>
-                        {catalogos.estadosCiviles.map(e => <option key={e.id} value={e.id}>{e.nombre}</option>)}
-                    </select>
-                </div>
-
-                <div className={containerClasses}>
-                    <label className={labelClasses}>
-                        Sexo <span className="text-red-500">*</span>
-                    </label>
-                    <select
-                        name="id_sexo"
-                        value={formData.id_sexo}
-                        onChange={handleChange}
-                        disabled={!(formHabilitado || (catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion)?.nombre?.toUpperCase() === 'NO IDENTIFICADO'))}
-                        className={`${inputClasses} bg-white`}
-                        required
-                    >
-                        <option value="">Seleccione</option>
-                        {catalogos.sexos.map(s => <option key={s.id} value={s.id}>{s.nombre}</option>)}
-                    </select>
-                </div>
-
+                {/* Fila 2: Apellidos */}
                 {(() => {
                     const tipoSeleccionado = catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion);
-                    const esNoIdentificado = tipoSeleccionado?.nombre?.toUpperCase() === 'NO IDENTIFICADO';
-                    const forceEnabled = esNoIdentificado || formHabilitado;
+                    const forceEnabled = (tipoSeleccionado?.nombre?.toUpperCase() === 'NO IDENTIFICADO') || formHabilitado;
 
                     return (
                         <>
-                            <div className={`${containerClasses} col-span-1`}>
+                            <div className={containerClasses}>
                                 <label className={labelClasses}>
                                     Primer Apellido <span className="text-red-500">*</span>
                                 </label>
                                 <input
+                                    tabIndex="103"
                                     type="text"
                                     name="primer_apellido"
                                     value={formData.primer_apellido}
@@ -137,11 +100,12 @@ const SeccionIdentidad = ({ formData, handleChange, handleBusquedaPaciente, cata
                                 />
                                 {errors.primer_apellido && <p className="text-red-500 text-xs mt-1">{errors.primer_apellido}</p>}
                             </div>
-                            <div className={`${containerClasses} col-span-1`}>
+                            <div className={containerClasses}>
                                 <label className={labelClasses}>
                                     Segundo Apellido
                                 </label>
                                 <input
+                                    tabIndex="104"
                                     type="text"
                                     name="segundo_apellido"
                                     value={formData.segundo_apellido}
@@ -151,11 +115,13 @@ const SeccionIdentidad = ({ formData, handleChange, handleBusquedaPaciente, cata
                                 />
                             </div>
 
-                            <div className={`${containerClasses} col-span-1`}>
+                            {/* Fila 3: Nombres */}
+                            <div className={containerClasses}>
                                 <label className={labelClasses}>
                                     Primer Nombre <span className="text-red-500">*</span>
                                 </label>
                                 <input
+                                    tabIndex="105"
                                     type="text"
                                     name="primer_nombre"
                                     value={formData.primer_nombre}
@@ -166,11 +132,12 @@ const SeccionIdentidad = ({ formData, handleChange, handleBusquedaPaciente, cata
                                 />
                                 {errors.primer_nombre && <p className="text-red-500 text-xs mt-1">{errors.primer_nombre}</p>}
                             </div>
-                            <div className={`${containerClasses} col-span-1`}>
+                            <div className={containerClasses}>
                                 <label className={labelClasses}>
                                     Segundo Nombre
                                 </label>
                                 <input
+                                    tabIndex="106"
                                     type="text"
                                     name="segundo_nombre"
                                     value={formData.segundo_nombre}
@@ -179,34 +146,52 @@ const SeccionIdentidad = ({ formData, handleChange, handleBusquedaPaciente, cata
                                     className={`${inputClasses} uppercase font-bold`}
                                 />
                             </div>
-                        </>
-                    );
-                })()}
 
-                {(() => {
-                    const tipoSeleccionado = catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion);
-                    const esNoIdentificado = tipoSeleccionado?.nombre?.toUpperCase() === 'NO IDENTIFICADO';
-                    const forceEnabled = esNoIdentificado || formHabilitado;
-
-                    return (
-                        <>
-                            <div className={containerClasses}>
-                                <label className={labelClasses}>Teléf. Fijo</label>
-                                <input
-                                    type="text"
-                                    name="telefono_fijo"
-                                    value={formData.telefono_fijo}
-                                    onChange={handleChange}
-                                    disabled={!forceEnabled}
-                                    className={`${inputClasses} bg-white`}
-                                    placeholder="02-XXXXXXX"
-                                />
+                            {/* Fila 4: Bio-Civiles (Reorganizado: Sin Género) */}
+                            <div className="col-span-2 grid grid-cols-2 gap-6">
+                                <div className={containerClasses}>
+                                    <label className={labelClasses}>
+                                        Sexo <span className="text-red-500">*</span>
+                                    </label>
+                                    <select
+                                        tabIndex="107"
+                                        name="id_sexo"
+                                        value={formData.id_sexo}
+                                        onChange={handleChange}
+                                        disabled={!forceEnabled}
+                                        className={`${inputClasses} bg-white`}
+                                        required
+                                    >
+                                        <option value="">Seleccione</option>
+                                        {catalogos.sexos.map(s => <option key={s.id} value={s.id}>{s.nombre}</option>)}
+                                    </select>
+                                </div>
+                                <div className={containerClasses}>
+                                    <label className={labelClasses}>
+                                        Estado Civil <span className="text-red-500">*</span>
+                                    </label>
+                                    <select
+                                        tabIndex="109"
+                                        name="id_estado_civil"
+                                        value={formData.id_estado_civil}
+                                        onChange={handleChange}
+                                        disabled={!forceEnabled}
+                                        className={`${inputClasses} bg-white`}
+                                        required
+                                    >
+                                        <option value="">Seleccione</option>
+                                        {catalogos.estadosCiviles.map(e => <option key={e.id} value={e.id}>{e.nombre}</option>)}
+                                    </select>
+                                </div>
                             </div>
+
+                            {/* Fila 5: Contacto */}
                             <div className={containerClasses}>
                                 <label className={labelClasses}>
                                     Celular <span className="text-red-500">*</span>
                                 </label>
                                 <input
+                                    tabIndex="110"
                                     type="text"
                                     name="telefono"
                                     value={formData.telefono}
@@ -217,18 +202,19 @@ const SeccionIdentidad = ({ formData, handleChange, handleBusquedaPaciente, cata
                                     required
                                 />
                             </div>
-                            <div className={`${containerClasses} col-span-2`}>
+                            <div className={containerClasses}>
                                 <label className={labelClasses}>
                                     Correo Electrónico
                                 </label>
                                 <input
+                                    tabIndex="111"
                                     type="email"
                                     name="email"
                                     value={formData.email}
                                     onChange={handleChange}
                                     disabled={!forceEnabled}
                                     className={`${inputClasses} bg-white`}
-                                    placeholder="paciente@ejemplo.com"
+                                    placeholder="PACIENTE@EJEMPLO.COM"
                                 />
                             </div>
                         </>

@@ -14,6 +14,7 @@ const catalogService = {
             nacionalidades,
             etnias,
             nivelesEducacion,
+            estadosInstruccion,
             segurosSalud,
             sexos,
             estadosCiviles,
@@ -24,12 +25,17 @@ const catalogService = {
             tiposDocumento,
             condicionesLlegada,
             tiposIdentificacion,
-            establecimientos
+            establecimientos,
+            paises,
+            tiposEmpresa,
+            tiposDiscapacidad,
+            bonos
         ] = await Promise.all([
             api.get('/catalogs/provincias'),
             api.get('/catalogs/nacionalidades'),
             api.get('/catalogs/etnias'),
             api.get('/catalogs/niveles-educacion'),
+            api.get('/catalogs/estado-nivel-instruccion'),
             api.get('/catalogs/seguros-salud'),
             api.get('/catalogs/sexos'),
             api.get('/catalogs/estados-civiles'),
@@ -37,10 +43,14 @@ const catalogService = {
             api.get('/catalogs/parentescos'),
             api.get('/catalogs/formas-llegada'),
             api.get('/catalogs/fuentes-informacion'),
-            api.get('/catalogs/tipos-documento'),
+            api.get('/catalogs/tipos-identificacion'),
             api.get('/catalogs/condiciones-llegada'),
             api.get('/catalogs/tipos-identificacion'),
-            api.get('/catalogs/establecimientos-salud')
+            api.get('/catalogs/establecimientos-salud'),
+            api.get('/catalogs/paises'),
+            api.get('/catalogs/tipos-empresa'),
+            api.get('/catalogs/tipos-discapacidad'),
+            api.get('/catalogs/bonos')
         ]);
 
         return {
@@ -48,6 +58,7 @@ const catalogService = {
             nacionalidades: nacionalidades.data,
             etnias: etnias.data,
             nivelesEducacion: nivelesEducacion.data,
+            estadosInstruccion: estadosInstruccion.data,
             segurosSalud: segurosSalud.data,
             sexos: sexos.data,
             estadosCiviles: estadosCiviles.data,
@@ -55,10 +66,14 @@ const catalogService = {
             parentescos: parentescos.data,
             formasLlegada: formasLlegada.data,
             fuentesInformacion: fuentesInformacion.data,
-            tiposDocumento: tiposDocumento.data,
+            tiposDocumento: tiposDocumento.data, // Mantenemos el nombre de la propiedad por compatibilidad con el estado del frontend
             condicionesLlegada: condicionesLlegada.data,
             tiposIdentificacion: tiposIdentificacion.data,
-            establecimientos: establecimientos.data
+            establecimientos: establecimientos.data,
+            paises: paises.data,
+            tiposEmpresa: tiposEmpresa.data,
+            tiposDiscapacidad: tiposDiscapacidad.data,
+            bonos: bonos.data
         };
     },
 
@@ -81,11 +96,13 @@ const catalogService = {
     },
 
     /**
-     * Obtiene nacionalidades étnicas por ID de etnia.
+     * Obtiene nacionalidades étnicas por ID de etnia desde cat_etnias_nacionalidades.
      * @param {number|string} etniaId
      */
     async getEthnicNationalities(etniaId) {
-        const res = await api.get(`/catalogs/nacionalidades-etnicas/${etniaId}`);
+        if (!etniaId) return [];
+        // Apuntamos al endpoint que consulta cat_etnias_nacionalidades
+        const res = await api.get(`/catalogs/autoidentificaciones-etnicas?etnia_id=${etniaId}`);
         return res.data;
     },
 
@@ -93,8 +110,10 @@ const catalogService = {
      * Obtiene pueblos étnicos por ID de nacionalidad étnica.
      * @param {number|string} nacionalidadEtnicaId
      */
-    async getEthnicGroups(nacionalidadEtnicaId) {
-        const res = await api.get(`/catalogs/pueblos-etnicos/${nacionalidadEtnicaId}`);
+    async getEthnicTowns(nacionalidadEtnicaId) {
+        if (!nacionalidadEtnicaId) return [];
+        // Cumplimos con el requerimiento: GET /api/catalogs/pueblos?nacionalidad_id=1
+        const res = await api.get(`/catalogs/pueblos?nacionalidad_id=${nacionalidadEtnicaId}`);
         return res.data;
     },
 
@@ -104,6 +123,23 @@ const catalogService = {
      */
     async getPaises() {
         const res = await api.get('/catalogs/paises');
+        return res.data;
+    },
+
+    /**
+     * Busca ocupaciones dinámicamente.
+     * @param {string} term
+     */
+    async searchOcupaciones(term) {
+        const res = await api.get(`/catalogs/ocupaciones?search=${term}`);
+        return res.data;
+    },
+
+    /**
+     * Obtiene todas las ocupaciones.
+     */
+    async getOcupaciones() {
+        const res = await api.get('/catalogs/ocupaciones');
         return res.data;
     }
 };

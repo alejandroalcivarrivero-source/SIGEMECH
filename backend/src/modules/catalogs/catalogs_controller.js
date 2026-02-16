@@ -1,4 +1,5 @@
 const { sequelize } = require('../../config/db');
+const { QueryTypes } = require('sequelize');
 
 /**
  * Helper para manejo de errores en controladores de catálogos
@@ -27,6 +28,7 @@ const safeFindAll = async (model, res, catalogName, options = {}) => {
 async function getProvincias(req, res) {
     const { Provincia } = sequelize.models;
     return safeFindAll(Provincia, res, 'provincias', {
+        attributes: ['id', 'nombre', 'codigo_inec'],
         order: [['nombre', 'ASC']]
     });
 }
@@ -76,9 +78,21 @@ async function getNivelesEducacion(req, res) {
 
 async function getOcupaciones(req, res) {
     const { Ocupacion } = sequelize.models;
-    return safeFindAll(Ocupacion, res, 'ocupaciones', {
-        order: [['nombre', 'ASC']]
-    });
+    const { search } = req.query;
+    
+    const options = {
+        order: [['nombre', 'ASC']],
+        limit: 20
+    };
+
+    if (search) {
+        const { Op } = require('sequelize');
+        options.where = {
+            nombre: { [Op.like]: `%${search}%` }
+        };
+    }
+
+    return safeFindAll(Ocupacion, res, 'ocupaciones', options);
 }
 
 async function getSexos(req, res) {
@@ -124,8 +138,10 @@ async function getFuentesInformacion(req, res) {
 }
 
 async function getTiposDocumento(req, res) {
-    const { TipoDocumento } = sequelize.models;
-    return safeFindAll(TipoDocumento, res, 'tipos de documento', {
+    // Redireccionamos a TipoIdentificacion para mantener compatibilidad con el frontend
+    const { TipoIdentificacion } = sequelize.models;
+    return safeFindAll(TipoIdentificacion, res, 'tipos de identificación (alias documentos)', {
+        attributes: ['id', 'nombre'],
         order: [['nombre', 'ASC']]
     });
 }
@@ -140,38 +156,47 @@ async function getCondicionesLlegada(req, res) {
 async function getTiposIdentificacion(req, res) {
     const { TipoIdentificacion } = sequelize.models;
     return safeFindAll(TipoIdentificacion, res, 'tipos de identificación', {
-        order: [['id', 'ASC']]
+        attributes: ['id', 'nombre'],
+        order: [['nombre', 'ASC']]
     });
 }
 
 async function getEthnicNationalities(req, res) {
-    const { AutoidentificacionEtnica } = sequelize.models;
-    // Soporta tanto params (ruta) como query string según requerimiento
+    const { NacionalidadEtnica } = sequelize.models;
+    // Soporta etnia_id en params o query string para cumplir con el requerimiento
     const etnia_id = req.params.etnia_id || req.query.etnia_id;
+
+    // Si no hay etnia_id, devolvemos lista vacía para mantener la cascada estricta
+    if (!etnia_id || etnia_id === 'undefined' || etnia_id === 'null') {
+        return res.json([]);
+    }
     
     const options = {
-        order: [['nombre', 'ASC']]
+        attributes: ['id', 'nombre'],
+        where: {
+            etnia_id: etnia_id
+        },
+        order: [['nombre', 'ASC']],
+        raw: true
     };
 
-    if (etnia_id) {
-        options.where = { etnia_id: etnia_id };
-    }
-
-    return safeFindAll(AutoidentificacionEtnica, res, 'autoidentificaciones étnicas', options);
+    return safeFindAll(NacionalidadEtnica, res, 'autoidentificaciones étnicas (nacionalidades)', options);
 }
 
 async function getEthnicGroups(req, res) {
     const { Pueblo } = sequelize.models;
-    // Soporta tanto params (ruta) como query string según requerimiento
     const nacionalidad_id = req.params.nacionalidad_id || req.query.nacionalidad_id;
+
+    // Si no hay nacionalidad_id, devolvemos lista vacía para mantener la cascada estricta
+    if (!nacionalidad_id || nacionalidad_id === 'undefined' || nacionalidad_id === 'null') {
+        return res.json([]);
+    }
     
     const options = {
+        attributes: ['id', 'nombre'],
+        where: { nacionalidad_id: nacionalidad_id },
         order: [['nombre', 'ASC']]
     };
-
-    if (nacionalidad_id) {
-        options.where = { nacionalidad_id: nacionalidad_id };
-    }
 
     return safeFindAll(Pueblo, res, 'pueblos', options);
 }
@@ -200,6 +225,55 @@ async function getSegurosSalud(req, res) {
     });
 }
 
+async function obtenerEstadosInstruccion(req, res) {
+    const { EstadoNivelInstruccion } = sequelize.models;
+    return safeFindAll(EstadoNivelInstruccion, res, 'estados de nivel de instrucción', {
+        attributes: ['id', 'nombre'],
+        where: { esta_activo: 1 },
+        order: [['nombre', 'ASC']]
+    });
+}
+
+async function obtenerTiposEmpresa(req, res) {
+    const { TipoEmpresa } = sequelize.models;
+    return safeFindAll(TipoEmpresa, res, 'tipos de empresa', {
+        attributes: ['id', 'nombre'],
+        where: { esta_activo: 1 },
+        order: [['nombre', 'ASC']]
+    });
+}
+
+async function getTiposDiscapacidad(req, res) {
+    const { TipoDiscapacidad } = sequelize.models;
+    return safeFindAll(TipoDiscapacidad, res, 'tipos de discapacidad', {
+        order: [['nombre', 'ASC']]
+    });
+}
+
+async function obtenerBonos(req, res) {
+    try {
+        // Verificamos si la tabla existe antes de consultar
+        const [tableExists] = await sequelize.query("SHOW TABLES LIKE 'cat_bonos'", { type: QueryTypes.SELECT });
+        
+        if (tableExists.length === 0) {
+            console.warn("[WARNING] La tabla 'cat_bonos' no existe en la base de datos.");
+            return res.json([]);
+        }
+
+        const bonos = await sequelize.query(
+            "SELECT id, nombre FROM cat_bonos WHERE esta_activo = 1 ORDER BY nombre ASC",
+            { type: QueryTypes.SELECT }
+        );
+        return res.json(bonos);
+    } catch (error) {
+        console.error("Error obteniendo bonos:", error);
+        return res.status(500).json({
+            message: "Error interno en el catálogo de bonos",
+            detail: error.message
+        });
+    }
+}
+
 module.exports = {
     getProvincias,
     getCantones,
@@ -221,5 +295,9 @@ module.exports = {
     getFuentesInformacion,
     getTiposDocumento,
     getCondicionesLlegada,
-    getSegurosSalud
+    getSegurosSalud,
+    obtenerEstadosInstruccion,
+    obtenerTiposEmpresa,
+    getTiposDiscapacidad,
+    obtenerBonos
 };

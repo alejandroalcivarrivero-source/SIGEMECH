@@ -1,1 +1,7 @@
 @import "tailwindcss";
+
+input:not([type="checkbox"]):not([type="radio"]), 
+textarea, 
+select {
+  text-transform: uppercase;
+}

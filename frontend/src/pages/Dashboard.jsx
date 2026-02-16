@@ -12,7 +12,7 @@ const Header = ({ logoPath, onLogout, user, toggleSidebar, isSidebarOpen, active
 
         // Reglas de Misión 2: Títulos dinámicos basados en useLocation
         if (path === '/dashboard/admision' || activeView === 'admision-maestra') {
-            return 'Admisión de Pacientes (008)';
+            return 'SISTEMA GESTION DE EMERGENCIAS CHONE';
         }
         if (path === '/dashboard') {
             return 'Panel Principal';
@@ -43,7 +43,7 @@ const Header = ({ logoPath, onLogout, user, toggleSidebar, isSidebarOpen, active
                 <h1 className="text-xl font-bold tracking-tight hidden sm:block">
                     SIGEMECH <span className="text-blue-200 font-normal">| {pageTitle}</span>
                 </h1>
-                <h1 className="text-xl font-bold tracking-tight sm:hidden">SIGEMECH</h1>
+                <h1 className="text-xl font-bold tracking-tight sm:hidden">SIGEMECH | SGE</h1>
             </div>
             <div className="flex items-center gap-4 text-sm">
                 <div className="text-right hidden md:block">
@@ -68,7 +68,7 @@ const Sidebar = ({ user, activeView, isOpen, toggleSidebar }) => {
     const navigate = useNavigate();
     const navItems = [
         { id: 'inicio', name: 'Dashboard Principal', icon: LayoutDashboard, roles: ['admin', 'supervisor', 'usuario'], path: '/dashboard/inicio' },
-        { id: 'admision', name: 'Admisión de Pacientes (008)', icon: FileText, roles: ['admin', 'usuario'], path: '/dashboard/admision' },
+        { id: 'admision', name: 'Admisión de Pacientes', icon: FileText, roles: ['admin', 'usuario'], path: '/dashboard/admision' },
         { id: 'estadistica', name: 'Estadística', icon: BarChart2, roles: ['admin', 'supervisor'], path: '/dashboard/estadistica' },
         { id: 'soporte', name: 'Supervisión de Auditoría', icon: LifeBuoy, roles: ['soporte', 'admin'], path: '/dashboard/soporte' },
     ];
@@ -471,11 +471,7 @@ export default function Dashboard() {
                         )}
 
                         {activeView === 'admision' && (
-                            <div className="animate-fade-in">
-                                 <div className="mb-6">
-                                    <h2 className="text-2xl font-bold text-slate-800">Admisión de Pacientes (008)</h2>
-                                    <p className="text-slate-500">Registro completo de filiación según Formulario 001 MSP.</p>
-                                 </div>
+                            <div className="animate-fade-in mt-2">
                                  <FormularioAdmisionMaestra />
                             </div>
                         )}

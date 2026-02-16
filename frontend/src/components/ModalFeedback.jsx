@@ -15,6 +15,21 @@ import api from '../api/axios';
  */
 const ModalFeedback = ({ type, title, message, onClose, onConfirm, autoClose = 0 }) => {
   useEffect(() => {
+    // Escuchar tecla ENTER para cerrar o confirmar
+    const handleKeyDown = (e) => {
+      if (e.key === 'Enter') {
+        if (onConfirm) {
+          onConfirm();
+        } else {
+          onClose();
+        }
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose, onConfirm]);
+
+  useEffect(() => {
     const isSuccess = type === 'success' || type === 'éxito';
     if (autoClose > 0 && isSuccess) {
       const timer = setTimeout(() => {

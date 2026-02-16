@@ -52,9 +52,15 @@ module.exports = (sequelize) => {
     const Sexo = defineModel(sequelize, 'Sexo', 'cat_sexos', {}, { timestamps: false });
     const Genero = defineModel(sequelize, 'Genero', 'cat_generos', {}, { timestamps: false });
     const TipoIdentificacion = defineModel(sequelize, 'TipoIdentificacion', 'cat_tipos_identificacion', {}, { timestamps: false });
-    const TipoDocumento = defineModel(sequelize, 'TipoDocumento', 'cat_tipos_documento', {}, { timestamps: false });
+    // Se elimina cat_tipos_documento y se usa el alias para compatibilidad si es necesario,
+    // pero el controlador se encargará de redirigir a TipoIdentificacion.
     const CondicionLlegada = defineModel(sequelize, 'CondicionLlegada', 'cat_condiciones_llegada', {}, { timestamps: false });
-    const EstablecimientoSalud = defineModel(sequelize, 'EstablecimientoSalud', 'cat_establecimientos_salud', {}, { timestamps: false });
+    const EstablecimientoSalud = defineModel(sequelize, 'EstablecimientoSalud', 'cat_establecimientos_salud', {
+        codigo_unico: { type: DataTypes.STRING(20), field: 'codigo_unico' },
+        tiene_quirofano: { type: DataTypes.INTEGER, field: 'tiene_quirofano' },
+        tiene_sala_parto: { type: DataTypes.INTEGER, field: 'tiene_sala_parto' },
+        id_canton: { type: DataTypes.INTEGER, field: 'id_canton' }
+    }, { timestamps: false });
     const Etnia = defineModel(sequelize, 'Etnia', 'cat_etnias', {}, { timestamps: false });
     const Instruccion = defineModel(sequelize, 'Instruccion', 'cat_instruccion', {}, { timestamps: false });
 
@@ -65,15 +71,42 @@ module.exports = (sequelize) => {
     const FormaLlegada = defineModel(sequelize, 'FormaLlegada', 'cat_formas_llegada');
     const FuenteInformacion = defineModel(sequelize, 'FuenteInformacion', 'cat_fuentes_informacion');
     const Pais = defineModel(sequelize, 'Pais', 'cat_paises', { codigo_iso: { type: DataTypes.STRING(3), allowNull: true, field: 'codigo_iso' }});
-    const Nacionalidad = defineModel(sequelize, 'Nacionalidad', 'cat_nacionalidades', { gentilicio: { type: DataTypes.STRING(100), field: 'gentilicio' }, pais_id: { type: DataTypes.INTEGER, references: { model: 'Pais', key: 'id' }, field: 'pais_id' }});
-    const SeguroSalud = defineModel(sequelize, 'SeguroSalud', 'cat_seguros_salud', {}, { timestamps: false });
     
+    // Nacionalidad para Identificación (Gentilicios de países)
+    const Nacionalidad = defineModel(sequelize, 'Nacionalidad', 'cat_nacionalidades', {
+        gentilicio: { type: DataTypes.STRING(100), field: 'gentilicio' },
+        pais_id: { type: DataTypes.INTEGER, references: { model: 'Pais', key: 'id' }, field: 'pais_id' }
+    });
+
+    // Nueva tabla para Nacionalidades Étnicas (Kichwa, Shuar, etc.)
+    const NacionalidadEtnica = defineModel(sequelize, 'NacionalidadEtnica', 'cat_etnias_nacionalidades', {
+        etnia_id: { type: DataTypes.INTEGER, references: { model: 'Etnia', key: 'id' }, field: 'etnia_id' }
+    });
+
+    const Pueblo = defineModel(sequelize, 'Pueblo', 'cat_pueblos', {
+        nacionalidad_id: { type: DataTypes.INTEGER, references: { model: 'NacionalidadEtnica', key: 'id' }, field: 'nacionalidad_id' }
+    }, { timestamps: false });
+
+    const SeguroSalud = defineModel(sequelize, 'SeguroSalud', 'cat_seguros_salud', {}, { timestamps: false });
+
+    // Estado del Nivel de Instrucción (Terminado, En curso, etc.)
+    const EstadoNivelInstruccion = defineModel(sequelize, 'EstadoNivelInstruccion', 'cat_estado_nivel_instruccion', {
+        esta_activo: { type: DataTypes.BOOLEAN, defaultValue: true, field: 'esta_activo' }
+    }, { timestamps: false });
+    
+    const TipoEmpresa = defineModel(sequelize, 'TipoEmpresa', 'cat_tipos_empresa', {
+        esta_activo: { type: DataTypes.BOOLEAN, defaultValue: true, field: 'esta_activo' }
+    }, { timestamps: false });
+
+    const TipoDiscapacidad = defineModel(sequelize, 'TipoDiscapacidad', 'cat_tipos_discapacidad', {}, { timestamps: false });
+
     return {
+        TipoEmpresa,
         SeguroSalud,
+        Pueblo,
         Sexo,
         Genero,
         TipoIdentificacion,
-        TipoDocumento,
         CondicionLlegada,
         EstablecimientoSalud,
         Etnia,
@@ -84,6 +117,9 @@ module.exports = (sequelize) => {
         FormaLlegada,
         FuenteInformacion,
         Pais,
-        Nacionalidad
+        Nacionalidad,
+        NacionalidadEtnica,
+        EstadoNivelInstruccion,
+        TipoDiscapacidad
     };
 };

@@ -11,6 +11,7 @@ const pacientesRoutes = require('./modules/pacientes/pacientes_routes');
 const soporteRoutes = require('./modules/soporte/soporte_routes');
 const catalogsRoutes = require('./modules/catalogs/catalogs_routes');
 const admissionsRoutes = require('./modules/admissions/admissions_routes');
+const uppercaseMiddleware = require('./middlewares/uppercase_middleware');
 const errorHandler = require('./middlewares/error_handler');
 
 dotenv.config();
@@ -22,6 +23,7 @@ const app = express();
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
+app.use(uppercaseMiddleware);
 
 // Middleware de Logs de Acceso Profesional
 app.use((req, res, next) => {
