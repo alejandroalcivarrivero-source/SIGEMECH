@@ -180,12 +180,16 @@ const admissionController = {
             });
 
             if (!paciente) {
-                return res.status(404).json({ message: 'Paciente no encontrada con esa cédula.' });
+                return res.status(404).json({ message: 'PACIENTE NO REGISTRADA.' });
             }
 
-            // Validar sexo (id_sexo: 2 asumiendo que 2 es Femenino/Mujer)
+            // SOBERANÍA LINGÜÍSTICA: Nombres de variables requeridos
+            const cedulaMadre = cedula;
+
+            // Validar sexo (id_sexo: 2 asumiendo que 2 es Femenino/Mujer conforme a los catálogos del sistema)
+            // Se realiza la validación también en backend por seguridad.
             if (paciente.id_sexo !== 2) {
-                return res.status(400).json({ message: 'La cédula ingresada no corresponde a una paciente de sexo femenino.' });
+                return res.status(400).json({ message: 'SEXO NO CORRESPONDE A FEMENINO.' });
             }
 
             // Validar admisión reciente (< 48 horas)
@@ -201,27 +205,55 @@ const admissionController = {
                 order: [['createdAt', 'DESC']]
             });
 
-            if (!admisionReciente) {
-                return res.status(404).json({ message: 'No se encontró una admisión reciente (últimas 48 horas) para esta paciente.' });
+            const tieneAdmisionReciente = !!admisionReciente;
+
+            if (!tieneAdmisionReciente) {
+                return res.status(404).json({ message: 'SIN ADMISIÓN RECIENTE.' });
             }
 
             // Si cumple todas las condiciones
             return res.status(200).json({
-                message: 'Paciente válida para registro materno.',
+                message: 'PACIENTE VÁLIDA PARA VÍNCULO MATERNO.',
                 paciente: {
                     id: paciente.id,
-                    nombre: `${paciente.firstName1} ${paciente.lastName1}`,
+                    nombre: `${paciente.firstName1} ${paciente.lastName1}`.toUpperCase(),
                     cedula: paciente.numero_documento
                 },
-                admision: {
-                    id: admisionReciente.id,
-                    fecha: admisionReciente.createdAt
-                }
+                tieneAdmisionReciente
             });
 
         } catch (error) {
             console.error('[VALIDAR-MATERNA] Error:', error);
-            return res.status(500).json({ message: 'Error interno del servidor al validar paciente materna.' });
+            return res.status(500).json({ message: 'ERROR INTERNO AL VALIDAR PACIENTE MATERNA.' });
+        }
+    },
+
+    /**
+     * Verifica específicamente la existencia de una admisión en las últimas horas.
+     * Endpoint: GET /api/admissions/verificar-reciente/:pacienteId
+     */
+    async verifyRecentAdmission(req, res) {
+        try {
+            const { pacienteId } = req.params;
+            const horas = parseInt(req.query.horas) || 48;
+            
+            const limiteFecha = new Date(new Date() - horas * 60 * 60 * 1000);
+
+            const admision = await Admision.findOne({
+                where: {
+                    id_paciente: pacienteId,
+                    createdAt: {
+                        [Op.gte]: limiteFecha
+                    }
+                }
+            });
+
+            return res.status(200).json({
+                tieneAdmision: !!admision
+            });
+        } catch (error) {
+            console.error('[VERIFICAR-RECIENTE] Error:', error);
+            return res.status(500).json({ message: 'ERROR AL VERIFICAR ADMISIÓN.' });
         }
     }
 };

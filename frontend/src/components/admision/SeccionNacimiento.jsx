@@ -303,63 +303,100 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
     const [requiereCedulaMadre, setRequiereCedulaMadre] = useState(false);
 
     useEffect(() => {
-        const ESTABLECIMIENTO_LOCAL_NOMBRE = "CENTRO DE SALUD TIPO C CHONE";
+        const CODIGO_CENTRO_CHONE = '001248';
         const establecimientoSeleccionado = catalogos.establecimientos?.find(e => e.id == formData.datosNacimiento?.id_lugar_parto);
-        const nombreEst = establecimientoSeleccionado?.nombre?.toUpperCase() || "";
-        const esLocal = nombreEst.includes("TIPO C") && nombreEst.includes("CHONE");
+        const esLocal = establecimientoSeleccionado?.codigo_unico === CODIGO_CENTRO_CHONE;
         setRequiereCedulaMadre(esLocal);
     }, [formData.datosNacimiento?.id_lugar_parto, catalogos.establecimientos]);
 
 
-    const manejarBusquedaMadre = async (cedula) => {
-        if (!cedula || cedula.length < 10) return;
+    const manejarBusquedaMadre = async (cedulaMadre) => {
+        if (!cedulaMadre || cedulaMadre.length < 10) return;
 
-        const ESTABLECIMIENTO_LOCAL_NOMBRE = "CENTRO DE SALUD TIPO C CHONE";
+        const CODIGO_CENTRO_CHONE = '001248';
         const establecimientoSeleccionado = catalogos.establecimientos?.find(e => e.id == formData.datosNacimiento?.id_lugar_parto);
-        const nombreEstablecimiento = establecimientoSeleccionado?.nombre?.toUpperCase() || "";
-        const esEstablecimientoLocal = nombreEstablecimiento.includes("TIPO C") && nombreEstablecimiento.includes("CHONE");
+        const esEstablecimientoLocal = establecimientoSeleccionado?.codigo_unico === CODIGO_CENTRO_CHONE;
 
         try {
-            const data = await pacienteService.getPacienteByCedula(cedula);
+            // SOBERANÍA LINGÜÍSTICA: Validación de Sexo y Edad en Frontend
+            const response = await pacienteService.findByCedula(cedulaMadre);
             
-            if (data) {
-                if (esEstablecimientoLocal && esPartoReciente) {
-                    const idSexoFemenino = catalogos.sexos?.find(s => s.nombre?.toUpperCase() === 'MUJER' || s.nombre?.toUpperCase() === 'FEMENINO')?.id;
+            if (response && response.found) {
+                const data = response.paciente;
+                if (esEstablecimientoLocal) {
+                    // 1. VALIDACIÓN SEXO: FEMENINO
+                    const idSexoFemenino = catalogos.sexos?.find(s =>
+                        s.nombre?.toUpperCase() === 'MUJER' ||
+                        s.nombre?.toUpperCase() === 'FEMENINO'
+                    )?.id;
+
                     if (data.id_sexo != idSexoFemenino) {
                         setModalConfig({
                             show: true,
                             type: 'error',
-                            title: 'Inconsistencia de Datos',
-                            message: 'La cédula ingresada no corresponde a una persona de sexo femenino conforme al Registro Civil.'
+                            title: 'VALIDACIÓN DE VÍNCULO MATERNO',
+                            message: 'LA PACIENTE NO CUMPLE CON EL CRITERIO DE SEXO FEMENINO.'
                         });
+                        // Bloquear avance
+                        handleChange({ target: { name: 'datosNacimiento.cedula_madre', value: '' } });
                         return;
                     }
 
+                    // 2. VALIDACIÓN EDAD: 10 a 55 años
+                    const fechaNacMadre = new Date(data.fecha_nacimiento);
+                    const hoy = new Date();
+                    let edadMadre = hoy.getFullYear() - fechaNacMadre.getFullYear();
+                    const m = hoy.getMonth() - fechaNacMadre.getMonth();
+                    if (m < 0 || (m === 0 && hoy.getDate() < fechaNacMadre.getDate())) {
+                        edadMadre--;
+                    }
+
+                    if (edadMadre < 10 || edadMadre > 55) {
+                        setModalConfig({
+                            show: true,
+                            type: 'error',
+                            title: 'VALIDACIÓN DE VÍNCULO MATERNO',
+                            message: `LA PACIENTE NO SE ENCUENTRA EN EL RANGO DE EDAD MATERNA (10-55 AÑOS). EDAD DETECTADA: ${edadMadre} AÑOS.`
+                        });
+                        handleChange({ target: { name: 'datosNacimiento.cedula_madre', value: '' } });
+                        return;
+                    }
+
+                    // 3. ADMISIÓN RECIENTE: 48 HORAS (BACKEND)
                     const tieneAdmisionReciente = await pacienteService.verificarAdmisionReciente(data.id, 48);
+                    
                     if (!tieneAdmisionReciente) {
                         setModalConfig({
                             show: true,
-                            type: 'advertencia',
-                            title: 'Validación de Flujo Materno',
-                            message: 'No se encontró una admisión activa para la madre en las últimas 48 horas. Para partos institucionales, la madre debe estar ingresada en este establecimiento.'
+                            type: 'error',
+                            title: 'BLOQUEO DE VÍNCULO MATERNO',
+                            message: 'PACIENTE NO REGISTRADA O SIN ADMISIÓN RECIENTE (ÚLTIMAS 48 HORAS).'
                         });
+                        handleChange({ target: { name: 'datosNacimiento.cedula_madre', value: '' } });
                         return;
                     }
                 }
 
+                // AUTOLLENADO EXITOSO
                 const updates = {
                     madre_id: data.id,
                     id_tipo_doc_representante: data.id_tipo_identificacion,
                     documento_representante: data.numero_documento,
-                    nombre_representante: `${data.primer_nombre} ${data.segundo_nombre || ''} ${data.primer_apellido} ${data.segundo_apellido || ''}`.trim(),
-                    direccion_representante: data.direccion || '',
+                    nombre_representante: `${data.primer_nombre} ${data.segundo_nombre || ''} ${data.primer_apellido} ${data.segundo_apellido || ''}`.trim().toUpperCase(),
+                    direccion_representante: (data.direccion || '').toUpperCase(),
                     id_parentesco_representante: catalogos.parentescos?.find(p => p.nombre?.toUpperCase() === 'MADRE')?.id || ''
                 };
                 
-                // NOTA IMPORTANTE: En la versión original se intentaba setFormData pero no estaba claro si se pasaba.
-                // Aquí usamos handleChange iterativo como fallback seguro.
                 Object.entries(updates).forEach(([name, value]) => {
                     handleChange({ target: { name, value } });
+                });
+
+                setModalConfig({
+                    show: true,
+                    type: 'success',
+                    title: 'VÍNCULO MATERNO RESTAURADO',
+                    message: `MADRE IDENTIFICADA: ${updates.nombre_representante}. DATOS PRECARGADOS CORRECTAMENTE.`,
+                    autoClose: 3000
                 });
 
             } else {
@@ -367,13 +404,14 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
                     setModalConfig({
                         show: true,
                         type: 'error',
-                        title: 'Madre No Encontrada',
-                        message: 'La madre no registra historial clínico en este sistema. Para partos institucionales es obligatorio el registro previo de la gestante.'
+                        title: 'BLOQUEO DE VÍNCULO MATERNO',
+                        message: 'PACIENTE NO REGISTRADA O SIN ADMISIÓN RECIENTE.'
                     });
+                    handleChange({ target: { name: 'datosNacimiento.cedula_madre', value: '' } });
                 }
             }
         } catch (error) {
-            console.error("Error al buscar madre:", error);
+            console.error("ERROR AL BUSCAR MADRE:", error);
         }
     };
 
@@ -674,32 +712,23 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
                             </div>
                         </div>
               
-                        {(() => {
-                            const est = establecimientosSalud.find(e => e.id == formData.datosNacimiento?.id_lugar_parto);
-                            const nombreEst = est?.nombre?.toUpperCase() || "";
-                            const esLocal = nombreEst.includes("TIPO C") && nombreEst.includes("CHONE");
-                            
-                            if (esLocal) {
-                                return (
-                                    <div className="col-span-1 animate-in fade-in slide-in-from-left-2 duration-300">
-                                        <label className={labelClasses}>Cédula Madre <span className="text-red-500">*</span></label>
-                                        <input
-                                            type="text"
-                                            tabIndex="208"
-                                            name="datosNacimiento.cedula_madre"
-                                            value={formData.datosNacimiento?.cedula_madre || ''}
-                                            onChange={handleChange}
-                                            onBlur={(e) => manejarBusquedaMadre(e.target.value)}
-                                            disabled={!(formHabilitado || (catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion)?.nombre?.toUpperCase() === 'NO IDENTIFICADO'))}
-                                            required={true}
-                                            placeholder="Ej: 1312345678"
-                                            className={`${inputClasses} border-blue-500 bg-white`}
-                                        />
-                                    </div>
-                                );
-                            }
-                            return null;
-                        })()}
+                        {requiereCedulaMadre && (
+                            <div className="col-span-1 animate-in fade-in slide-in-from-left-2 duration-300">
+                                <label className={labelClasses}>CÉDULA DE LA MADRE <span className="text-red-500">*</span></label>
+                                <input
+                                    type="text"
+                                    tabIndex="208"
+                                    name="datosNacimiento.cedula_madre"
+                                    value={formData.datosNacimiento?.cedula_madre || ''}
+                                    onChange={handleChange}
+                                    onBlur={(e) => manejarBusquedaMadre(e.target.value)}
+                                    disabled={!(formHabilitado || (catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion)?.nombre?.toUpperCase() === 'NO IDENTIFICADO'))}
+                                    required={true}
+                                    placeholder="EJ: 1312345678"
+                                    className={`${inputClasses} border-blue-500 bg-white`}
+                                />
+                            </div>
+                        )}
                     </div>
                 </div>
             )}

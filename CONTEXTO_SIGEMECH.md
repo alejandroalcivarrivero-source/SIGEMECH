@@ -479,3 +479,23 @@ La interfaz se organiza en 3 renglones optimizados:
 - **Soberanía Lingüística:** Todo texto se transforma automáticamente a **MAYÚSCULAS**.
 - **Validación de Teléfonos:** Restricción estricta de solo números y máximo 10 dígitos para todos los campos de contacto.
 - **Identidad Visual:** Aplicación de paleta **Azul/Oro** y tipografía de alta legibilidad para entornos de emergencia.
+
+## 🤰 RESTAURACIÓN DEL VÍNCULO MATERNO-FETAL (2026-02-16)
+
+### 1. Trigger de Visibilidad por Código Único
+- Se implementó el blindaje del campo **CÉDULA DE LA MADRE**, el cual se activa ÚNICAMENTE si el establecimiento seleccionado corresponde al código único **'001248'** (Centro de Salud Chone Tipo C).
+- Se eliminó la dependencia de búsqueda por nombre literal para evitar fallos por tildes o variaciones de texto.
+
+### 2. Lógica de Validación Blindada (Soberanía Lingüística)
+Se estableció un protocolo de validación de 3 niveles para el vínculo materno:
+- **A) Sexo:** Debe ser estrictamente **FEMENINO** (Validación contra catálogo de Sexos).
+- **B) Edad:** El rango permitido es de **10 a 55 años**. Edades fuera de este rango bloquean el registro.
+- **C) Admisión Reciente (48 Horas):** El sistema consulta en tiempo real si la madre posee una admisión activa registrada en las últimas **48 HORAS**.
+- **Consecuencia de Fallo:** Cualquier incumplimiento dispara un `ModalFeedback` con el mensaje: **"PACIENTE NO REGISTRADA O SIN ADMISIÓN RECIENTE"** y bloquea automáticamente el avance al bloque de Representante Legal, limpiando el campo de cédula.
+
+### 3. Autollenado y Normalización
+- Tras una validación exitosa, el sistema precarga automáticamente:
+    - Nombre del Representante (en MAYÚSCULAS).
+    - Dirección y Parentesco (MADRE).
+    - ID de la madre para vinculación atómica en la base de datos.
+- Se asegura el cumplimiento de la **Soberanía Lingüística** con variables normalizadas: `cedulaMadre`, `tieneAdmisionReciente`.

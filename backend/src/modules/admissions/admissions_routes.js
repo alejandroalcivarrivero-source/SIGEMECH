@@ -15,6 +15,9 @@ router.post('/', authMiddleware, admissionsController.createAdmission);
 // Validar paciente materna para sección nacimiento
 router.post('/validar-materna', authMiddleware, admissionsController.validarMaterna);
 
+// Verificar admisión reciente
+router.get('/verificar-reciente/:pacienteId', authMiddleware, admissionsController.verifyRecentAdmission);
+
 // Rutas para el Libro de Partos (RPIS/MSP)
 router.post('/partos', authMiddleware, partosController.guardarParto);
 router.get('/partos/:paciente_id', authMiddleware, partosController.obtenerPartoPorPaciente);
