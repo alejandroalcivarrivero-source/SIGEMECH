@@ -42,8 +42,19 @@ const SeccionRepresentante = ({ formData, handleChange, catalogos, formHabilitad
     const parentescoMadreId = catalogos.parentescos?.find(p => p.nombre?.toUpperCase() === 'MADRE')?.id;
     const bloqueoMadre = isNeonato && formData.id_parentesco_representante == parentescoMadreId && formData.cedula_madre;
 
+    // CANDADO DE REPRESENTANTE LEGAL:
+    // REGLA: Si (edadDias < 28), el bloque de Representante Legal debe estar 'disabled'.
+    // HABILITACIÓN: Solo se activa si 'id_lugar_parto' y 'hora_parto' tienen datos.
+    // Si (edadDias >= 28 y < 2 años), el bloque se habilita normalmente.
+    const edadDias = edadInfo?.horas / 24; // Usamos horas para precisión
+    const esMenor28Dias = isNeonato; // Basado en la lógica de calculosCronologicos.js
+    
+    const tieneDatosParto = formData.datosNacimiento?.id_lugar_parto && formData.datosNacimiento?.hora_parto;
+    
+    const representanteBloqueado = esMenor28Dias ? !tieneDatosParto : false;
+
     return (
-        <div className={`space-y-3 ${esSubcomponente ? 'mt-6 pt-4 border-t-2 border-dashed border-blue-200' : ''}`}>
+        <div className={`space-y-3 ${esSubcomponente ? 'mt-6 pt-4 border-t-2 border-dashed border-blue-200' : ''} ${representanteBloqueado ? 'opacity-50 grayscale pointer-events-none' : ''}`}>
             <h3 className="text-xs font-extrabold text-blue-900 border-b border-blue-200 pb-0.5 mb-2 uppercase tracking-tight">
                 Datos del Representante Legal
             </h3>
@@ -55,7 +66,7 @@ const SeccionRepresentante = ({ formData, handleChange, catalogos, formHabilitad
                         name="id_tipo_doc_representante"
                         value={formData.id_tipo_doc_representante}
                         onChange={handleChange}
-                        disabled={!formHabilitado || bloqueoMadre}
+                        disabled={!formHabilitado || bloqueoMadre || representanteBloqueado}
                         className={inputClasses}
                         required
                     >
@@ -74,7 +85,7 @@ const SeccionRepresentante = ({ formData, handleChange, catalogos, formHabilitad
                         value={formData.documento_representante}
                         onChange={handleIdentificacionChange}
                         onBlur={handleBlurIdentificacion}
-                        disabled={!formHabilitado || bloqueoMadre}
+                        disabled={!formHabilitado || bloqueoMadre || representanteBloqueado}
                         maxLength={esNoIdentificado ? 17 : 10}
                         className={`${inputClasses} font-bold ${errorCedula ? 'border-red-500' : ''}`}
                         required
@@ -90,7 +101,7 @@ const SeccionRepresentante = ({ formData, handleChange, catalogos, formHabilitad
                         name="id_parentesco_representante"
                         value={formData.id_parentesco_representante}
                         onChange={handleChange}
-                        disabled={!formHabilitado || bloqueoMadre}
+                        disabled={!formHabilitado || bloqueoMadre || representanteBloqueado}
                         className={inputClasses}
                         required
                     >
@@ -108,7 +119,7 @@ const SeccionRepresentante = ({ formData, handleChange, catalogos, formHabilitad
                         name="nombre_representante"
                         value={formData.nombre_representante || ''}
                         onChange={handleChange}
-                        disabled={!formHabilitado || bloqueoMadre}
+                        disabled={!formHabilitado || bloqueoMadre || representanteBloqueado}
                         className={`${inputClasses} uppercase font-bold`}
                         required
                     />
@@ -121,7 +132,7 @@ const SeccionRepresentante = ({ formData, handleChange, catalogos, formHabilitad
                         name="direccion_representante"
                         value={formData.direccion_representante || ''}
                         onChange={handleChange}
-                        disabled={!formHabilitado}
+                        disabled={!formHabilitado || representanteBloqueado}
                         className={`${inputClasses} uppercase`}
                         required
                     />

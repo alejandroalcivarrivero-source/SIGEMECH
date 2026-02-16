@@ -352,13 +352,11 @@ Se cumplió con la nueva jerarquía de navegación para la Admisión 008:
 *   **Priorización Territorial:** Se implementó un algoritmo de ordenamiento dinámico que posiciona primero al establecimiento local (bajo regla de <24h), seguido de los centros del cantón **CHONE** y finalmente el resto en orden alfabético.
 *   **Normalización de Interfaz:** Se actualizó el label del selector al formato normativo `${codigo_unico} - ${nombre}` forzado a **MAYÚSCULAS**.
 
-### 3. Refactorización de Establecimientos y Red RPIS (2026-02-16)
-*   **Filtrado por Unicódigo:** Se sustituyó la búsqueda manual por nombre literal por una validación estricta usando el **CODIGO_LOCAL ('001248')**.
-*   **Regla de Oro de Capacidad Dual:** El selector de establecimientos de transferencia ahora integra la capacidad de **SALA DE PARTO** para el nivel local:
-    *   **Si es < 24h:** Se muestran todos los establecimientos que tengan **SALA DE PARTO** (habilitando al Centro Local '001248' - CHONE).
-    *   **Si es > 24h:** Se restringe exclusivamente a centros con **QUIRÓFANO** (ocultando automáticamente a Chone por seguridad técnica).
-*   **Priorización Territorial:** Se implementó un algoritmo de ordenamiento dinámico que posiciona primero al establecimiento local (**CHONE**), seguido de los centros del cantón Chone y finalmente el resto en orden alfabético.
-*   **Normalización de Interfaz:** Se actualizó la visualización del selector al formato normativo `${codigo_unico} - ${nombre}` forzado a **MAYÚSCULAS**.
+### 3. Refactorización de Establecimientos y Red RPIS (Actualización 2026-02-16)
+*   **FILTRO DE CAPACIDADES (SELECTIVO):** Se implementó una restricción técnica donde el catálogo de establecimientos solo muestra registros que posean quirófano o sala de parto (`e.tiene_quirofano === 1 || e.tiene_sala_parto === 1`). Registros sin estas capacidades son omitidos.
+*   **ORDENAMIENTO POR CANTON (CHONE):** Se estableció una regla de prioridad territorial donde los establecimientos con `id_canton === 1303` (Chone) aparecen al principio de la lista, manteniendo el orden alfabético dentro de este grupo.
+*   **CANDADO DE REPRESENTANTE LEGAL:** Se implementó un bloqueo de seguridad para neonatos (`edadInfo.isNeonato` / `< 28 días`). El bloque de Representante Legal permanece inhabilitado y con opacidad reducida hasta que se completen los campos **Lugar del Parto** y **Hora de Parto**, forzando la trazabilidad del nacimiento antes del registro del tutor.
+*   **NORMALIZACIÓN DE INTERFAZ:** Se forzó el formato de label `${codigo_unico} - ${nombre}` en estricto MAYÚSCULAS para todos los establecimientos del selector.
 
 ## Integración End-to-End de Catálogos (2026-02-15)
 

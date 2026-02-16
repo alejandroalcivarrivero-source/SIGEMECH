@@ -159,60 +159,54 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
     useEffect(() => {
         if (!catalogos.establecimientos) return;
 
-        const CODIGO_LOCAL = '001248';
-        const ID_CANTON_CHONE = 44; // ID_CANTON para Chone según estructura de base de datos
+        const ID_CANTON_CHONE = 1303;
+        const CODIGO_PRIORITARIO = '001248';
 
-        // 1. Filtrado Base: Sala de Parto vs Quirófano según edad neonatal
-        let filtrados = catalogos.establecimientos.filter(e => {
-            const tieneQuirofano = e.tiene_quirofano === 1;
-            const tieneSalaParto = e.tiene_sala_parto === 1;
+        // 1. PASO 1: FILTRO TÉCNICO ESTRICTO
+        // Filtra 'catalogos.establecimientos' para que SOLO se incluyan registros donde:
+        // (e.tiene_sala_parto === 1 || e.tiene_quirofano === 1).
+        let filtrados = catalogos.establecimientos.filter(e =>
+            Number(e.tiene_quirofano) === 1 || Number(e.tiene_sala_parto) === 1
+        );
 
-            // FILTRO DE SEGURIDAD TÉCNICA:
-            // SI es < 24h: Mostrar todos los que tengan Sala de Parto (incluyendo Chone).
-            // SI es > 24h: Mostrar SOLO los que tengan Quirófano (Oculta automáticamente a Chone).
-            if (esMenorA24HorasReales) {
-                return tieneSalaParto;
-            } else {
-                return tieneQuirofano;
-            }
-        });
+        // 3. PASO 3: REGLA DE SEGURIDAD (24H)
+        // si 'esMenorA24HorasReales' es FALSE, oculta específicamente el código '001248'
+        if (!esMenorA24HorasReales) {
+            filtrados = filtrados.filter(e => e.codigo_unico !== CODIGO_PRIORITARIO);
+        }
 
-        // 2. ORDENAMIENTO Y FORMATO:
-        // - CHONE (001248) siempre debe aparecer PRIMERO mediante .sort().
-        // - Luego por Cantón Chone.
-        // - Finalmente alfabético.
+        // 2. PASO 2: ORDENAMIENTO JERÁRQUICO (ID_CANTON 1303)
+        // Aplica un .sort() con esta jerarquía exacta:
+        // A) Si e.codigo_unico === '001248', va al inicio (Prioridad Máxima).
+        // B) Si e.id_canton === 1303, va después (Resto de Chone).
+        // C) El resto de establecimientos (otros cantones) van al final.
+        // Dentro de cada grupo (B y C), ordena alfabéticamente por NOMBRE.
         filtrados.sort((a, b) => {
-            const esLocalA = a.codigo_unico === CODIGO_LOCAL;
-            const esLocalB = b.codigo_unico === CODIGO_LOCAL;
+            // A) Prioridad Máxima
+            if (a.codigo_unico === CODIGO_PRIORITARIO) return -1;
+            if (b.codigo_unico === CODIGO_PRIORITARIO) return 1;
+
+            // B) Resto de Chone
+            const esChoneA = a.id_canton === ID_CANTON_CHONE;
+            const esChoneB = b.id_canton === ID_CANTON_CHONE;
             
-            if (esLocalA) return -1;
-            if (esLocalB) return 1;
+            if (esChoneA && !esChoneB) return -1;
+            if (!esChoneA && esChoneB) return 1;
 
-            if (a.id_canton === ID_CANTON_CHONE && b.id_canton !== ID_CANTON_CHONE) return -1;
-            if (a.id_canton !== ID_CANTON_CHONE && b.id_canton === ID_CANTON_CHONE) return 1;
-
-            return a.nombre.localeCompare(b.nombre);
+            // C) El resto y orden alfabético por NOMBRE
+            return (a.nombre || '').toString().localeCompare((b.nombre || '').toString());
         });
 
         setEstablecimientosSalud(filtrados);
 
-        // 3. Validación de selección actual
-        const estSeleccionado = catalogos.establecimientos.find(e => e.id == formData.datosNacimiento?.id_lugar_parto);
-        if (estSeleccionado) {
-            const tieneQuirofano = estSeleccionado.tiene_quirofano === 1;
-            const tieneSalaParto = estSeleccionado.tiene_sala_parto === 1;
-
-            if (esMenorA24HorasReales) {
-                if (!tieneSalaParto) {
-                    handleChange({ target: { name: 'datosNacimiento.id_lugar_parto', value: '' } });
-                }
-            } else {
-                if (!tieneQuirofano) {
-                    handleChange({ target: { name: 'datosNacimiento.id_lugar_parto', value: '' } });
-                }
+        // Validación de selección actual: Asegurar que el establecimiento seleccionado sigue siendo válido
+        if (formData.datosNacimiento?.id_lugar_parto) {
+            const sigueSiendoValido = filtrados.some(e => e.id == formData.datosNacimiento.id_lugar_parto);
+            if (!sigueSiendoValido) {
+                handleChange({ target: { name: 'datosNacimiento.id_lugar_parto', value: '' } });
             }
         }
-    }, [esMenorA24HorasReales, catalogos.establecimientos, formData.datosNacimiento?.id_lugar_parto]);
+    }, [catalogos.establecimientos, formData.datosNacimiento?.id_lugar_parto, esMenorA24HorasReales]);
 
     useEffect(() => {
         if (catalogos.establecimientos) {
@@ -711,17 +705,15 @@ const SeccionNacimiento = ({ formData, handleChange, handleBlur, catalogos, form
             )}
 
             {formData.datosNacimiento?.fecha_nacimiento && edadInfo.anios < 2 && (
-                <div className={!esRegistroValido ? "opacity-50 pointer-events-none grayscale select-none" : ""}>
-                    <SeccionRepresentante
-                        formData={formData}
-                        handleChange={handleChange}
-                        catalogos={catalogos}
-                        formHabilitado={formHabilitado}
-                        esSubcomponente={true}
-                        edadInfo={edadInfo}
-                        manejarBusquedaMadre={manejarBusquedaMadre}
-                    />
-                </div>
+                <SeccionRepresentante
+                    formData={formData}
+                    handleChange={handleChange}
+                    catalogos={catalogos}
+                    formHabilitado={formHabilitado}
+                    esSubcomponente={true}
+                    edadInfo={edadInfo}
+                    manejarBusquedaMadre={manejarBusquedaMadre}
+                />
             )}
         </div>
     );
