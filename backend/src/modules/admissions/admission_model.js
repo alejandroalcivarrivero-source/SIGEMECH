@@ -10,7 +10,11 @@ module.exports = (sequelize) => {
       autoIncrement: true,
       field: 'id'
     },
-    // ... otros campos
+    unidad_transporte: {
+      type: DataTypes.STRING(50),
+      allowNull: true,
+      field: 'unidad_transporte'
+    },
   }, {
     sequelize,
     tableName: 'admisiones_emergencia',

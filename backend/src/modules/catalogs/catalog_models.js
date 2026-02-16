@@ -59,7 +59,10 @@ module.exports = (sequelize) => {
         codigo_unico: { type: DataTypes.STRING(20), field: 'codigo_unico' },
         tiene_quirofano: { type: DataTypes.INTEGER, field: 'tiene_quirofano' },
         tiene_sala_parto: { type: DataTypes.INTEGER, field: 'tiene_sala_parto' },
-        id_canton: { type: DataTypes.INTEGER, field: 'id_canton' }
+        tiene_ambulancia: { type: DataTypes.INTEGER, field: 'tiene_ambulancia' },
+        tipo_gestion: { type: DataTypes.STRING(100), field: 'tipo_gestion' },
+        id_canton: { type: DataTypes.INTEGER, field: 'id_canton' },
+        id_nivel: { type: DataTypes.INTEGER, field: 'id_nivel' }
     }, { timestamps: false });
     const Etnia = defineModel(sequelize, 'Etnia', 'cat_etnias', {}, { timestamps: false });
     const Instruccion = defineModel(sequelize, 'Instruccion', 'cat_instruccion', {}, { timestamps: false });

@@ -1,3 +1,22 @@
+# CONTEXTO DEL PROYECTO SIGEMECH
+
+## FLUJO DE LIMPIEZA REACTIVA Y HERENCIA DE DATOS (Admisión)
+Para garantizar la integridad de los datos de admisión, se ha implementado un sistema de limpieza reactiva en `SeccionLlegadaMotivo.jsx`:
+
+1.  **Limpieza Total de Residuos**: Cualquier cambio en la 'Forma de Llegada' o en el 'Medio de Transporte de Referencia' (Badge) dispara un reset de los campos `persona_entrega`, `telefono_entrega`, `id_establecimiento_origen` e `id_fuente_informacion`.
+2.  **Herencia Ambulatoria**: Si la forma de llegada es 'AMBULATORIO', el sistema autocompleta:
+    *   `persona_entrega`: Con el Nombre Completo del Paciente (heredado de Pestaña 1).
+    *   `telefono_entrega`: Con el teléfono del paciente.
+    *   `id_fuente_informacion`: Seteado automáticamente como 'DIRECTA'.
+    *   `id_establecimiento_origen`: Seteado como 'NULL/NO APLICA'.
+3.  **Lógica de Referencia (Particular/Taxi)**: Si se selecciona 'PARTICULAR/TAXI':
+    *   Los campos se mantienen vacíos y habilitados para ingreso manual.
+    *   El foco se coloca automáticamente en 'INSTITUCIÓN O PERSONA QUE ENTREGA'.
+    *   `id_fuente_informacion`: Seteado automáticamente como 'INDIRECTA'.
+4.  **Lógica de Referencia (Ambulancia)**: Si se selecciona 'AMBULANCIA':
+    *   `persona_entrega`: Se precarga con el prefijo "UNIDAD DE AMBULANCIA: ".
+    *   `id_fuente_informacion`: Seteado automáticamente como 'INDIRECTA'.
+
 # Recuperación de Lógica Neonatal y Sesión de Usuario
 
 ## Contexto del Problema
@@ -40,9 +59,15 @@ El sistema ahora cumple con los estándares de arquitectura senior:
 ### Blindaje de Nacionalidad Extranjera
 *   Se implementó un bloqueo estricto para pacientes cuya nacionalidad no es **ECUATORIANA**. En estos casos, los selectores de Provincia, Cantón y Parroquia de nacimiento se inhabilitan automáticamente y se resetean a su valor inicial ("Seleccione").
 
-## 🏥 Red de Salud de Chone (Actualización 2026-02-15)
-Se ha incorporado la **Red Privada y de Socorro de Chone** en la Pestaña 6, optimizando el filtrado por capacidades técnicas:
-- **Transporte Sanitario:** Filtrado automático de establecimientos que cuentan con ambulancia (`tiene_ambulancia === 1`) cuando la forma de llegada es terrestre-especializada.
+## 🏥 Red de Salud de Chone (Actualización 2026-02-16)
+Se ha incorporado la **Red Privada y de Socorro de Chone** y la lógica de **Doble Catálogo**, optimizando el filtrado por capacidades técnicas:
+- **Doble Catálogo de Origen:** Implementado en `SeccionLlegadaMotivo.jsx`.
+    - **REFERENCIA:** Filtra red pública (Niveles 1 y 2) para el establecimiento de origen.
+    - **ENTIDAD QUE TRASLADA:** Nuevo selector especializado que utiliza `catalogos.establecimientos` filtrando por `tiene_ambulancia === 1`, con prioridad para entes de socorro locales (Cantón 1303). Se consolida este uso para métricas de servicio de ambulancias.
+- **Cascada de Activación Estricta:** Implementación de dependencias jerárquicas para habilitar campos:
+    - `INSTITUCIÓN O PERSONA QUE ENTREGA` requiere ahora `ESTABLECIMIENTO QUE REFIERE` y `ENTIDAD QUE TRASLADA` (según aplique).
+    - `CÓDIGO/PLACA DE UNIDAD` se habilita únicamente tras seleccionar la entidad.
+- **Limpieza Reactiva Proactiva:** Reset total de todos los selectores de la pestaña al cambiar el tipo de llegada para garantizar la pureza de los datos.
 - **Niveles de Resolución:** Implementación de Badges dinámicos para identificar niveles de complejidad (1, 2 o 3) en establecimientos de origen durante procesos de referencia.
 - **Normalización de Datos:** Transformación automática a MAYÚSCULAS en todos los campos de texto de logística y motivo para mantener la integridad de la base de datos.
 
@@ -499,3 +524,62 @@ Se estableció un protocolo de validación de 3 niveles para el vínculo materno
     - Dirección y Parentesco (MADRE).
     - ID de la madre para vinculación atómica en la base de datos.
 - Se asegura el cumplimiento de la **Soberanía Lingüística** con variables normalizadas: `cedulaMadre`, `tieneAdmisionReciente`.
+
+## 🏥 Refactorización de Establecimiento de Origen y Flujo de Referencia (2026-02-16)
+
+Se ha optimizado la lógica del **Establecimiento de Origen** en la Pestaña 6 para fortalecer la Red Pública y garantizar la integridad de los datos según la forma de llegada:
+
+### 1. Comportamiento Dinámico y Limpieza
+- **Modo AMBULATORIO:** Se inhabilita automáticamente el selector de establecimiento y se establece el valor **'NO APLICA'**. Al cambiar a este modo, cualquier selección previa de establecimiento se limpia automáticamente para evitar datos inconsistentes.
+- **Modo REFERENCIA:** El catálogo de establecimientos se filtra dinámicamente para mostrar **ÚNICAMENTE** instituciones con `tipo_gestion === "PÚBLICO"`, cerrando el flujo exclusivo a la Red Pública de Salud.
+
+### 2. Ordenamiento Jerárquico de Referencia (Prioridad Local)
+Para agilizar la selección en casos de referencia, se implementó un algoritmo de ordenamiento por niveles y ubicación:
+- **Prioridad 1:** Establecimientos del Cantón **CHONE (1303)** con **Nivel 1**.
+- **Prioridad 2:** Establecimientos del Cantón **CHONE (1303)** con **Nivel 2**.
+- **Prioridad 3:** Resto de establecimientos PÚBLICOS (Nivel 1 antes que Nivel 2).
+
+### 3. Normalización y Estándar Visual
+- **Formato de Label:** Se estandarizó la visualización al formato `${codigo_unico} - ${nombre}` en estricto **MAYÚSCULAS**.
+- **UX de Emergencia:** Se mantienen los indicadores visuales (como el emoji 🚑 para establecimientos con ambulancia) para facilitar la toma de decisiones rápida.
+
+## 🚀 ACTIVACIÓN PROGRESIVA Y LIMPIEZA REACTIVA (2026-02-16)
+
+Se ha implementado una capa de seguridad y automatización en la **Pestaña 6 (Arribo)** para prevenir inconsistencias de datos y mejorar la experiencia del usuario:
+
+### 1. Estado Inicial y Bloqueo Progresivo
+- **Control de Flujo:** Los campos clave (Establecimiento de Origen, Institución que Entrega, Teléfono y Condición) ahora se encuentran deshabilitados (`disabled`) por defecto.
+- **Activación por Selección:** Estos campos solo se desbloquean una vez que el usuario selecciona una **Forma de Llegada** válida, forzando un flujo de ingreso lógico y ordenado.
+
+### 2. Limpieza Reactiva (useEffect)
+- Se implementó un observador (`useEffect`) que detecta cambios en la **Forma de Llegada**.
+- Al cambiar la selección (o volver a "SELECCIONE"), el sistema resetea automáticamente a cadena vacía (`''`) los campos dependientes: `id_establecimiento_origen`, `persona_entrega`, `telefono_entrega`, y `observaciones_arribo`, garantizando que no persistan datos de flujos anteriores.
+
+### 3. Autollenado Inteligente (Flujo Ambulatorio)
+Para pacientes que llegan por sus propios medios (**AMBULATORIO**), se automatiza el registro con datos de la Pestaña 1:
+- **Institución/Persona que Entrega:** Se concatena el nombre completo del paciente (Apellidos + Nombres) en MAYÚSCULAS.
+- **Teléfono del Entregador:** Se hereda el celular o teléfono fijo registrado en la filiación.
+- **Establecimiento de Origen:** Se establece automáticamente como `null` (**NO APLICA**).
+- **Inviolabilidad:** Los campos autollanados se bloquean visualmente (`bg-gray-200`) para evitar alteraciones manuales en este flujo específico.
+
+### 4. Señalética de Auditoría
+- Se optimizaron los **Badges e Info-Messages** para que aparezcan únicamente cuando corresponden al flujo activo (ej. alertas de ambulancia solo en traslados especializados), manteniendo la interfaz limpia y enfocada.
+
+## 🚑 SEPARACIÓN DE ORIGEN Y TRANSPORTE (PESTAÑA 6) - 2026-02-16
+Se ha implementado una distinción física y lógica entre la **Entidad que Refiere** (Origen) y la **Unidad de Transporte** para evitar confusión operativa:
+
+### 1. Campos Exclusivos y Señalética
+- **Unidad de Transporte:** Nuevo campo 'unidad_transporte' visible únicamente si la forma de llegada es **AMBULANCIA** o si es **REFERENCIA** con el badge **AMBULANCIA** activo.
+  - Label: 'UNIDAD DE AMBULANCIA (CÓDIGO/PLACA)'.
+  - Placeholder: 'EJ: ALFA-1 O ECU-911'.
+- **Establecimiento que Refiere:** Se mantiene exclusivo para la entidad médica (Hospital/Centro de Salud) que origina la transferencia.
+  - Label: 'ESTABLECIMIENTO QUE REFIERE'.
+  - Placeholder: 'BUSQUE EL HOSPITAL O CENTRO DE SALUD'.
+
+### 2. Limpieza Reactiva Reforzada
+- Cualquier cambio en **'FORMA DE LLEGADA'** dispara una limpieza atómica de **TODOS** los campos de la sección (Persona que entrega, Teléfono, Establecimiento, Fuente de Información y Unidad de Transporte), eliminando residuos de ambulancias en registros ambulatorios.
+
+### 3. Activación en Cascada (Cascading Activation)
+- El campo **'INSTITUCIÓN O PERSONA QUE ENTREGA'** permanece inhabilitado hasta que se cumplan las condiciones mínimas de origen:
+  - En **REFERENCIA/AMBULANCIA**: Requiere haber definido el Establecimiento o la Unidad de Transporte según corresponda.
+  - En **AMBULATORIO**: Se auto-completa y bloquea automáticamente con los datos del paciente.
