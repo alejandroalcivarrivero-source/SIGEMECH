@@ -1,0 +1,6204 @@
+{
+"cat_motivo_consulta_sintomas": [
+	{
+		"id_sintoma" : 1,
+		"motivo_consulta_sintoma" : "FIEBRE (AGUDA)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:47.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 2,
+		"motivo_consulta_sintoma" : "FIEBRE (PERSISTENTE)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:47.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 3,
+		"motivo_consulta_sintoma" : "FIEBRE (INTERMITENTE)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:47.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 4,
+		"motivo_consulta_sintoma" : "MALESTAR GENERAL",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:47.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 5,
+		"motivo_consulta_sintoma" : "ASTENIA (CANSANCIO, FATIGA, DEBILIDAD)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:47.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 6,
+		"motivo_consulta_sintoma" : "ADINAMIA (FALTA DE ENERGÍA)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:47.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 7,
+		"motivo_consulta_sintoma" : "PÉRDIDA DE PESO INEXPLICABLE",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:47.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 8,
+		"motivo_consulta_sintoma" : "AUMENTO DE PESO INEXPLICABLE",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:47.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 9,
+		"motivo_consulta_sintoma" : "ANOREXIA (PÉRDIDA DE APETITO)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:47.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 10,
+		"motivo_consulta_sintoma" : "SUDORACIÓN NOCTURNA",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:47.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 11,
+		"motivo_consulta_sintoma" : "ESCALOFRÍOS",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:47.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 12,
+		"motivo_consulta_sintoma" : "DOLOR (GENERALIZADO)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:47.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 13,
+		"motivo_consulta_sintoma" : "DOLOR (LOCALIZADO)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:47.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 14,
+		"motivo_consulta_sintoma" : "DOLOR (AGUDO)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:47.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 15,
+		"motivo_consulta_sintoma" : "DOLOR (CRÓNICO)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:47.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 16,
+		"motivo_consulta_sintoma" : "DOLOR (INESPECÍFICO)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:47.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 17,
+		"motivo_consulta_sintoma" : "EDEMA (HINCHAZÓN LOCALIZADA)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:47.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 18,
+		"motivo_consulta_sintoma" : "EDEMA (HINCHAZÓN GENERALIZADA)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:47.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 19,
+		"motivo_consulta_sintoma" : "MAREO",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:47.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 20,
+		"motivo_consulta_sintoma" : "VÉRTIGO (SENSACIÓN DE GIRO)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:47.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 21,
+		"motivo_consulta_sintoma" : "VÉRTIGO (SENSACIÓN DE INESTABILIDAD)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:47.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 22,
+		"motivo_consulta_sintoma" : "DESMAYO",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:47.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 23,
+		"motivo_consulta_sintoma" : "SÍNCOPE (PÉRDIDA TRANSITORIA DE CONCIENCIA)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:47.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 24,
+		"motivo_consulta_sintoma" : "PALIDEZ",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:47.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 25,
+		"motivo_consulta_sintoma" : "ICTERICIA (COLORACIÓN AMARILLENTA DE PIEL Y OJOS)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:47.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 26,
+		"motivo_consulta_sintoma" : "CIANOSIS (COLORACIÓN AZULADA DE PIEL Y MUCOSAS)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:47.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 27,
+		"motivo_consulta_sintoma" : "LINFADENOPATÍAS (GANGLIOS INFLAMADOS)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:47.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 28,
+		"motivo_consulta_sintoma" : "PRURITO (PICAZÓN GENERALIZADA)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:47.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 29,
+		"motivo_consulta_sintoma" : "PRURITO (PICAZÓN LOCALIZADA)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:47.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 30,
+		"motivo_consulta_sintoma" : "REACCIÓN ALÉRGICA (RASH)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:47.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 31,
+		"motivo_consulta_sintoma" : "REACCIÓN ALÉRGICA (URTICARIA)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 32,
+		"motivo_consulta_sintoma" : "REACCIÓN ALÉRGICA (ANGIOEDEMA)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 33,
+		"motivo_consulta_sintoma" : "INTOLERANCIA AL FRÍO",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 34,
+		"motivo_consulta_sintoma" : "INTOLERANCIA AL CALOR",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 35,
+		"motivo_consulta_sintoma" : "SENSACIÓN DE HORMIGUEO (PARESTESIAS)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 36,
+		"motivo_consulta_sintoma" : "ENTUMECIMIENTO",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 37,
+		"motivo_consulta_sintoma" : "CALAMBRES MUSCULARES",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 38,
+		"motivo_consulta_sintoma" : "ESPASMOS MUSCULARES",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 39,
+		"motivo_consulta_sintoma" : "TEMBLOR (EN REPOSO)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 40,
+		"motivo_consulta_sintoma" : "TEMBLOR (CON MOVIMIENTO)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 41,
+		"motivo_consulta_sintoma" : "RIGIDEZ (MATUTINA)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 42,
+		"motivo_consulta_sintoma" : "RIGIDEZ (ARTICULAR)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 43,
+		"motivo_consulta_sintoma" : "SENSACIÓN DE ARDOR (CUTÁNEO)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 44,
+		"motivo_consulta_sintoma" : "SENSACIÓN DE ARDOR (INTERNO)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 45,
+		"motivo_consulta_sintoma" : "SENSACIÓN DE OPRESIÓN (EN PECHO)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 46,
+		"motivo_consulta_sintoma" : "SENSACIÓN DE OPRESIÓN (EN CABEZA)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 47,
+		"motivo_consulta_sintoma" : "SENSACIÓN DE PESADEZ",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 48,
+		"motivo_consulta_sintoma" : "FATIGA CRÓNICA",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 49,
+		"motivo_consulta_sintoma" : "DOLOR DE CABEZA (CEFALEA)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 50,
+		"motivo_consulta_sintoma" : "DOLOR DE CABEZA (MIGRAÑA)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 51,
+		"motivo_consulta_sintoma" : "DOLOR DE CABEZA (TENSIONAL)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 52,
+		"motivo_consulta_sintoma" : "SENSACIÓN DE \"CABEZA LIGERA\"",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 53,
+		"motivo_consulta_sintoma" : "DESEQUILIBRIO AL CAMINAR",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 54,
+		"motivo_consulta_sintoma" : "INESTABILIDAD POSTURAL",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 55,
+		"motivo_consulta_sintoma" : "SENSACIÓN DE DESPERSONALIZACIÓN\/DESREALIZACIÓN",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 56,
+		"motivo_consulta_sintoma" : "CAMBIOS EN LA VOZ (SIN CAUSA RESPIRATORIA APARENTE)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 57,
+		"motivo_consulta_sintoma" : "RONQUIDOS (SIN APNEA DEL SUEÑO CONFIRMADA)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 58,
+		"motivo_consulta_sintoma" : "BRUXISMO (RECHINAR DE DIENTES)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 59,
+		"motivo_consulta_sintoma" : "SUDORACIÓN EXCESIVA (HIPERHIDROSIS GENERALIZADA)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 60,
+		"motivo_consulta_sintoma" : "SEQUEDAD DE BOCA PERSISTENTE (XEROSTOMÍA)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 61,
+		"motivo_consulta_sintoma" : "SEQUEDAD OCULAR",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 62,
+		"motivo_consulta_sintoma" : "OJOS LLOROSOS",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 63,
+		"motivo_consulta_sintoma" : "SENSIBILIDAD A LA LUZ (FOTOFOBIA)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 64,
+		"motivo_consulta_sintoma" : "SENSIBILIDAD AL SONIDO (HIPERACUSIA)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 65,
+		"motivo_consulta_sintoma" : "DOLOR EN LAS ARTICULACIONES TEMPOROMANDIBULARES (ATM)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 66,
+		"motivo_consulta_sintoma" : "ZUMBIDO EN LOS OÍDOS (TINNITUS)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 67,
+		"motivo_consulta_sintoma" : "VISIÓN DE \"MOSCAS VOLANTES\" (MIODESOPSIAS)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 68,
+		"motivo_consulta_sintoma" : "DESTELLOS DE LUZ (FOTOPSIAS)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 69,
+		"motivo_consulta_sintoma" : "PÉRDIDA DE VISIÓN PERIFÉRICA",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 70,
+		"motivo_consulta_sintoma" : "DOLOR DENTAL (SIN CAUSA APARENTE)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 71,
+		"motivo_consulta_sintoma" : "SANGRADO DE ENCÍAS",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 72,
+		"motivo_consulta_sintoma" : "MAL ALIENTO (HALITOSIS)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 73,
+		"motivo_consulta_sintoma" : "ÚLCERAS BUCALES RECURRENTES",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 74,
+		"motivo_consulta_sintoma" : "DOLOR DE GARGANTA CRÓNICO (SIN INFECCIÓN)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 75,
+		"motivo_consulta_sintoma" : "SENSACIÓN DE NUDO EN LA GARGANTA (GLOBO HISTÉRICO)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 76,
+		"motivo_consulta_sintoma" : "DIFICULTAD PARA RESPIRAR AL HABLAR",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 77,
+		"motivo_consulta_sintoma" : "DOLOR AL DEGLUTIR LÍQUIDOS",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 78,
+		"motivo_consulta_sintoma" : "DOLOR AL DEGLUTIR SÓLIDOS",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 79,
+		"motivo_consulta_sintoma" : "SENSACIÓN DE ARDOR EN LA LENGUA",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 80,
+		"motivo_consulta_sintoma" : "CAMBIOS EN EL COLOR DE LA LENGUA",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 81,
+		"motivo_consulta_sintoma" : "GRIETAS EN LAS COMISURAS DE LA BOCA (QUEILITIS ANGULAR)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 82,
+		"motivo_consulta_sintoma" : "LABIOS SECOS Y AGRIETADOS",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 83,
+		"motivo_consulta_sintoma" : "DOLOR EN EL PECHO ATÍPICO (NO CARDÍACO)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 84,
+		"motivo_consulta_sintoma" : "DOLOR EN LA ESPALDA ATÍPICO (NO MUSCULOESQUELÉTICO)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 85,
+		"motivo_consulta_sintoma" : "DOLOR EN LAS EXTREMIDADES (SIN CAUSA APARENTE)",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 86,
+		"motivo_consulta_sintoma" : "SENSACIÓN DE FRÍO EN UNA EXTREMIDAD",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 87,
+		"motivo_consulta_sintoma" : "SENSACIÓN DE CALOR EN UNA EXTREMIDAD",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 88,
+		"motivo_consulta_sintoma" : "CAMBIOS EN EL COLOR DE LA PIEL DE LAS EXTREMIDADES",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 89,
+		"motivo_consulta_sintoma" : "UÑAS FRÁGILES",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 90,
+		"motivo_consulta_sintoma" : "UÑAS CON ESTRÍAS",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 91,
+		"motivo_consulta_sintoma" : "UÑAS CON MANCHAS",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 92,
+		"motivo_consulta_sintoma" : "PELO QUEBRADIZO",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 93,
+		"motivo_consulta_sintoma" : "PELO GRASO",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 94,
+		"motivo_consulta_sintoma" : "PELO SECO",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 95,
+		"motivo_consulta_sintoma" : "APARICIÓN DE CANAS PREMATURAS",
+		"categoria" : "GENERAL",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 96,
+		"motivo_consulta_sintoma" : "TOS (SECA)",
+		"categoria" : "RESPIRATORIO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 97,
+		"motivo_consulta_sintoma" : "TOS (PRODUCTIVA)",
+		"categoria" : "RESPIRATORIO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 98,
+		"motivo_consulta_sintoma" : "TOS (CON FLEMA)",
+		"categoria" : "RESPIRATORIO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 99,
+		"motivo_consulta_sintoma" : "TOS (CON SANGRE\/HEMOPTISIS)",
+		"categoria" : "RESPIRATORIO",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 100,
+		"motivo_consulta_sintoma" : "DIFICULTAD PARA RESPIRAR (DISNEA)",
+		"categoria" : "RESPIRATORIO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 101,
+		"motivo_consulta_sintoma" : "DIFICULTAD PARA RESPIRAR (DE ESFUERZO)",
+		"categoria" : "RESPIRATORIO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 102,
+		"motivo_consulta_sintoma" : "DIFICULTAD PARA RESPIRAR (EN REPOSO)",
+		"categoria" : "RESPIRATORIO",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 103,
+		"motivo_consulta_sintoma" : "DIFICULTAD PARA RESPIRAR (NOCTURNA)",
+		"categoria" : "RESPIRATORIO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 104,
+		"motivo_consulta_sintoma" : "SIBILANCIAS (SILBIDOS AL RESPIRAR)",
+		"categoria" : "RESPIRATORIO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 105,
+		"motivo_consulta_sintoma" : "DOLOR DE GARGANTA (ODINOFAGIA)",
+		"categoria" : "RESPIRATORIO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 106,
+		"motivo_consulta_sintoma" : "RONQUERA",
+		"categoria" : "RESPIRATORIO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 107,
+		"motivo_consulta_sintoma" : "DISFONÍA",
+		"categoria" : "RESPIRATORIO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 108,
+		"motivo_consulta_sintoma" : "CONGESTIÓN NASAL",
+		"categoria" : "RESPIRATORIO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 109,
+		"motivo_consulta_sintoma" : "SECRECIÓN NASAL (RINORREA)",
+		"categoria" : "RESPIRATORIO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 110,
+		"motivo_consulta_sintoma" : "ESTORNUDOS",
+		"categoria" : "RESPIRATORIO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 111,
+		"motivo_consulta_sintoma" : "DOLOR EN EL PECHO AL RESPIRAR (PLEURÍTICO)",
+		"categoria" : "RESPIRATORIO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 112,
+		"motivo_consulta_sintoma" : "OPRESIÓN EN EL PECHO",
+		"categoria" : "RESPIRATORIO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 113,
+		"motivo_consulta_sintoma" : "RESPIRACIÓN RUIDOSA (ESTRIDOR)",
+		"categoria" : "RESPIRATORIO",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 114,
+		"motivo_consulta_sintoma" : "RESPIRACIÓN RUIDOSA (RONCUS)",
+		"categoria" : "RESPIRATORIO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 115,
+		"motivo_consulta_sintoma" : "APNEA DEL SUEÑO (SOSPECHA)",
+		"categoria" : "RESPIRATORIO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 116,
+		"motivo_consulta_sintoma" : "PAUSAS RESPIRATORIAS",
+		"categoria" : "RESPIRATORIO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 117,
+		"motivo_consulta_sintoma" : "DOLOR EN LOS SENOS PARANASALES",
+		"categoria" : "RESPIRATORIO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 118,
+		"motivo_consulta_sintoma" : "PÉRDIDA DEL OLFATO (ANOSMIA)",
+		"categoria" : "RESPIRATORIO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 119,
+		"motivo_consulta_sintoma" : "VOZ ALTERADA",
+		"categoria" : "RESPIRATORIO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 120,
+		"motivo_consulta_sintoma" : "SENSACIÓN DE CUERPO EXTRAÑO EN LA GARGANTA",
+		"categoria" : "RESPIRATORIO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 121,
+		"motivo_consulta_sintoma" : "TIRAJE INTERCOSTAL\/SUBCOSTAL (EN NIÑOS)",
+		"categoria" : "RESPIRATORIO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 122,
+		"motivo_consulta_sintoma" : "ALETEO NASAL (EN NIÑOS)",
+		"categoria" : "RESPIRATORIO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 123,
+		"motivo_consulta_sintoma" : "CIANOSIS PERIORAL (ALREDEDOR DE LA BOCA)",
+		"categoria" : "RESPIRATORIO",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 124,
+		"motivo_consulta_sintoma" : "DOLOR ABDOMINAL (TIPO)",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 125,
+		"motivo_consulta_sintoma" : "DOLOR ABDOMINAL (LOCALIZACIÓN)",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 126,
+		"motivo_consulta_sintoma" : "DOLOR ABDOMINAL (IRRADIACIÓN)",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 127,
+		"motivo_consulta_sintoma" : "DOLOR ABDOMINAL (CÓLICO)",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 128,
+		"motivo_consulta_sintoma" : "DOLOR ABDOMINAL (PUNZANTE)",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 129,
+		"motivo_consulta_sintoma" : "NÁUSEAS",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 130,
+		"motivo_consulta_sintoma" : "VÓMITOS",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:48.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 131,
+		"motivo_consulta_sintoma" : "VÓMITOS (EN PROYECTIL)",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 132,
+		"motivo_consulta_sintoma" : "VÓMITOS (CON SANGRE\/HEMATEMESIS)",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 133,
+		"motivo_consulta_sintoma" : "DIARREA (AGUDA)",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 134,
+		"motivo_consulta_sintoma" : "DIARREA (CRÓNICA)",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 135,
+		"motivo_consulta_sintoma" : "DIARREA (CON SANGRE\/HEMATOQUECIA)",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 136,
+		"motivo_consulta_sintoma" : "DIARREA (CON MOCO)",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 137,
+		"motivo_consulta_sintoma" : "DIARREA (ESTEATORREA)",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 138,
+		"motivo_consulta_sintoma" : "ESTREÑIMIENTO (CRÓNICO)",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 139,
+		"motivo_consulta_sintoma" : "ESTREÑIMIENTO (AGUDO)",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 140,
+		"motivo_consulta_sintoma" : "ESTREÑIMIENTO (CON ESFUERZO)",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 141,
+		"motivo_consulta_sintoma" : "ACIDEZ ESTOMACAL (PIROSIS)",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 142,
+		"motivo_consulta_sintoma" : "REFLUJO GASTROESOFÁGICO",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 143,
+		"motivo_consulta_sintoma" : "INDIGESTIÓN",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 144,
+		"motivo_consulta_sintoma" : "DISPEPSIA",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 145,
+		"motivo_consulta_sintoma" : "HINCHAZÓN ABDOMINAL",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 146,
+		"motivo_consulta_sintoma" : "DISTENSIÓN ABDOMINAL",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 147,
+		"motivo_consulta_sintoma" : "GASES (FLATULENCIAS)",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 148,
+		"motivo_consulta_sintoma" : "GASES (ERUCTOS FRECUENTES)",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 149,
+		"motivo_consulta_sintoma" : "SANGRE EN LAS HECES (MELENA - HECES NEGRAS)",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 150,
+		"motivo_consulta_sintoma" : "SANGRE EN LAS HECES (HEMATOQUECIA - SANGRE ROJA)",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 151,
+		"motivo_consulta_sintoma" : "CAMBIOS EN EL HÁBITO INTESTINAL",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 152,
+		"motivo_consulta_sintoma" : "DOLOR AL DEFECAR",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 153,
+		"motivo_consulta_sintoma" : "HEMORROIDES (SANGRADO)",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 154,
+		"motivo_consulta_sintoma" : "HEMORROIDES (DOLOR)",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 155,
+		"motivo_consulta_sintoma" : "HEMORROIDES (PROLAPSO)",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 156,
+		"motivo_consulta_sintoma" : "FISURA ANAL (DOLOR)",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 157,
+		"motivo_consulta_sintoma" : "FISURA ANAL (SANGRADO)",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 158,
+		"motivo_consulta_sintoma" : "DIFICULTAD PARA TRAGAR (DISFAGIA)",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 159,
+		"motivo_consulta_sintoma" : "DIFICULTAD PARA TRAGAR (PARA SÓLIDOS)",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 160,
+		"motivo_consulta_sintoma" : "DIFICULTAD PARA TRAGAR (PARA LÍQUIDOS)",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 161,
+		"motivo_consulta_sintoma" : "DOLOR AL TRAGAR (ODINOFAGIA)",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 162,
+		"motivo_consulta_sintoma" : "MASA ABDOMINAL PALPABLE",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 163,
+		"motivo_consulta_sintoma" : "HECES PÁLIDAS (ACOLIA)",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 164,
+		"motivo_consulta_sintoma" : "ORINA OSCURA (COLURIA)",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 165,
+		"motivo_consulta_sintoma" : "RUIDOS INTESTINALES AUMENTADOS",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 166,
+		"motivo_consulta_sintoma" : "RUIDOS INTESTINALES DISMINUIDOS",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 167,
+		"motivo_consulta_sintoma" : "DOLOR EN EL HIPOCONDRIO DERECHO",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 168,
+		"motivo_consulta_sintoma" : "DOLOR EN EL HIPOCONDRIO IZQUIERDO",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 169,
+		"motivo_consulta_sintoma" : "DOLOR EN EL EPIGASTRIO",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 170,
+		"motivo_consulta_sintoma" : "REGURGITACIÓN",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 171,
+		"motivo_consulta_sintoma" : "SENSACIÓN DE PLENITUD POSTPRANDIAL",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 172,
+		"motivo_consulta_sintoma" : "DOLOR PERIANAL",
+		"categoria" : "GASTROINTESTINAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 173,
+		"motivo_consulta_sintoma" : "DOLOR EN EL PECHO (ANGINA)",
+		"categoria" : "CARDIOVASCULAR",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 174,
+		"motivo_consulta_sintoma" : "DOLOR EN EL PECHO (OPRESIVO)",
+		"categoria" : "CARDIOVASCULAR",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 175,
+		"motivo_consulta_sintoma" : "DOLOR EN EL PECHO (PUNZANTE)",
+		"categoria" : "CARDIOVASCULAR",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 176,
+		"motivo_consulta_sintoma" : "DOLOR EN EL PECHO (IRRADIADO)",
+		"categoria" : "CARDIOVASCULAR",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 177,
+		"motivo_consulta_sintoma" : "PALPITACIONES (SENSACIÓN DE LATIDOS RÁPIDOS)",
+		"categoria" : "CARDIOVASCULAR",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 178,
+		"motivo_consulta_sintoma" : "PALPITACIONES (SENSACIÓN DE LATIDOS FUERTES)",
+		"categoria" : "CARDIOVASCULAR",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 179,
+		"motivo_consulta_sintoma" : "PALPITACIONES (SENSACIÓN DE LATIDOS IRREGULARES)",
+		"categoria" : "CARDIOVASCULAR",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 180,
+		"motivo_consulta_sintoma" : "FALTA DE AIRE (DISNEA DE ESFUERZO)",
+		"categoria" : "CARDIOVASCULAR",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 181,
+		"motivo_consulta_sintoma" : "FALTA DE AIRE (EN REPOSO)",
+		"categoria" : "CARDIOVASCULAR",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 182,
+		"motivo_consulta_sintoma" : "ORTOPNEA (DIFICULTAD PARA RESPIRAR ACOSTADO)",
+		"categoria" : "CARDIOVASCULAR",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 183,
+		"motivo_consulta_sintoma" : "DISNEA PAROXÍSTICA NOCTURNA",
+		"categoria" : "CARDIOVASCULAR",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 184,
+		"motivo_consulta_sintoma" : "HINCHAZÓN DE PIERNAS (EDEMA)",
+		"categoria" : "CARDIOVASCULAR",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 185,
+		"motivo_consulta_sintoma" : "HINCHAZÓN DE TOBILLOS (EDEMA)",
+		"categoria" : "CARDIOVASCULAR",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 186,
+		"motivo_consulta_sintoma" : "EDEMA (BILATERAL)",
+		"categoria" : "CARDIOVASCULAR",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 187,
+		"motivo_consulta_sintoma" : "EDEMA (UNILATERAL)",
+		"categoria" : "CARDIOVASCULAR",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 188,
+		"motivo_consulta_sintoma" : "CANSANCIO FÁCIL (FATIGA CARDIOVASCULAR)",
+		"categoria" : "CARDIOVASCULAR",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 189,
+		"motivo_consulta_sintoma" : "MAREOS (DE ORIGEN CARDIOVASCULAR)",
+		"categoria" : "CARDIOVASCULAR",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 190,
+		"motivo_consulta_sintoma" : "SÍNCOPE (PÉRDIDA DE CONCIENCIA DE ORIGEN CARDIOVASCULAR)",
+		"categoria" : "CARDIOVASCULAR",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 191,
+		"motivo_consulta_sintoma" : "PRESIÓN ARTERIAL ALTA (SÍNTOMAS DE CRISIS HIPERTENSIVA)",
+		"categoria" : "CARDIOVASCULAR",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 192,
+		"motivo_consulta_sintoma" : "PRESIÓN ARTERIAL BAJA (SÍNTOMAS DE HIPOTENSIÓN)",
+		"categoria" : "CARDIOVASCULAR",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 193,
+		"motivo_consulta_sintoma" : "DOLOR EN LAS PANTORRILLAS AL CAMINAR (CLAUDICACIÓN INTERMITENTE)",
+		"categoria" : "CARDIOVASCULAR",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 194,
+		"motivo_consulta_sintoma" : "VENAS VARICOSAS (DOLOR)",
+		"categoria" : "CARDIOVASCULAR",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 195,
+		"motivo_consulta_sintoma" : "VENAS VARICOSAS (PESADEZ)",
+		"categoria" : "CARDIOVASCULAR",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 196,
+		"motivo_consulta_sintoma" : "VENAS VARICOSAS (HINCHAZÓN)",
+		"categoria" : "CARDIOVASCULAR",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 197,
+		"motivo_consulta_sintoma" : "CIANOSIS (COLORACIÓN AZULADA)",
+		"categoria" : "CARDIOVASCULAR",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 198,
+		"motivo_consulta_sintoma" : "DOLOR EN EL BRAZO IZQUIERDO (IRRADIADO)",
+		"categoria" : "CARDIOVASCULAR",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 199,
+		"motivo_consulta_sintoma" : "DOLOR EN LA MANDÍBULA (IRRADIADO)",
+		"categoria" : "CARDIOVASCULAR",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 200,
+		"motivo_consulta_sintoma" : "SUDORACIÓN FRÍA (ASOCIADA A DOLOR TORÁCICO)",
+		"categoria" : "CARDIOVASCULAR",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 201,
+		"motivo_consulta_sintoma" : "DOLOR DE ESPALDA CON SÍNTOMAS CARDÍACOS (IRRADIADO)",
+		"categoria" : "CARDIOVASCULAR",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 202,
+		"motivo_consulta_sintoma" : "DESMAYO AL LEVANTARSE (HIPOTENSIÓN ORTOSTÁTICA)",
+		"categoria" : "CARDIOVASCULAR",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 203,
+		"motivo_consulta_sintoma" : "SENSACIÓN DE OPRESIÓN EN EL CUELLO (DE ORIGEN CARDÍACO)",
+		"categoria" : "CARDIOVASCULAR",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 204,
+		"motivo_consulta_sintoma" : "PULSO IRREGULAR",
+		"categoria" : "CARDIOVASCULAR",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 205,
+		"motivo_consulta_sintoma" : "PULSO DÉBIL",
+		"categoria" : "CARDIOVASCULAR",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 206,
+		"motivo_consulta_sintoma" : "DEDOS FRÍOS Y PÁLIDOS (FENÓMENO DE RAYNAUD)",
+		"categoria" : "CARDIOVASCULAR",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 207,
+		"motivo_consulta_sintoma" : "DOLOR AL ORINAR (DISURIA)",
+		"categoria" : "UROLÓGICO\/RENAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 208,
+		"motivo_consulta_sintoma" : "DOLOR AL ORINAR (ARDOR)",
+		"categoria" : "UROLÓGICO\/RENAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 209,
+		"motivo_consulta_sintoma" : "ORINAR CON MUCHA FRECUENCIA (POLAQUIURIA)",
+		"categoria" : "UROLÓGICO\/RENAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 210,
+		"motivo_consulta_sintoma" : "NECESIDAD URGENTE DE ORINAR (TENESMO VESICAL)",
+		"categoria" : "UROLÓGICO\/RENAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 211,
+		"motivo_consulta_sintoma" : "ORINAR POR LA NOCHE (NICTURIA)",
+		"categoria" : "UROLÓGICO\/RENAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 212,
+		"motivo_consulta_sintoma" : "SANGRE EN LA ORINA (HEMATURIA MACROSCÓPICA)",
+		"categoria" : "UROLÓGICO\/RENAL",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 213,
+		"motivo_consulta_sintoma" : "SANGRE EN LA ORINA (HEMATURIA MICROSCÓPICA)",
+		"categoria" : "UROLÓGICO\/RENAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 214,
+		"motivo_consulta_sintoma" : "ORINA TURBIA",
+		"categoria" : "UROLÓGICO\/RENAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 215,
+		"motivo_consulta_sintoma" : "ORINA CON MAL OLOR",
+		"categoria" : "UROLÓGICO\/RENAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 216,
+		"motivo_consulta_sintoma" : "INCONTINENCIA URINARIA (DE ESFUERZO)",
+		"categoria" : "UROLÓGICO\/RENAL",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 217,
+		"motivo_consulta_sintoma" : "INCONTINENCIA URINARIA (DE URGENCIA)",
+		"categoria" : "UROLÓGICO\/RENAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 218,
+		"motivo_consulta_sintoma" : "INCONTINENCIA URINARIA (POR REBOSAMIENTO)",
+		"categoria" : "UROLÓGICO\/RENAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 219,
+		"motivo_consulta_sintoma" : "DIFICULTAD PARA INICIAR LA MICCIÓN (VACILACIÓN)",
+		"categoria" : "UROLÓGICO\/RENAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 220,
+		"motivo_consulta_sintoma" : "CHORRO URINARIO DÉBIL",
+		"categoria" : "UROLÓGICO\/RENAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 221,
+		"motivo_consulta_sintoma" : "CHORRO URINARIO INTERMITENTE",
+		"categoria" : "UROLÓGICO\/RENAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 222,
+		"motivo_consulta_sintoma" : "DOLOR EN LA ZONA LUMBAR (FLANCO UNILATERAL)",
+		"categoria" : "UROLÓGICO\/RENAL",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 223,
+		"motivo_consulta_sintoma" : "DOLOR EN LA ZONA LUMBAR (FLANCO BILATERAL)",
+		"categoria" : "UROLÓGICO\/RENAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 224,
+		"motivo_consulta_sintoma" : "RETENCIÓN URINARIA (INCAPACIDAD PARA VACIAR LA VEJIGA)",
+		"categoria" : "UROLÓGICO\/RENAL",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 225,
+		"motivo_consulta_sintoma" : "DOLOR TESTICULAR",
+		"categoria" : "UROLÓGICO\/RENAL",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 226,
+		"motivo_consulta_sintoma" : "HINCHAZÓN ESCROTAL",
+		"categoria" : "UROLÓGICO\/RENAL",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 227,
+		"motivo_consulta_sintoma" : "EYACULACIÓN DOLOROSA",
+		"categoria" : "UROLÓGICO\/RENAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 228,
+		"motivo_consulta_sintoma" : "DISFUNCIÓN ERÉCTIL",
+		"categoria" : "UROLÓGICO\/RENAL",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 229,
+		"motivo_consulta_sintoma" : "CAMBIOS EN EL VOLUMEN DE ORINA (POLIURIA)",
+		"categoria" : "UROLÓGICO\/RENAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 230,
+		"motivo_consulta_sintoma" : "CAMBIOS EN EL VOLUMEN DE ORINA (OLIGURIA)",
+		"categoria" : "UROLÓGICO\/RENAL",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:49.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 231,
+		"motivo_consulta_sintoma" : "CAMBIOS EN EL VOLUMEN DE ORINA (ANURIA)",
+		"categoria" : "UROLÓGICO\/RENAL",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 232,
+		"motivo_consulta_sintoma" : "DOLOR SUPRAPÚBICO",
+		"categoria" : "UROLÓGICO\/RENAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 233,
+		"motivo_consulta_sintoma" : "DOLOR EN LA URETRA",
+		"categoria" : "UROLÓGICO\/RENAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 234,
+		"motivo_consulta_sintoma" : "SECRECIÓN URETRAL",
+		"categoria" : "UROLÓGICO\/RENAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 235,
+		"motivo_consulta_sintoma" : "PRURITO GENITAL (MASCULINO)",
+		"categoria" : "UROLÓGICO\/RENAL",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 236,
+		"motivo_consulta_sintoma" : "MASA EN LOS TESTÍCULOS",
+		"categoria" : "UROLÓGICO\/RENAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 237,
+		"motivo_consulta_sintoma" : "DOLOR EN EL PENE",
+		"categoria" : "UROLÓGICO\/RENAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 238,
+		"motivo_consulta_sintoma" : "PRIAPISMO (ERECCIÓN PROLONGADA Y DOLOROSA)",
+		"categoria" : "UROLÓGICO\/RENAL",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 239,
+		"motivo_consulta_sintoma" : "RETRASO MENSTRUAL",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 240,
+		"motivo_consulta_sintoma" : "AMENORREA (AUSENCIA DE MENSTRUACIÓN)",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 241,
+		"motivo_consulta_sintoma" : "SANGRADO VAGINAL ANORMAL (METRORRAGIA - SANGRADO IRREGULAR)",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 242,
+		"motivo_consulta_sintoma" : "SANGRADO VAGINAL ANORMAL (MENORRAGIA - SANGRADO ABUNDANTE)",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 243,
+		"motivo_consulta_sintoma" : "DOLOR MENSTRUAL INTENSO (DISMENORREA)",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 244,
+		"motivo_consulta_sintoma" : "DOLOR PÉLVICO CRÓNICO",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 245,
+		"motivo_consulta_sintoma" : "SECRECIÓN VAGINAL ANORMAL (FLUJO)",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 246,
+		"motivo_consulta_sintoma" : "SECRECIÓN VAGINAL ANORMAL (OLOR)",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 247,
+		"motivo_consulta_sintoma" : "SECRECIÓN VAGINAL ANORMAL (COLOR)",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 248,
+		"motivo_consulta_sintoma" : "SECRECIÓN VAGINAL ANORMAL (PICAZÓN\/PRURITO)",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 249,
+		"motivo_consulta_sintoma" : "DOLOR DURANTE LAS RELACIONES SEXUALES (DISPAREUNIA)",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 250,
+		"motivo_consulta_sintoma" : "BULTO EN EL SENO",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 251,
+		"motivo_consulta_sintoma" : "DOLOR EN EL SENO (MASTALGIA)",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 252,
+		"motivo_consulta_sintoma" : "CAMBIOS EN EL PEZÓN (SECRECIÓN)",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 253,
+		"motivo_consulta_sintoma" : "CAMBIOS EN EL PEZÓN (RETRACCIÓN)",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 254,
+		"motivo_consulta_sintoma" : "NÁUSEAS EN EL EMBARAZO",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 255,
+		"motivo_consulta_sintoma" : "VÓMITOS EN EL EMBARAZO (HIPEREMESIS GRAVÍDICA)",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 256,
+		"motivo_consulta_sintoma" : "SANGRADO EN EL EMBARAZO (AMENAZA DE ABORTO)",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 257,
+		"motivo_consulta_sintoma" : "SANGRADO EN EL EMBARAZO (DESPRENDIMIENTO)",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 258,
+		"motivo_consulta_sintoma" : "CONTRACCIONES (PREMATURAS)",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 259,
+		"motivo_consulta_sintoma" : "CONTRACCIONES (DE PARTO)",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 260,
+		"motivo_consulta_sintoma" : "DISMINUCIÓN DE MOVIMIENTOS FETALES",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 261,
+		"motivo_consulta_sintoma" : "HINCHAZÓN EN EL EMBARAZO (EDEMA MANOS)",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 262,
+		"motivo_consulta_sintoma" : "HINCHAZÓN EN EL EMBARAZO (EDEMA CARA)",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 263,
+		"motivo_consulta_sintoma" : "HINCHAZÓN EN EL EMBARAZO (EDEMA PIERNAS)",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 264,
+		"motivo_consulta_sintoma" : "DOLOR DE CABEZA EN EL EMBARAZO (SOSPECHA DE PREECLAMPSIA)",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 265,
+		"motivo_consulta_sintoma" : "PÉRDIDA DE LÍQUIDO AMNIÓTICO",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 266,
+		"motivo_consulta_sintoma" : "FIEBRE EN EL EMBARAZO",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 267,
+		"motivo_consulta_sintoma" : "SÍNTOMAS DE MENOPAUSIA (SOFOCOS)",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 268,
+		"motivo_consulta_sintoma" : "SÍNTOMAS DE MENOPAUSIA (SEQUEDAD VAGINAL)",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 269,
+		"motivo_consulta_sintoma" : "SÍNTOMAS DE MENOPAUSIA (CAMBIOS DE HUMOR)",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 270,
+		"motivo_consulta_sintoma" : "SANGRADO POSTMENOPÁUSICO",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 271,
+		"motivo_consulta_sintoma" : "DOLOR EN LA PELVIS",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 272,
+		"motivo_consulta_sintoma" : "DOLOR EN LOS OVARIOS",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 273,
+		"motivo_consulta_sintoma" : "SENSACIÓN DE PESO EN LA PELVIS (PROLAPSO)",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 274,
+		"motivo_consulta_sintoma" : "DOLOR EN LA VULVA",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 275,
+		"motivo_consulta_sintoma" : "ÚLCERAS GENITALES (FEMENINAS)",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 276,
+		"motivo_consulta_sintoma" : "VERRUGAS GENITALES (FEMENINAS)",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 277,
+		"motivo_consulta_sintoma" : "DOLOR EN EL BAJO VIENTRE (GINECOLÓGICO)",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 278,
+		"motivo_consulta_sintoma" : "CAMBIOS EN EL CICLO MENSTRUAL (IRREGULARIDADES)",
+		"categoria" : "GINECOLÓGICO\/OBSTÉTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 279,
+		"motivo_consulta_sintoma" : "DOLOR DE ESPALDA (LUMBALGIA)",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 280,
+		"motivo_consulta_sintoma" : "DOLOR DE ESPALDA (CERVICALGIA)",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 281,
+		"motivo_consulta_sintoma" : "DOLOR DE ESPALDA (DORSALGIA)",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 282,
+		"motivo_consulta_sintoma" : "DOLOR DE ESPALDA (CIÁTICA)",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 283,
+		"motivo_consulta_sintoma" : "DOLOR ARTICULAR (ARTRALGIA)",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 284,
+		"motivo_consulta_sintoma" : "DOLOR ARTICULAR (EN UNA ARTICULACIÓN)",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 285,
+		"motivo_consulta_sintoma" : "DOLOR ARTICULAR (EN VARIAS ARTICULACIONES)",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 286,
+		"motivo_consulta_sintoma" : "HINCHAZÓN ARTICULAR (ARTRITIS)",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 287,
+		"motivo_consulta_sintoma" : "HINCHAZÓN ARTICULAR (CON CALOR)",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 288,
+		"motivo_consulta_sintoma" : "HINCHAZÓN ARTICULAR (CON ENROJECIMIENTO)",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 289,
+		"motivo_consulta_sintoma" : "RIGIDEZ ARTICULAR (MATUTINA)",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 290,
+		"motivo_consulta_sintoma" : "RIGIDEZ ARTICULAR (POST-REPOSO)",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 291,
+		"motivo_consulta_sintoma" : "DOLOR MUSCULAR (MIALGIA)",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 292,
+		"motivo_consulta_sintoma" : "DOLOR MUSCULAR (LOCALIZADO)",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 293,
+		"motivo_consulta_sintoma" : "DOLOR MUSCULAR (GENERALIZADO)",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 294,
+		"motivo_consulta_sintoma" : "CALAMBRES MUSCULARES",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 295,
+		"motivo_consulta_sintoma" : "DEBILIDAD MUSCULAR (GENERALIZADA)",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 296,
+		"motivo_consulta_sintoma" : "DEBILIDAD MUSCULAR (LOCALIZADA)",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 297,
+		"motivo_consulta_sintoma" : "LIMITACIÓN DEL MOVIMIENTO (ARTICULAR)",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 298,
+		"motivo_consulta_sintoma" : "LIMITACIÓN DEL MOVIMIENTO (MUSCULAR)",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 299,
+		"motivo_consulta_sintoma" : "DOLOR POST-GOLPE",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 300,
+		"motivo_consulta_sintoma" : "DOLOR POST-CAÍDA",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 301,
+		"motivo_consulta_sintoma" : "DOLOR POST-ESGUINCE",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 302,
+		"motivo_consulta_sintoma" : "DOLOR POST-FRACTURA",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 303,
+		"motivo_consulta_sintoma" : "HINCHAZÓN POST-TRAUMATISMO",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 304,
+		"motivo_consulta_sintoma" : "DEFORMIDAD POST-TRAUMATISMO",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 305,
+		"motivo_consulta_sintoma" : "DOLOR EN EL CUELLO (TORTÍCOLIS)",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 306,
+		"motivo_consulta_sintoma" : "DOLOR EN EL HOMBRO (TENDINITIS)",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 307,
+		"motivo_consulta_sintoma" : "DOLOR EN EL HOMBRO (BURSITIS)",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 308,
+		"motivo_consulta_sintoma" : "DOLOR EN EL CODO (EPICONDILITIS)",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 309,
+		"motivo_consulta_sintoma" : "DOLOR EN EL CODO (EPITROCLEÍTIS)",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 310,
+		"motivo_consulta_sintoma" : "DOLOR EN LA MUÑECA (SÍNDROME DEL TÚNEL CARPIANO)",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 311,
+		"motivo_consulta_sintoma" : "DOLOR EN LA MANO \/ DEDOS (ARTRITIS)",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 312,
+		"motivo_consulta_sintoma" : "DOLOR EN LA MANO \/ DEDOS (TENDINITIS)",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 313,
+		"motivo_consulta_sintoma" : "DOLOR EN LA CADERA",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 314,
+		"motivo_consulta_sintoma" : "DOLOR EN LA RODILLA (MENISCAL)",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 315,
+		"motivo_consulta_sintoma" : "DOLOR EN LA RODILLA (LIGAMENTOSO)",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 316,
+		"motivo_consulta_sintoma" : "DOLOR EN EL TOBILLO (ESGUINCE)",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 317,
+		"motivo_consulta_sintoma" : "DOLOR EN EL TOBILLO (TENDINITIS)",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 318,
+		"motivo_consulta_sintoma" : "DOLOR EN EL PIE \/ DEDOS DEL PIE (FASCITIS PLANTAR)",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 319,
+		"motivo_consulta_sintoma" : "DOLOR EN EL PIE \/ DEDOS DEL PIE (JUANETE)",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 320,
+		"motivo_consulta_sintoma" : "DEFORMIDAD ARTICULAR",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:50.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 321,
+		"motivo_consulta_sintoma" : "CHASQUIDOS ARTICULARES",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 322,
+		"motivo_consulta_sintoma" : "SENSACIÓN DE INESTABILIDAD ARTICULAR",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 323,
+		"motivo_consulta_sintoma" : "DOLOR AL CARGAR PESO",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 324,
+		"motivo_consulta_sintoma" : "DOLOR AL MOVER LA ARTICULACIÓN",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 325,
+		"motivo_consulta_sintoma" : "DOLOR QUE EMPEORA CON LA ACTIVIDAD",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 326,
+		"motivo_consulta_sintoma" : "DOLOR QUE MEJORA CON EL REPOSO",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 327,
+		"motivo_consulta_sintoma" : "DOLOR NOCTURNO (MUSCULOESQUELÉTICO)",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 328,
+		"motivo_consulta_sintoma" : "CONTRACTURAS MUSCULARES",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 329,
+		"motivo_consulta_sintoma" : "NÓDULOS MUSCULARES",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 330,
+		"motivo_consulta_sintoma" : "SENSACIÓN DE QUEMAZÓN EN LAS ARTICULACIONES",
+		"categoria" : "MUSCULOESQUELÉTICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 331,
+		"motivo_consulta_sintoma" : "DOLOR DE CABEZA (CEFALEA NEUROLÓGICA)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 332,
+		"motivo_consulta_sintoma" : "DOLOR DE CABEZA (MIGRAÑA NEUROLÓGICA)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 333,
+		"motivo_consulta_sintoma" : "DOLOR DE CABEZA (TENSIONAL NEUROLÓGICA)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 334,
+		"motivo_consulta_sintoma" : "DOLOR DE CABEZA (EN TRUENO)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 335,
+		"motivo_consulta_sintoma" : "MAREOS (NEUROLÓGICO)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 336,
+		"motivo_consulta_sintoma" : "VÉRTIGO (SENSACIÓN DE GIRO NEUROLÓGICO)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 337,
+		"motivo_consulta_sintoma" : "VÉRTIGO (INESTABILIDAD NEUROLÓGICA)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 338,
+		"motivo_consulta_sintoma" : "DESMAYO (NEUROLÓGICO)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 339,
+		"motivo_consulta_sintoma" : "SÍNCOPE (PÉRDIDA DE CONCIENCIA NEUROLÓGICA)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 340,
+		"motivo_consulta_sintoma" : "CONVULSIONES (GENERALIZADAS)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 341,
+		"motivo_consulta_sintoma" : "CONVULSIONES (FOCALES)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 342,
+		"motivo_consulta_sintoma" : "CRISIS EPILÉPTICAS",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 343,
+		"motivo_consulta_sintoma" : "PÉRDIDA DE CONCIENCIA (SIN CONVULSIONES)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 344,
+		"motivo_consulta_sintoma" : "DEBILIDAD EN UNA PARTE DEL CUERPO (HEMIPARESIA)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 345,
+		"motivo_consulta_sintoma" : "DEBILIDAD EN UNA PARTE DEL CUERPO (MONOPARESIA)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 346,
+		"motivo_consulta_sintoma" : "PARÁLISIS (HEMIPLEJIA)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 347,
+		"motivo_consulta_sintoma" : "PARÁLISIS (PARAPLEJIA)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 348,
+		"motivo_consulta_sintoma" : "PARÁLISIS (CUADRIPLEJIA)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 349,
+		"motivo_consulta_sintoma" : "DIFICULTAD PARA HABLAR (DISARTRIA)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 350,
+		"motivo_consulta_sintoma" : "DIFICULTAD PARA HABLAR (AFASIA EXPRESIVA)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 351,
+		"motivo_consulta_sintoma" : "DIFICULTAD PARA HABLAR (AFASIA RECEPTIVA)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 352,
+		"motivo_consulta_sintoma" : "PROBLEMAS DE VISIÓN (VISIÓN BORROSA NEUROLÓGICA)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 353,
+		"motivo_consulta_sintoma" : "PROBLEMAS DE VISIÓN (VISIÓN DOBLE\/DIPLOPÍA NEUROLÓGICA)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 354,
+		"motivo_consulta_sintoma" : "PROBLEMAS DE VISIÓN (PÉRDIDA SÚBITA DE VISIÓN)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 355,
+		"motivo_consulta_sintoma" : "PROBLEMAS DE VISIÓN (PÉRDIDA PROGRESIVA DE VISIÓN)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 356,
+		"motivo_consulta_sintoma" : "ENTUMECIMIENTO (PARESTESIAS)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 357,
+		"motivo_consulta_sintoma" : "ENTUMECIMIENTO (EN EXTREMIDADES)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 358,
+		"motivo_consulta_sintoma" : "ENTUMECIMIENTO (EN CARA)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 359,
+		"motivo_consulta_sintoma" : "HORMIGUEO (PARESTESIAS)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 360,
+		"motivo_consulta_sintoma" : "HORMIGUEO (EN EXTREMIDADES)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 361,
+		"motivo_consulta_sintoma" : "HORMIGUEO (EN CARA)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 362,
+		"motivo_consulta_sintoma" : "TEMBLOR (DE REPOSO)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 363,
+		"motivo_consulta_sintoma" : "TEMBLOR (DE ACCIÓN)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 364,
+		"motivo_consulta_sintoma" : "TEMBLOR (POSTURAL)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 365,
+		"motivo_consulta_sintoma" : "PROBLEMAS DE EQUILIBRIO (ATAXIA)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 366,
+		"motivo_consulta_sintoma" : "MARCHA INESTABLE (ATAXIA)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 367,
+		"motivo_consulta_sintoma" : "PÉRDIDA DE MEMORIA (AMNESIA ANTERÓGRADA)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 368,
+		"motivo_consulta_sintoma" : "PÉRDIDA DE MEMORIA (AMNESIA RETRÓGRADA)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 369,
+		"motivo_consulta_sintoma" : "CONFUSIÓN",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 370,
+		"motivo_consulta_sintoma" : "DESORIENTACIÓN (TEMPORAL)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 371,
+		"motivo_consulta_sintoma" : "DESORIENTACIÓN (ESPACIAL)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 372,
+		"motivo_consulta_sintoma" : "DESORIENTACIÓN (PERSONAL)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 373,
+		"motivo_consulta_sintoma" : "CAMBIOS EN LA PERSONALIDAD (NEUROLÓGICO)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 374,
+		"motivo_consulta_sintoma" : "INSOMNIO (DE ORIGEN NEUROLÓGICO)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 375,
+		"motivo_consulta_sintoma" : "SOMNOLENCIA EXCESIVA (DE ORIGEN NEUROLÓGICO)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 376,
+		"motivo_consulta_sintoma" : "DOLOR NEUROPÁTICO (ARDOR)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 377,
+		"motivo_consulta_sintoma" : "DOLOR NEUROPÁTICO (PUNZANTE)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 378,
+		"motivo_consulta_sintoma" : "DOLOR NEUROPÁTICO (ELÉCTRICO)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 379,
+		"motivo_consulta_sintoma" : "TICS NERVIOSOS (MOTORES)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 380,
+		"motivo_consulta_sintoma" : "TICS NERVIOSOS (VOCALES)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 381,
+		"motivo_consulta_sintoma" : "VÉRTIGO POSICIONAL (BENIGNO PAROXÍSTICO)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 382,
+		"motivo_consulta_sintoma" : "PARÁLISIS FACIAL (BELL)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 383,
+		"motivo_consulta_sintoma" : "ALTERACIÓN DEL GUSTO",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 384,
+		"motivo_consulta_sintoma" : "ALTERACIÓN DEL OLFATO",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 385,
+		"motivo_consulta_sintoma" : "PÉRDIDA DE AUDICIÓN (HIPOACUSIA)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 386,
+		"motivo_consulta_sintoma" : "ZUMBIDO EN LOS OÍDOS (TINNITUS NEUROLÓGICO)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 387,
+		"motivo_consulta_sintoma" : "SENSACIÓN DE CABEZA HUECA",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 388,
+		"motivo_consulta_sintoma" : "SENSACIÓN DE PRESIÓN EN LA CABEZA",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 389,
+		"motivo_consulta_sintoma" : "SENSACIÓN DE HORMIGUEO EN LA CARA",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 390,
+		"motivo_consulta_sintoma" : "SENSACIÓN DE QUEMAZÓN EN LA PIEL (NEUROLÓGICA)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 391,
+		"motivo_consulta_sintoma" : "DIFICULTAD PARA COORDINAR MOVIMIENTOS (DISDIADOCOCINESIA)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 392,
+		"motivo_consulta_sintoma" : "DISFAGIA (DE ORIGEN NEUROLÓGICO)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 393,
+		"motivo_consulta_sintoma" : "DIPLOPÍA (VISIÓN DOBLE)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 394,
+		"motivo_consulta_sintoma" : "NISTAGMO (MOVIMIENTOS OCULARES INVOLUNTARIOS)",
+		"categoria" : "NEUROLÓGICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 395,
+		"motivo_consulta_sintoma" : "ERUPCIÓN CUTÁNEA (RASH)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 396,
+		"motivo_consulta_sintoma" : "ERUPCIÓN CUTÁNEA (MACULOPAPULAR)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 397,
+		"motivo_consulta_sintoma" : "ERUPCIÓN CUTÁNEA (VESICULAR)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 398,
+		"motivo_consulta_sintoma" : "ERUPCIÓN CUTÁNEA (PUSTULAR)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 399,
+		"motivo_consulta_sintoma" : "PICAZÓN (PRURITO CUTÁNEO)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 400,
+		"motivo_consulta_sintoma" : "PICAZÓN (LOCALIZADO CUTÁNEO)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 401,
+		"motivo_consulta_sintoma" : "PICAZÓN (GENERALIZADO CUTÁNEO)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 402,
+		"motivo_consulta_sintoma" : "ENROJECIMIENTO DE LA PIEL (ERITEMA LOCALIZADO)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 403,
+		"motivo_consulta_sintoma" : "ENROJECIMIENTO DE LA PIEL (ERITEMA DIFUSO)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 404,
+		"motivo_consulta_sintoma" : "LESIONES EN LA PIEL (AMPOLLAS)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 405,
+		"motivo_consulta_sintoma" : "LESIONES EN LA PIEL (PÚSTULAS)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 406,
+		"motivo_consulta_sintoma" : "LESIONES EN LA PIEL (ÚLCERAS)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 407,
+		"motivo_consulta_sintoma" : "LESIONES EN LA PIEL (NÓDULOS)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 408,
+		"motivo_consulta_sintoma" : "LESIONES EN LA PIEL (PÁPULAS)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 409,
+		"motivo_consulta_sintoma" : "LESIONES EN LA PIEL (PLACAS)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 410,
+		"motivo_consulta_sintoma" : "CAMBIOS EN LUNARES (TAMAÑO)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 411,
+		"motivo_consulta_sintoma" : "CAMBIOS EN LUNARES (FORMA)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 412,
+		"motivo_consulta_sintoma" : "CAMBIOS EN LUNARES (COLOR)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 413,
+		"motivo_consulta_sintoma" : "CAMBIOS EN LUNARES (PICAZÓN)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 414,
+		"motivo_consulta_sintoma" : "CAMBIOS EN LUNARES (SANGRADO)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 415,
+		"motivo_consulta_sintoma" : "CAMBIOS EN LUNARES (ASIMETRÍA)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 416,
+		"motivo_consulta_sintoma" : "CAMBIOS EN LUNARES (BORDES IRREGULARES)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 417,
+		"motivo_consulta_sintoma" : "ACNÉ (COMEDONES)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 418,
+		"motivo_consulta_sintoma" : "ACNÉ (PÁPULAS)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 419,
+		"motivo_consulta_sintoma" : "ACNÉ (PÚSTULAS)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 420,
+		"motivo_consulta_sintoma" : "ACNÉ (QUISTES)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:51.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 421,
+		"motivo_consulta_sintoma" : "DERMATITIS (ECZEMA)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 422,
+		"motivo_consulta_sintoma" : "DERMATITIS (ATÓPICA)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 423,
+		"motivo_consulta_sintoma" : "DERMATITIS (DE CONTACTO)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 424,
+		"motivo_consulta_sintoma" : "DERMATITIS (SEBORREICA)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 425,
+		"motivo_consulta_sintoma" : "PSORIASIS (PLACAS ERITEMATOESCAMOSAS)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 426,
+		"motivo_consulta_sintoma" : "URTICARIA (HABONES)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 427,
+		"motivo_consulta_sintoma" : "URTICARIA (ANGIOEDEMA)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 428,
+		"motivo_consulta_sintoma" : "HONGOS EN LA PIEL \/ UÑAS (MICOSIS)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 429,
+		"motivo_consulta_sintoma" : "HONGOS EN LAS UÑAS (ONICOMICOSIS)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 430,
+		"motivo_consulta_sintoma" : "INFECCIONES BACTERIANAS DE LA PIEL (IMPÉTIGO)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 431,
+		"motivo_consulta_sintoma" : "INFECCIONES BACTERIANAS DE LA PIEL (CELULITIS)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 432,
+		"motivo_consulta_sintoma" : "INFECCIONES BACTERIANAS DE LA PIEL (ERISIPELA)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 433,
+		"motivo_consulta_sintoma" : "INFECCIONES BACTERIANAS DE LA PIEL (FORÚNCULOS)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 434,
+		"motivo_consulta_sintoma" : "VERRUGAS (COMUNES)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 435,
+		"motivo_consulta_sintoma" : "VERRUGAS (PLANTARES)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 436,
+		"motivo_consulta_sintoma" : "VERRUGAS (GENITALES)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 437,
+		"motivo_consulta_sintoma" : "HERPES (LABIAL)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 438,
+		"motivo_consulta_sintoma" : "HERPES (ZÓSTER)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 439,
+		"motivo_consulta_sintoma" : "HERPES (GENITAL)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 440,
+		"motivo_consulta_sintoma" : "QUEMADURAS (DOLOR)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 441,
+		"motivo_consulta_sintoma" : "QUEMADURAS (ENROJECIMIENTO)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 442,
+		"motivo_consulta_sintoma" : "QUEMADURAS (AMPOLLAS)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 443,
+		"motivo_consulta_sintoma" : "QUEMADURAS (NECROSIS)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 444,
+		"motivo_consulta_sintoma" : "PICADURAS DE INSECTOS (REACCIÓN LOCAL)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 445,
+		"motivo_consulta_sintoma" : "PICADURAS DE INSECTOS (REACCIÓN SISTÉMICA)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 446,
+		"motivo_consulta_sintoma" : "REACCIONES ALÉRGICAS EN LA PIEL (POR CONTACTO)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 447,
+		"motivo_consulta_sintoma" : "REACCIONES ALÉRGICAS EN LA PIEL (POR FÁRMACOS)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 448,
+		"motivo_consulta_sintoma" : "CAÍDA DEL CABELLO (ALOPECIA DIFUSA)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 449,
+		"motivo_consulta_sintoma" : "CAÍDA DEL CABELLO (ALOPECIA AREATA)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 450,
+		"motivo_consulta_sintoma" : "UÑAS QUEBRADIZAS \/ CON CAMBIOS (COLOR)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 451,
+		"motivo_consulta_sintoma" : "UÑAS QUEBRADIZAS \/ CON CAMBIOS (FORMA)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 452,
+		"motivo_consulta_sintoma" : "UÑAS QUEBRADIZAS \/ CON CAMBIOS (ENGROSAMIENTO)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 453,
+		"motivo_consulta_sintoma" : "PIEL SECA (XEROSIS)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 454,
+		"motivo_consulta_sintoma" : "PIEL GRASA (SEBORREA)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 455,
+		"motivo_consulta_sintoma" : "SUDORACIÓN EXCESIVA (HIPERHIDROSIS LOCALIZADA)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 456,
+		"motivo_consulta_sintoma" : "QUISTES SEBÁCEOS",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 457,
+		"motivo_consulta_sintoma" : "LIPOMAS",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 458,
+		"motivo_consulta_sintoma" : "CICATRICES ANORMALES (QUELOIDES)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 459,
+		"motivo_consulta_sintoma" : "CICATRICES ANORMALES (HIPERTRÓFICAS)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 460,
+		"motivo_consulta_sintoma" : "DECOLORACIÓN DE LA PIEL (HIPOPIGMENTACIÓN)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 461,
+		"motivo_consulta_sintoma" : "DECOLORACIÓN DE LA PIEL (HIPERPIGMENTACIÓN)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 462,
+		"motivo_consulta_sintoma" : "DECOLORACIÓN DE LA PIEL (VITÍLIGO)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 463,
+		"motivo_consulta_sintoma" : "ÚLCERAS POR PRESIÓN",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 464,
+		"motivo_consulta_sintoma" : "PIEL ESCAMOSA",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 465,
+		"motivo_consulta_sintoma" : "PIEL AGRIETADA",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 466,
+		"motivo_consulta_sintoma" : "PIEL SENSIBLE",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 467,
+		"motivo_consulta_sintoma" : "AMPOLLAS POR FRICCIÓN",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 468,
+		"motivo_consulta_sintoma" : "ROSÁCEA (ENROJECIMIENTO FACIAL)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 469,
+		"motivo_consulta_sintoma" : "ROSÁCEA (PÁPULAS)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 470,
+		"motivo_consulta_sintoma" : "ROSÁCEA (PÚSTULAS)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 471,
+		"motivo_consulta_sintoma" : "NEVUS (APARICIÓN)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 472,
+		"motivo_consulta_sintoma" : "NEVUS (CAMBIO)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 473,
+		"motivo_consulta_sintoma" : "QUERATOSIS SEBORREICA",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 474,
+		"motivo_consulta_sintoma" : "QUERATOSIS ACTÍNICA",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 475,
+		"motivo_consulta_sintoma" : "CARCINOMA BASOCELULAR (SOSPECHA)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 476,
+		"motivo_consulta_sintoma" : "CARCINOMA ESPINOCELULAR (SOSPECHA)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 477,
+		"motivo_consulta_sintoma" : "MELANOMA (SOSPECHA)",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 478,
+		"motivo_consulta_sintoma" : "ERISIPELA",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 479,
+		"motivo_consulta_sintoma" : "FOLICULITIS",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 480,
+		"motivo_consulta_sintoma" : "ABSCESOS CUTÁNEOS",
+		"categoria" : "DERMATOLÓGICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 481,
+		"motivo_consulta_sintoma" : "FIEBRE EN LACTANTES",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 482,
+		"motivo_consulta_sintoma" : "FIEBRE EN NIÑOS (SIN FOCO APARENTE)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 483,
+		"motivo_consulta_sintoma" : "IRRITABILIDAD EN LACTANTES",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 484,
+		"motivo_consulta_sintoma" : "LLANTO INCONSOLABLE",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 485,
+		"motivo_consulta_sintoma" : "RECHAZO DEL ALIMENTO (PEDIÁTRICO)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 486,
+		"motivo_consulta_sintoma" : "DIFICULTAD PARA ALIMENTARSE (PEDIÁTRICO)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 487,
+		"motivo_consulta_sintoma" : "VÓMITOS EN PROYECTIL (PEDIÁTRICO)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 488,
+		"motivo_consulta_sintoma" : "DIARREA EN NIÑOS (CON SIGNOS DE DESHIDRATACIÓN)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 489,
+		"motivo_consulta_sintoma" : "ESTREÑIMIENTO EN NIÑOS (CRÓNICO)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 490,
+		"motivo_consulta_sintoma" : "ESTREÑIMIENTO EN NIÑOS (DOLOROSO)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 491,
+		"motivo_consulta_sintoma" : "ERUPCIONES CUTÁNEAS INFANTILES (EXANTEMAS VIRALES)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 492,
+		"motivo_consulta_sintoma" : "ERUPCIÓN CUTÁNEA (VARICELA)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 493,
+		"motivo_consulta_sintoma" : "ERUPCIÓN CUTÁNEA (SARAMPIÓN)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 494,
+		"motivo_consulta_sintoma" : "ERUPCIÓN CUTÁNEA (RUBÉOLA)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 495,
+		"motivo_consulta_sintoma" : "ERUPCIÓN CUTÁNEA (ERITEMA INFECCIOSO)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 496,
+		"motivo_consulta_sintoma" : "TOS PERSISTENTE EN NIÑOS",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 497,
+		"motivo_consulta_sintoma" : "DIFICULTAD RESPIRATORIA EN NIÑOS (TIRAJE)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 498,
+		"motivo_consulta_sintoma" : "DIFICULTAD RESPIRATORIA EN NIÑOS (ALETEO NASAL)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 499,
+		"motivo_consulta_sintoma" : "DIFICULTAD RESPIRATORIA EN NIÑOS (QUEJIDO)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 500,
+		"motivo_consulta_sintoma" : "CONVULSIONES FEBRILES",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 501,
+		"motivo_consulta_sintoma" : "RETRASO EN EL DESARROLLO (MOTOR GRUESO)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 502,
+		"motivo_consulta_sintoma" : "RETRASO EN EL DESARROLLO (MOTOR FINO)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 503,
+		"motivo_consulta_sintoma" : "RETRASO EN EL DESARROLLO (DEL LENGUAJE)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 504,
+		"motivo_consulta_sintoma" : "RETRASO EN EL DESARROLLO (COGNITIVO)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 505,
+		"motivo_consulta_sintoma" : "RETRASO EN EL DESARROLLO (SOCIAL)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 506,
+		"motivo_consulta_sintoma" : "PROBLEMAS DE APRENDIZAJE (DIFICULTAD ESCOLAR)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 507,
+		"motivo_consulta_sintoma" : "PROBLEMAS DE CONDUCTA (AGRESIVIDAD INFANTIL)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 508,
+		"motivo_consulta_sintoma" : "PROBLEMAS DE CONDUCTA (HIPERACTIVIDAD INFANTIL)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 509,
+		"motivo_consulta_sintoma" : "PROBLEMAS DE CONDUCTA (RETRAIMIENTO INFANTIL)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 510,
+		"motivo_consulta_sintoma" : "ENURESIS (MOJAR LA CAMA)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 511,
+		"motivo_consulta_sintoma" : "ENURESIS (PRIMARIA)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 512,
+		"motivo_consulta_sintoma" : "ENURESIS (SECUNDARIA)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 513,
+		"motivo_consulta_sintoma" : "ENCOPRESIS (DEFECACIÓN INVOLUNTARIA)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 514,
+		"motivo_consulta_sintoma" : "DOLOR ABDOMINAL RECURRENTE EN NIÑOS",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 515,
+		"motivo_consulta_sintoma" : "OTITIS MEDIA AGUDA (DOLOR DE OÍDO PEDIÁTRICO)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 516,
+		"motivo_consulta_sintoma" : "OTITIS MEDIA AGUDA (FIEBRE PEDIÁTRICA)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 517,
+		"motivo_consulta_sintoma" : "OTITIS MEDIA AGUDA (IRRITABILIDAD PEDIÁTRICA)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 518,
+		"motivo_consulta_sintoma" : "FARINGOAMIGDALITIS (DOLOR DE GARGANTA PEDIÁTRICO)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 519,
+		"motivo_consulta_sintoma" : "FARINGOAMIGDALITIS (FIEBRE PEDIÁTRICA)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 520,
+		"motivo_consulta_sintoma" : "FARINGOAMIGDALITIS (DIFICULTAD PARA TRAGAR PEDIÁTRICA)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:52.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 521,
+		"motivo_consulta_sintoma" : "PEDICULOSIS (PIOJOS, PICAZÓN EN EL CUERO CABELLUDO)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 522,
+		"motivo_consulta_sintoma" : "ESCABIOSIS (SARNA, PICAZÓN INTENSA, LESIONES CUTÁNEAS)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 523,
+		"motivo_consulta_sintoma" : "ICTERICIA NEONATAL (COLORACIÓN AMARILLA EN RECIÉN NACIDOS)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 524,
+		"motivo_consulta_sintoma" : "REFLUJO GASTROESOFÁGICO EN LACTANTES (REGURGITACIONES FRECUENTES)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 525,
+		"motivo_consulta_sintoma" : "REFLUJO GASTROESOFÁGICO EN LACTANTES (IRRITABILIDAD)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 526,
+		"motivo_consulta_sintoma" : "CÓLICO DEL LACTANTE (LLANTO EXCESIVO)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 527,
+		"motivo_consulta_sintoma" : "CÓLICO DEL LACTANTE (IRRITABILIDAD)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 528,
+		"motivo_consulta_sintoma" : "BRONQUIOLITIS (TOS, SIBILANCIAS, DIFICULTAD RESPIRATORIA EN LACTANTES)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 529,
+		"motivo_consulta_sintoma" : "CRUP (LARINGOTRAQUEOBRONQUITIS, TOS PERRUNA, ESTRIDOR)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 530,
+		"motivo_consulta_sintoma" : "DOLOR DE CRECIMIENTO (DOLOR EN EXTREMIDADES INFERIORES)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 531,
+		"motivo_consulta_sintoma" : "PROBLEMAS DE VISIÓN EN NIÑOS (ESTRABISMO)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 532,
+		"motivo_consulta_sintoma" : "PROBLEMAS DE VISIÓN EN NIÑOS (AMBLIOPÍA)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 533,
+		"motivo_consulta_sintoma" : "PROBLEMAS DE VISIÓN EN NIÑOS (DIFICULTAD PARA VER LA PIZARRA)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 534,
+		"motivo_consulta_sintoma" : "PROBLEMAS DE AUDICIÓN EN NIÑOS (NO RESPONDE A SONIDOS)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 535,
+		"motivo_consulta_sintoma" : "PROBLEMAS DE AUDICIÓN EN NIÑOS (RETRASO DEL LENGUAJE)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 536,
+		"motivo_consulta_sintoma" : "ANEMIA EN NIÑOS (PALIDEZ)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 537,
+		"motivo_consulta_sintoma" : "ANEMIA EN NIÑOS (CANSANCIO)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 538,
+		"motivo_consulta_sintoma" : "OBESIDAD INFANTIL",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 539,
+		"motivo_consulta_sintoma" : "BAJO PESO (PEDIÁTRICO)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 540,
+		"motivo_consulta_sintoma" : "DESNUTRICIÓN (PEDIÁTRICO)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 541,
+		"motivo_consulta_sintoma" : "TALLA BAJA (PEDIÁTRICO)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 542,
+		"motivo_consulta_sintoma" : "RETRASO DE CRECIMIENTO (PEDIÁTRICO)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 543,
+		"motivo_consulta_sintoma" : "PUBERTAD PRECOZ",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 544,
+		"motivo_consulta_sintoma" : "PUBERTAD RETRASADA",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 545,
+		"motivo_consulta_sintoma" : "PROBLEMAS DE SUEÑO EN NIÑOS (INSOMNIO)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 546,
+		"motivo_consulta_sintoma" : "PROBLEMAS DE SUEÑO EN NIÑOS (DESPERTARES NOCTURNOS)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 547,
+		"motivo_consulta_sintoma" : "PROBLEMAS DE SUEÑO EN NIÑOS (PESADILLAS)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 548,
+		"motivo_consulta_sintoma" : "PROBLEMAS DE SUEÑO EN NIÑOS (TERRORES NOCTURNOS)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 549,
+		"motivo_consulta_sintoma" : "MIEDOS Y FOBIAS (ESPECÍFICAS EN NIÑOS)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 550,
+		"motivo_consulta_sintoma" : "MIEDOS Y FOBIAS (SOCIALES EN NIÑOS)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 551,
+		"motivo_consulta_sintoma" : "ANSIEDAD POR SEPARACIÓN",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 552,
+		"motivo_consulta_sintoma" : "PROBLEMAS DE SOCIALIZACIÓN (PEDIÁTRICO)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 553,
+		"motivo_consulta_sintoma" : "AGRESIVIDAD (PEDIÁTRICO)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 554,
+		"motivo_consulta_sintoma" : "RABIETAS FRECUENTES",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 555,
+		"motivo_consulta_sintoma" : "PROBLEMAS DENTALES (CARIES EN NIÑOS)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 556,
+		"motivo_consulta_sintoma" : "PROBLEMAS DENTALES (DOLOR DENTAL PEDIÁTRICO)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 557,
+		"motivo_consulta_sintoma" : "PROBLEMAS DENTALES (GINGIVITIS EN NIÑOS)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 558,
+		"motivo_consulta_sintoma" : "ERUPCIÓN DEL PAÑAL",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 559,
+		"motivo_consulta_sintoma" : "IMPÉTIGO EN NIÑOS",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 560,
+		"motivo_consulta_sintoma" : "MOLLUSCUM CONTAGIOSUM",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 561,
+		"motivo_consulta_sintoma" : "PIE PLANO (PEDIÁTRICO)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 562,
+		"motivo_consulta_sintoma" : "DISPLASIA DE CADERA (CONTROL PEDIÁTRICO)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 563,
+		"motivo_consulta_sintoma" : "ESCOLIOSIS (SOSPECHA EN NIÑOS)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 564,
+		"motivo_consulta_sintoma" : "TICS (PEDIÁTRICO)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 565,
+		"motivo_consulta_sintoma" : "ENCOPRESIS (INCONTINENCIA FECAL PEDIÁTRICA)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 566,
+		"motivo_consulta_sintoma" : "DOLOR DE OÍDO CON FIEBRE (PEDIÁTRICO)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 567,
+		"motivo_consulta_sintoma" : "CONJUNTIVITIS EN NIÑOS",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 568,
+		"motivo_consulta_sintoma" : "VÓMITOS Y DIARREA (GASTROENTERITIS PEDIÁTRICA)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 569,
+		"motivo_consulta_sintoma" : "ERUPCIÓN POR CALOR (SUDAMINA)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 570,
+		"motivo_consulta_sintoma" : "URTICARIA INFANTIL",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 571,
+		"motivo_consulta_sintoma" : "LARINGITIS (PEDIÁTRICA)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 572,
+		"motivo_consulta_sintoma" : "FARINGITIS ESTREPTOCÓCICA (SOSPECHA PEDIÁTRICA)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 573,
+		"motivo_consulta_sintoma" : "ESCARLATINA (SOSPECHA PEDIÁTRICA)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 574,
+		"motivo_consulta_sintoma" : "ENFERMEDAD MANO-PIE-BOCA",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 575,
+		"motivo_consulta_sintoma" : "ROSÉOLA INFANTIL",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 576,
+		"motivo_consulta_sintoma" : "PAROTIDITIS (PAPERAS)",
+		"categoria" : "PEDIÁTRICO",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 577,
+		"motivo_consulta_sintoma" : "EXTENSIÓN DE CERTIFICADO MÉDICO PARA APREHENDIDO (POLICIAL)",
+		"categoria" : "ADMIN - CERTIFICADO MÉDICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 578,
+		"motivo_consulta_sintoma" : "EXTENSIÓN DE CERTIFICADO MÉDICO PARA PERSONAL POLICIAL",
+		"categoria" : "ADMIN - CERTIFICADO MÉDICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 579,
+		"motivo_consulta_sintoma" : "EXTENSIÓN DE CERTIFICADO MÉDICO PARA JUSTIFICAR AUSENCIA LABORAL",
+		"categoria" : "ADMIN - CERTIFICADO MÉDICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 580,
+		"motivo_consulta_sintoma" : "EXTENSIÓN DE CERTIFICADO MÉDICO PARA JUSTIFICAR AUSENCIA ESCOLAR",
+		"categoria" : "ADMIN - CERTIFICADO MÉDICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 581,
+		"motivo_consulta_sintoma" : "EXTENSIÓN DE CERTIFICADO MÉDICO PARA TRÁMITES DEPORTIVOS",
+		"categoria" : "ADMIN - CERTIFICADO MÉDICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 582,
+		"motivo_consulta_sintoma" : "EXTENSIÓN DE CERTIFICADO MÉDICO PARA TRÁMITES DE VIAJE",
+		"categoria" : "ADMIN - CERTIFICADO MÉDICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 583,
+		"motivo_consulta_sintoma" : "EXTENSIÓN DE CERTIFICADO MÉDICO PARA TRÁMITES DE LICENCIA DE CONDUCIR",
+		"categoria" : "ADMIN - CERTIFICADO MÉDICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 584,
+		"motivo_consulta_sintoma" : "EXTENSIÓN DE CERTIFICADO MÉDICO PARA TRÁMITES DE SEGUROS",
+		"categoria" : "ADMIN - CERTIFICADO MÉDICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 585,
+		"motivo_consulta_sintoma" : "EXTENSIÓN DE CERTIFICADO MÉDICO PARA TRÁMITES DE ADOPCIÓN",
+		"categoria" : "ADMIN - CERTIFICADO MÉDICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 586,
+		"motivo_consulta_sintoma" : "EXTENSIÓN DE CERTIFICADO MÉDICO PARA TRÁMITES DE DISCAPACIDAD",
+		"categoria" : "ADMIN - CERTIFICADO MÉDICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 587,
+		"motivo_consulta_sintoma" : "EXTENSIÓN DE CERTIFICADO MÉDICO PARA TRÁMITES JUDICIALES",
+		"categoria" : "ADMIN - CERTIFICADO MÉDICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 588,
+		"motivo_consulta_sintoma" : "EXTENSIÓN DE CERTIFICADO MÉDICO PARA TRÁMITES DE RESIDENCIA\/MIGRACIÓN",
+		"categoria" : "ADMIN - CERTIFICADO MÉDICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 589,
+		"motivo_consulta_sintoma" : "EXTENSIÓN DE CERTIFICADO MÉDICO PARA JUSTIFICAR CUIDADO DE PERSONA DEPENDIENTE",
+		"categoria" : "ADMIN - CERTIFICADO MÉDICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 590,
+		"motivo_consulta_sintoma" : "EXTENSIÓN DE CERTIFICADO MÉDICO PARA JUSTIFICAR REPOSO DOMICILIARIO",
+		"categoria" : "ADMIN - CERTIFICADO MÉDICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 591,
+		"motivo_consulta_sintoma" : "EXTENSIÓN DE CERTIFICADO MÉDICO POR ALTA MÉDICA",
+		"categoria" : "ADMIN - CERTIFICADO MÉDICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 592,
+		"motivo_consulta_sintoma" : "EXTENSIÓN DE CERTIFICADO MÉDICO POR INGRESO HOSPITALARIO",
+		"categoria" : "ADMIN - CERTIFICADO MÉDICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 593,
+		"motivo_consulta_sintoma" : "EXTENSIÓN DE CERTIFICADO MÉDICO POR ENFERMEDAD CRÓNICA",
+		"categoria" : "ADMIN - CERTIFICADO MÉDICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 594,
+		"motivo_consulta_sintoma" : "EXTENSIÓN DE CERTIFICADO MÉDICO PARA GUARDERÍAS\/JARDINES DE INFANCIA",
+		"categoria" : "ADMIN - CERTIFICADO MÉDICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 595,
+		"motivo_consulta_sintoma" : "EXTENSIÓN DE CERTIFICADO MÉDICO PARA CAMPAMENTOS DE VERANO",
+		"categoria" : "ADMIN - CERTIFICADO MÉDICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 596,
+		"motivo_consulta_sintoma" : "EXTENSIÓN DE CERTIFICADO MÉDICO PARA ACTIVIDADES RECREATIVAS",
+		"categoria" : "ADMIN - CERTIFICADO MÉDICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 597,
+		"motivo_consulta_sintoma" : "EXTENSIÓN DE CERTIFICADO MÉDICO PARA PERMISOS DE TRABAJO ESPECÍFICOS",
+		"categoria" : "ADMIN - CERTIFICADO MÉDICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 598,
+		"motivo_consulta_sintoma" : "EXTENSIÓN DE CERTIFICADO MÉDICO PARA REINCORPORACIÓN LABORAL",
+		"categoria" : "ADMIN - CERTIFICADO MÉDICO",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 599,
+		"motivo_consulta_sintoma" : "DETECCIÓN DE VIOLENCIA INTRAFAMILIAR (MALTRATO FÍSICO)",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 600,
+		"motivo_consulta_sintoma" : "DETECCIÓN DE VIOLENCIA INTRAFAMILIAR (MALTRATO PSICOLÓGICO)",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 601,
+		"motivo_consulta_sintoma" : "DETECCIÓN DE VIOLENCIA INTRAFAMILIAR (MALTRATO ECONÓMICO)",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 602,
+		"motivo_consulta_sintoma" : "DETECCIÓN DE VIOLENCIA INTRAFAMILIAR (MALTRATO SEXUAL)",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 603,
+		"motivo_consulta_sintoma" : "MANEJO INICIAL DE CASOS DE VIOLENCIA INTRAFAMILIAR (CONTENCIÓN)",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 604,
+		"motivo_consulta_sintoma" : "MANEJO INICIAL DE CASOS DE VIOLENCIA INTRAFAMILIAR (SEGURIDAD)",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 605,
+		"motivo_consulta_sintoma" : "MANEJO INICIAL DE CASOS DE VIOLENCIA INTRAFAMILIAR (DOCUMENTACIÓN)",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 606,
+		"motivo_consulta_sintoma" : "REFERENCIA A SERVICIOS ESPECIALIZADOS EN VIOLENCIA INTRAFAMILIAR",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 607,
+		"motivo_consulta_sintoma" : "DETECCIÓN DE VIOLENCIA DE GÉNERO (ABUSO POR PAREJA\/EXPAREJA)",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 608,
+		"motivo_consulta_sintoma" : "MANEJO INICIAL DE CASOS DE VIOLENCIA DE GÉNERO",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 609,
+		"motivo_consulta_sintoma" : "REFERENCIA A SERVICIOS ESPECIALIZADOS EN VIOLENCIA DE GÉNERO",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 610,
+		"motivo_consulta_sintoma" : "DETECCIÓN DE MALTRATO INFANTIL (ABUSO FÍSICO)",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 611,
+		"motivo_consulta_sintoma" : "DETECCIÓN DE MALTRATO INFANTIL (ABUSO EMOCIONAL)",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 612,
+		"motivo_consulta_sintoma" : "DETECCIÓN DE MALTRATO INFANTIL (NEGLIGENCIA)",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 613,
+		"motivo_consulta_sintoma" : "DETECCIÓN DE MALTRATO INFANTIL (ABUSO SEXUAL)",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 614,
+		"motivo_consulta_sintoma" : "NOTIFICACIÓN DE MALTRATO INFANTIL A AUTORIDADES COMPETENTES",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 615,
+		"motivo_consulta_sintoma" : "REFERENCIA A SERVICIOS DE PROTECCIÓN INFANTIL",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 616,
+		"motivo_consulta_sintoma" : "DETECCIÓN DE ABUSO SEXUAL (EN NIÑOS)",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 617,
+		"motivo_consulta_sintoma" : "DETECCIÓN DE ABUSO SEXUAL (EN ADOLESCENTES)",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 618,
+		"motivo_consulta_sintoma" : "DETECCIÓN DE ABUSO SEXUAL (EN ADULTOS)",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 619,
+		"motivo_consulta_sintoma" : "MANEJO INICIAL DE CASOS DE ABUSO SEXUAL (CONTENCIÓN)",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 620,
+		"motivo_consulta_sintoma" : "MANEJO INICIAL DE CASOS DE ABUSO SEXUAL (EXAMEN FORENSE)",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:53.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 621,
+		"motivo_consulta_sintoma" : "MANEJO INICIAL DE CASOS DE ABUSO SEXUAL (PROFILAXIS)",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:54.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 622,
+		"motivo_consulta_sintoma" : "REFERENCIA A SERVICIOS ESPECIALIZADOS EN ABUSO SEXUAL",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:54.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 623,
+		"motivo_consulta_sintoma" : "DETECCIÓN DE MALTRATO A PERSONAS MAYORES (ABUSO FÍSICO)",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:54.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 624,
+		"motivo_consulta_sintoma" : "DETECCIÓN DE MALTRATO A PERSONAS MAYORES (ABUSO EMOCIONAL)",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:54.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 625,
+		"motivo_consulta_sintoma" : "DETECCIÓN DE MALTRATO A PERSONAS MAYORES (ABUSO FINANCIERO)",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:54.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 626,
+		"motivo_consulta_sintoma" : "DETECCIÓN DE MALTRATO A PERSONAS MAYORES (NEGLIGENCIA)",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:54.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 627,
+		"motivo_consulta_sintoma" : "NOTIFICACIÓN DE MALTRATO A PERSONAS MAYORES A AUTORIDADES COMPETENTES",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:54.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 628,
+		"motivo_consulta_sintoma" : "REFERENCIA A SERVICIOS DE PROTECCIÓN A PERSONAS MAYORES",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:54.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 629,
+		"motivo_consulta_sintoma" : "VIOLENCIA COMUNITARIA (IMPACTO EN SALUD FÍSICA)",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:54.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 630,
+		"motivo_consulta_sintoma" : "VIOLENCIA COMUNITARIA (IMPACTO EN SALUD MENTAL)",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:54.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 631,
+		"motivo_consulta_sintoma" : "ACOSO ESCOLAR (BULLYING) - DETECCIÓN DE VÍCTIMAS",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:54.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 632,
+		"motivo_consulta_sintoma" : "ACOSO ESCOLAR (BULLYING) - DETECCIÓN DE AGRESORES",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:54.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 633,
+		"motivo_consulta_sintoma" : "ACOSO ESCOLAR (BULLYING) - ASESORAMIENTO A PADRES",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:54.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 634,
+		"motivo_consulta_sintoma" : "CIBERACOSO (CYBERBULLYING) - DETECCIÓN",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 4,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:54.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 635,
+		"motivo_consulta_sintoma" : "CIBERACOSO (CYBERBULLYING) - ASESORAMIENTO",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:54.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 636,
+		"motivo_consulta_sintoma" : "ASESORAMIENTO SOBRE SEGURIDAD PERSONAL Y PREVENCIÓN DE VIOLENCIA",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:54.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 637,
+		"motivo_consulta_sintoma" : "APOYO A VÍCTIMAS DE DELITOS VIOLENTOS (REFERENCIA A APOYO PSICOLÓGICO)",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:54.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 638,
+		"motivo_consulta_sintoma" : "APOYO A VÍCTIMAS DE DELITOS VIOLENTOS (REFERENCIA A APOYO LEGAL)",
+		"categoria" : "ADMIN - VIOLENCIA",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:54.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 639,
+		"motivo_consulta_sintoma" : "VACUNACIÓN (BCG Y HB)",
+		"categoria" : "VACUNATORIO - EMERGENCIA",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:54.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 640,
+		"motivo_consulta_sintoma" : "PROCEDIMIENTOS DE ENFERMERÍA (VARIOS)",
+		"categoria" : "PROCEDIMIENTOS - EMERGENCIA",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:00:54.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 641,
+		"motivo_consulta_sintoma" : "CAÍDA DE PROPIA ALTURA CON TRAUMA CRANEAL",
+		"categoria" : "TRAUMATOLOGIA",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:34:13.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 642,
+		"motivo_consulta_sintoma" : "HERIDA POR ARMA BLANCA (CORTANTE\/PUNZANTE)",
+		"categoria" : "TRAUMATOLOGIA",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:34:13.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 643,
+		"motivo_consulta_sintoma" : "HERIDA POR ARMA DE FUEGO",
+		"categoria" : "TRAUMATOLOGIA",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:34:13.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 644,
+		"motivo_consulta_sintoma" : "ESGUINCE DE TOBILLO GRADO I\/II\/III",
+		"categoria" : "TRAUMATOLOGIA",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:34:13.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 645,
+		"motivo_consulta_sintoma" : "SOSPECHA DE FRACTURA CERRADA DE MIEMBRO SUPERIOR",
+		"categoria" : "TRAUMATOLOGIA",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:34:13.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 646,
+		"motivo_consulta_sintoma" : "TRAUMA TORÁCICO CERRADO",
+		"categoria" : "TRAUMATOLOGIA",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:34:13.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 647,
+		"motivo_consulta_sintoma" : "LUXACIÓN DE HOMBRO \/ CODO",
+		"categoria" : "TRAUMATOLOGIA",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:34:13.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 648,
+		"motivo_consulta_sintoma" : "AMPUTACIÓN TRAUMÁTICA DE DIGITO",
+		"categoria" : "TRAUMATOLOGIA",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:34:13.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 649,
+		"motivo_consulta_sintoma" : "QUEMADURA POR ELECTRICIDAD",
+		"categoria" : "TRAUMATOLOGIA",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:34:13.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 650,
+		"motivo_consulta_sintoma" : "TRAUMA OCULAR PENETRANTE",
+		"categoria" : "TRAUMATOLOGIA",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:34:13.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 651,
+		"motivo_consulta_sintoma" : "INTOXICACIÓN POR ORGANOFOSFORADOS (PESTICIDAS)",
+		"categoria" : "INTOXICACIONES",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:34:13.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 652,
+		"motivo_consulta_sintoma" : "INTOXICACIÓN ETÍLICA AGUDA",
+		"categoria" : "INTOXICACIONES",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:34:13.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 653,
+		"motivo_consulta_sintoma" : "INGESTA DE SUSTANCIAS CÁUSTICAS (CLORO\/DESINFECTANTES)",
+		"categoria" : "INTOXICACIONES",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:34:13.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 654,
+		"motivo_consulta_sintoma" : "PICADURA DE ALACRÁN \/ ESCORPIÓN",
+		"categoria" : "INTOXICACIONES",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:34:13.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 655,
+		"motivo_consulta_sintoma" : "MORDEDURA DE SERPIENTE (OFIDISMO)",
+		"categoria" : "INTOXICACIONES",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:34:13.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 656,
+		"motivo_consulta_sintoma" : "SOBREDOSIS POR PSICOTRÓPICOS \/ MEDICAMENTOS",
+		"categoria" : "INTOXICACIONES",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:34:13.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 657,
+		"motivo_consulta_sintoma" : "INHALACIÓN DE GASES TÓXICOS \/ MONÓXIDO",
+		"categoria" : "INTOXICACIONES",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:34:13.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 658,
+		"motivo_consulta_sintoma" : "CRISIS DE ANSIEDAD \/ ATAQUE DE PÁNICO",
+		"categoria" : "SALUD MENTAL",
+		"codigo_triaje" : 3,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:34:13.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 659,
+		"motivo_consulta_sintoma" : "IDEACIÓN SUICIDA O INTENTO AUTOLÍTICO",
+		"categoria" : "SALUD MENTAL",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:34:13.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 660,
+		"motivo_consulta_sintoma" : "AGITACIÓN PSICOMOTRIZ \/ EPISODIO PSICÓTICO",
+		"categoria" : "SALUD MENTAL",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:34:13.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 661,
+		"motivo_consulta_sintoma" : "SÍNDROME DE ABSTINENCIA AGUDO",
+		"categoria" : "SALUD MENTAL",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:34:13.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 662,
+		"motivo_consulta_sintoma" : "HERIDA POR ARMA DE FUEGO EN ABDOMEN",
+		"categoria" : "TRAUMATOLOGIA",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:36:34.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 663,
+		"motivo_consulta_sintoma" : "HERIDA POR ARMA DE FUEGO EN TÓRAX",
+		"categoria" : "TRAUMATOLOGIA",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:36:34.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 664,
+		"motivo_consulta_sintoma" : "HERIDA POR ARMA BLANCA CON EXPOSICIÓN DE VÍSCERAS",
+		"categoria" : "TRAUMATOLOGIA",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:36:34.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 665,
+		"motivo_consulta_sintoma" : "FRACTURA EXPUESTA DE TIBIA \/ PERONÉ",
+		"categoria" : "TRAUMATOLOGIA",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:36:34.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 666,
+		"motivo_consulta_sintoma" : "FRACTURA EXPUESTA DE FÉMUR",
+		"categoria" : "TRAUMATOLOGIA",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:36:34.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 667,
+		"motivo_consulta_sintoma" : "TRAUMA CRANEOENCEFÁLICO SEVERO (PERDIDA DE CONCIENCIA)",
+		"categoria" : "TRAUMATOLOGIA",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:36:34.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 668,
+		"motivo_consulta_sintoma" : "TRAUMA CRANEOENCEFÁLICO MODERADO",
+		"categoria" : "TRAUMATOLOGIA",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:36:34.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 669,
+		"motivo_consulta_sintoma" : "POLITRAUMATISMO POR ACCIDENTE DE TRÁNSITO",
+		"categoria" : "TRAUMATOLOGIA",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:36:34.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 670,
+		"motivo_consulta_sintoma" : "LUXACIÓN DE CADERA",
+		"categoria" : "TRAUMATOLOGIA",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:36:34.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 671,
+		"motivo_consulta_sintoma" : "QUEMADURA DE SEGUNDO GRADO > 10% SUPERFICIE CORPORAL",
+		"categoria" : "TRAUMATOLOGIA",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:36:34.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 672,
+		"motivo_consulta_sintoma" : "QUEMADURA DE TERCER GRADO",
+		"categoria" : "TRAUMATOLOGIA",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:36:34.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 673,
+		"motivo_consulta_sintoma" : "INTOXICACIÓN POR CARBAMATOS \/ PESTICIDAS",
+		"categoria" : "INTOXICACIONES",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:36:34.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 674,
+		"motivo_consulta_sintoma" : "INTOXICACIÓN POR METANOL (ALCOHOL ADULTERADO)",
+		"categoria" : "INTOXICACIONES",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:36:34.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 675,
+		"motivo_consulta_sintoma" : "INGESTA VOLUNTARIA DE RATICIDA",
+		"categoria" : "INTOXICACIONES",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:36:34.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 676,
+		"motivo_consulta_sintoma" : "MORDEDURA DE SERPIENTE X (OFIDISMO)",
+		"categoria" : "INTOXICACIONES",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:36:34.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 677,
+		"motivo_consulta_sintoma" : "EMPONZOÑAMIENTO ARÁCNIDO (ARAÑA)",
+		"categoria" : "INTOXICACIONES",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:36:34.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 678,
+		"motivo_consulta_sintoma" : "INTOXICACIÓN POR MEDICAMENTOS ANTIDEPRESIVOS",
+		"categoria" : "INTOXICACIONES",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:36:34.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 679,
+		"motivo_consulta_sintoma" : "HEMORRAGIA POSPARTO INMEDIATA",
+		"categoria" : "GINECO-OBSTETRICO",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:36:34.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 680,
+		"motivo_consulta_sintoma" : "ECLAMPSIA (CONVULSIONES EN EL EMBARAZO)",
+		"categoria" : "GINECO-OBSTETRICO",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:36:34.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 681,
+		"motivo_consulta_sintoma" : "PREECLAMPSIA CON SIGNOS DE SEVERIDAD",
+		"categoria" : "GINECO-OBSTETRICO",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:36:34.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 682,
+		"motivo_consulta_sintoma" : "DESPRENDIMIENTO PREMATURO DE PLACENTA",
+		"categoria" : "GINECO-OBSTETRICO",
+		"codigo_triaje" : 1,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:36:34.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 683,
+		"motivo_consulta_sintoma" : "RUPTURA PREMATURA DE MEMBRANAS > 24 HORAS",
+		"categoria" : "GINECO-OBSTETRICO",
+		"codigo_triaje" : 2,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:36:34.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 684,
+		"motivo_consulta_sintoma" : "CURACIÓN DE HERIDA MAYOR",
+		"categoria" : "PROCEDIMIENTOS - EMERGENCIA",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:36:34.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 685,
+		"motivo_consulta_sintoma" : "RETIRO DE PUNTOS DE SUTURA",
+		"categoria" : "PROCEDIMIENTOS - EMERGENCIA",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:36:34.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 686,
+		"motivo_consulta_sintoma" : "COLOCACIÓN DE SONDA VESICAL",
+		"categoria" : "PROCEDIMIENTOS - EMERGENCIA",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:36:34.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 687,
+		"motivo_consulta_sintoma" : "NEBULIZACIÓN ADULTO \/ PEDIÁTRICO",
+		"categoria" : "PROCEDIMIENTOS - EMERGENCIA",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:36:34.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 688,
+		"motivo_consulta_sintoma" : "ADMINISTRACIÓN DE MEDICACIÓN INTRAMUSCULAR",
+		"categoria" : "PROCEDIMIENTOS - EMERGENCIA",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:36:34.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	},
+	{
+		"id_sintoma" : 689,
+		"motivo_consulta_sintoma" : "ASPIRACIÓN DE SECRECIONES",
+		"categoria" : "PROCEDIMIENTOS - EMERGENCIA",
+		"codigo_triaje" : 5,
+		"esta_activo" : 1,
+		"fecha_creacion" : "2026-02-17T01:36:34.000Z",
+		"fecha_actualizacion" : "2026-02-17T01:36:42.000Z"
+	}
+]}

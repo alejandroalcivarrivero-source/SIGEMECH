@@ -13,7 +13,7 @@ module.exports = (sequelize) => {
     },
     id_tipo_identificacion: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'id_tipo_identificacion'
     },
     numero_documento: {
@@ -23,22 +23,22 @@ module.exports = (sequelize) => {
       field: 'numero_documento'
     },
     primer_nombre: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING(100),
       allowNull: false,
       field: 'primer_nombre'
     },
     segundo_nombre: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING(100),
       allowNull: true,
       field: 'segundo_nombre'
     },
     primer_apellido: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING(100),
       allowNull: false,
       field: 'primer_apellido'
     },
     segundo_apellido: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING(100),
       allowNull: true,
       field: 'segundo_apellido'
     },
@@ -47,23 +47,13 @@ module.exports = (sequelize) => {
       allowNull: false,
       field: 'fecha_nacimiento'
     },
-    id_sexo: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      field: 'id_sexo'
-    },
-    id_genero: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      field: 'id_genero'
-    },
     direccion: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.TEXT,
       allowNull: true,
       field: 'direccion'
     },
     referencia_domicilio: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.TEXT,
         allowNull: true,
         field: 'referencia_domicilio'
     },
@@ -94,7 +84,7 @@ module.exports = (sequelize) => {
         field: 'id_parroquia'
     },
     lugar_nacimiento: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.STRING(200),
         allowNull: true,
         field: 'lugar_nacimiento'
     },
@@ -123,18 +113,33 @@ module.exports = (sequelize) => {
         allowNull: true,
         field: 'id_instruccion'
     },
-    ocupacion: {
+    id_estado_instruccion: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        field: 'id_estado_instruccion'
+    },
+    id_ocupacion: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        field: 'id_ocupacion'
+    },
+    id_tipo_empresa: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        field: 'id_tipo_empresa'
+    },
+    ocupacion: { // Campo redundante o legacy, mantenemos mapeo
         type: DataTypes.STRING(100),
         allowNull: true,
         field: 'ocupacion'
     },
-    tipo_empresa: {
+    tipo_empresa: { // Campo redundante o legacy, mantenemos mapeo
         type: DataTypes.STRING(100),
         allowNull: true,
         field: 'tipo_empresa'
     },
     tiene_discapacidad: {
-        type: DataTypes.BOOLEAN,
+        type: DataTypes.BOOLEAN, // tinyint(1) -> boolean
         defaultValue: false,
         field: 'tiene_discapacidad'
     },
@@ -148,8 +153,13 @@ module.exports = (sequelize) => {
         allowNull: true,
         field: 'porcentaje_discapacidad'
     },
+    id_bono: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        field: 'id_bono'
+    },
     nombre_representante: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.STRING(200),
         allowNull: true,
         field: 'nombre_representante'
     },
@@ -177,6 +187,16 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
         allowNull: true,
         field: 'id_seguro_salud'
+    },
+    esta_activo: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+        field: 'esta_activo'
+    },
+    id_sexo: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        field: 'id_sexo'
     },
   }, {
     sequelize,

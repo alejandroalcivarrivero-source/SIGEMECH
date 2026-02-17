@@ -141,6 +141,15 @@ const catalogService = {
     async getOcupaciones() {
         const res = await api.get('/catalogs/ocupaciones');
         return res.data;
+    },
+
+    /**
+     * Busca motivos de consulta/síntomas dinámicamente.
+     * @param {string} term
+     */
+    async searchMotivosConsulta(term) {
+        const res = await api.get(`/catalogs/motivos-consulta?search=${term}`);
+        return res.data;
     }
 };
 

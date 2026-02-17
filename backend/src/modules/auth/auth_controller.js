@@ -78,9 +78,7 @@ const login = async (req, res) => {
         res.status(200).json({
             mensaje: 'Autenticación exitosa. ¡Bienvenido/a!',
             ficha_acceso,
-            usuario: respuestaUsuario,
-            // Mantenemos propiedad user por compatibilidad si algún otro componente lo usa (legacy support)
-            user: respuestaUsuario
+            usuario: respuestaUsuario
         });
 
     } catch (error) {

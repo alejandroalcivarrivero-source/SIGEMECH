@@ -19,19 +19,19 @@ module.exports = (sequelize) => {
                 key: 'id'
             }
         },
-        paciente_id: {
+        id_admision_neonato: {
             type: DataTypes.INTEGER,
-            allowNull: false,
-            field: 'paciente_id',
+            allowNull: true, // Puede ser nulo si no hay neonato o se registra después
+            field: 'id_admision_neonato',
             references: {
-                model: 'pacientes',
+                model: 'admisiones_emergencia',
                 key: 'id'
             }
         },
-        fecha_parto: {
+        fecha_hora_parto: {
             type: DataTypes.DATE,
             allowNull: false,
-            field: 'fecha_parto'
+            field: 'fecha_hora_parto'
         },
         // ... (resto de los campos del modelo sin cambios)
         responsable_parto_id: {

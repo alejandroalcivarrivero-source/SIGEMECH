@@ -6,6 +6,7 @@
   "license": "GPL-3.0",
   "scripts": {
     "start": "node src/app.js",
+    "predev": "node src/scripts/prueba_humo_final.js",
     "dev": "nodemon src/app.js",
     "sync": "node src/scripts/sync_db.js"
   },

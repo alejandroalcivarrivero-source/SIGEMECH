@@ -19,13 +19,19 @@ const sequelize = new Sequelize(
     }
 );
 
+let db = {};
+
 const inicializar = async () => {
     try {
         await sequelize.authenticate();
         console.log('Conexión a la base de datos establecida exitosamente.');
         
-        const models = inicializarModelos(sequelize);
+        const modelos = inicializarModelos(sequelize);
         console.log('Modelos inicializados.');
+
+        // Asignar modelos al objeto db exportado
+        db.sequelize = sequelize;
+        Object.assign(db, modelos);
 
         await sequelize.sync({ alter: false });
         console.log('Sincronización de modelos completada.');
@@ -36,6 +42,7 @@ const inicializar = async () => {
 };
 
 module.exports = {
-    sequelize,
-    inicializar
+    db,
+    inicializar,
+    sequelize
 };

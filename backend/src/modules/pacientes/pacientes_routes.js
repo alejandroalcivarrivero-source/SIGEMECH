@@ -4,7 +4,7 @@ const pacientesController = require('./pacientes_controller');
 const verificarToken = require('../../middlewares/auth_middleware');
 
 // Ruta: GET /api/pacientes/buscar/:cedula
-router.get('/buscar/:cedula', verificarToken, pacientesController.buscarPacientePorCedula);
+router.get('/buscar/:cedula', /*verificarToken,*/ pacientesController.buscarPacientePorCedula);
 
 // Ruta: POST /api/pacientes/admision (Paso 1)
 router.post('/admision', verificarToken, pacientesController.registrarAdmision);

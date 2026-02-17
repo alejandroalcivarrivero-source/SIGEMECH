@@ -274,6 +274,39 @@ async function obtenerBonos(req, res) {
     }
 }
 
+async function searchMotivosConsulta(req, res) {
+    const { search } = req.query;
+
+    if (!search) {
+        return res.json([]);
+    }
+
+    try {
+        const results = await sequelize.query(
+                `SELECT
+                    id_sintoma AS id,
+                    motivo_consulta_sintoma AS nombre,
+                    categoria AS categoria,
+                    codigo_triaje AS prioridad
+                FROM cat_motivo_consulta_sintomas
+                WHERE motivo_consulta_sintoma LIKE :search
+                AND esta_activo = 1
+                LIMIT 50`,
+                {
+                    replacements: { search: `%${search}%` },
+                    type: QueryTypes.SELECT
+                }
+            );
+        res.json(results);
+    } catch (error) {
+        console.error("Error en searchMotivosConsulta:", error);
+        res.status(500).json({
+            message: "Error al buscar síntomas/motivos de consulta",
+            detail: error.message
+        });
+    }
+}
+
 module.exports = {
     getProvincias,
     getCantones,
@@ -299,5 +332,6 @@ module.exports = {
     obtenerEstadosInstruccion,
     obtenerTiposEmpresa,
     getTiposDiscapacidad,
-    obtenerBonos
+    obtenerBonos,
+    searchMotivosConsulta
 };

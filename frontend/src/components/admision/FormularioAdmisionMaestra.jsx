@@ -19,7 +19,7 @@ import SeccionDatosAdicionales from './SeccionDatosAdicionales';
 import SeccionContactoEmergencia from './SeccionContactoEmergencia';
 import SeccionLlegadaMotivo from './SeccionLlegadaMotivo';
 import SeccionRepresentante from './SeccionRepresentante';
-import { calcularEdadDetallada } from '../../utils/calculosCronologicos';
+import { calcularEdad } from '../../utils/calculosCronologicos';
 
 const FormularioAdmisionMaestra = () => {
     const navigate = useNavigate();
@@ -79,10 +79,71 @@ const FormularioAdmisionMaestra = () => {
         establecimiento_origen: '',
         
         // Pestaña 7
-        motivo_consulta: '', motivo_detalle: '',
+        motivo_consulta: '', motivo_detalle: '', enfermedad_actual: '', id_sintoma: '', sintoma_categoria: '',
         
         // Otros
         id_tipo_doc_representante: ''
+    };
+
+    // Mapeo inverso de datos del backend al formulario
+    // Asegura que cuando se carga un paciente, los campos se llenen correctamente
+    // Utilizando estrictamente snake_case acorde a la base de datos MariaDB
+    const mapBackendToFrontend = (backendData) => {
+        if (!backendData) return initialFormData;
+        
+        return {
+            ...initialFormData,
+            ...backendData, // Base: copiar todo lo que coincida por nombre (snake_case)
+            
+            // Mapeos explícitos para asegurar compatibilidad con campos calculados o estructuras anidadas
+            id_tipo_identificacion: backendData.id_tipo_identificacion,
+            numero_documento: backendData.numero_documento,
+            primer_nombre: backendData.primer_nombre,
+            segundo_nombre: backendData.segundo_nombre,
+            primer_apellido: backendData.primer_apellido,
+            segundo_apellido: backendData.segundo_apellido,
+            fecha_nacimiento: backendData.fecha_nacimiento ? backendData.fecha_nacimiento.split('T')[0] : '',
+            id_sexo: backendData.id_sexo,
+            id_estado_civil: backendData.id_estado_civil,
+            id_nacionalidad: backendData.id_nacionalidad,
+            id_etnia: backendData.id_etnia,
+            id_nacionalidad_etnica: backendData.id_nacionalidad_etnica,
+            id_pueblo: backendData.id_pueblo,
+            
+            // Datos de Nacimiento anidados (Reconstrucción para la UI)
+            datosNacimiento: {
+                id_nacionalidad: backendData.id_nacionalidad,
+                provincia_nacimiento_id: backendData.provincia_nacimiento_id,
+                canton_nacimiento_id: backendData.canton_nacimiento_id,
+                parroquia_nacimiento_id: backendData.parroquia_nacimiento_id,
+                fecha_nacimiento: backendData.fecha_nacimiento ? backendData.fecha_nacimiento.split('T')[0] : '',
+                hora_parto: backendData.hora_nacimiento || '',
+                id_lugar_parto: backendData.id_lugar_parto,
+                cedula_madre: backendData.cedula_madre
+            },
+            
+            // Datos de Residencia (Requieren lógica de extracción si vienen populados)
+            provinciaResidencia: backendData.parroquia?.canton?.provincia_id || '',
+            cantonResidencia: backendData.parroquia?.canton_id || '',
+            id_parroquia: backendData.id_parroquia,
+            direccion: backendData.direccion,
+            referencia_domicilio: backendData.referencia_domicilio,
+            
+            // Contacto
+            telefono: backendData.telefono,
+            email: backendData.email,
+            
+            // Datos Adicionales (Mapeo directo snake_case)
+            id_instruccion: backendData.id_instruccion,
+            id_estado_instruccion: backendData.id_estado_instruccion,
+            id_ocupacion: backendData.id_ocupacion,
+            id_tipo_empresa: backendData.id_tipo_empresa,
+            id_seguro_salud: backendData.id_seguro_salud,
+            id_bono: backendData.id_bono,
+            tiene_discapacidad: backendData.tiene_discapacidad ? 'SI' : 'NO',
+            id_tipo_discapacidad: backendData.id_tipo_discapacidad,
+            porcentaje_discapacidad: backendData.porcentaje_discapacidad
+        };
     };
 
     const [formData, setFormData] = useState(initialFormData);
@@ -96,7 +157,7 @@ const FormularioAdmisionMaestra = () => {
         // O fallback a nivel superior si existiera, pero la estructura principal es formData.datosNacimiento
         const fecha = formData.datosNacimiento?.fecha_nacimiento || formData.fecha_nacimiento;
         const hora = formData.datosNacimiento?.hora_parto || formData.hora_parto || '00:00';
-        return calcularEdadDetallada(fecha, hora);
+        return calcularEdad(fecha, hora);
     }, [formData.datosNacimiento?.fecha_nacimiento, formData.fecha_nacimiento, formData.datosNacimiento?.hora_parto, formData.hora_parto]);
 
     const esMenor = edadInfo.anios < 18;
@@ -520,22 +581,64 @@ const FormularioAdmisionMaestra = () => {
         setLoading(true);
         try {
             const response = await pacienteService.findByCedula(formData.numero_documento);
-            if (response.found) {
-                setFormData(prev => ({ ...prev, ...response.paciente }));
+            
+            // Verificación robusta de respuesta
+            if (response && response.found && response.paciente) {
+                // Usamos el mapeador para asegurar compatibilidad total con la estructura snake_case del backend
+                const datosMapeados = mapBackendToFrontend(response.paciente);
+                
+                // Mantenemos los datos que ya se hayan ingresado en el formulario y que no vengan del backend (merge seguro)
+                setFormData(prev => ({
+                    ...prev,
+                    ...datosMapeados,
+                    // Preservar datos de admisión actual que no son del paciente histórico
+                    motivo_consulta: prev.motivo_consulta,
+                    motivo_detalle: prev.motivo_detalle,
+                    enfermedad_actual: prev.enfermedad_actual,
+                    id_sintoma: prev.id_sintoma,
+                    sintoma_categoria: prev.sintoma_categoria
+                }));
+                
                 setFormHabilitado(true);
                 setModalConfig({
                     show: true, type: 'success', title: 'Paciente Encontrado',
                     message: `Se han cargado los datos de ${response.paciente.primer_nombre} ${response.paciente.primer_apellido}.`
                 });
             } else {
-                setModalConfig({
-                    show: true, type: 'warning', title: 'Nuevo Paciente',
-                    message: 'Paciente no registrado en el sistema. ¿Desea iniciar un nuevo registro?',
-                    confirmAction: () => { setFormHabilitado(true); setModalConfig(p => ({...p, show: false})); }
+                // Caso: Paciente no encontrado (404 lógico) -> Limpiar formulario para nuevo registro
+                // No mostramos error, sino que habilitamos el formulario para registro limpio
+                
+                // Guardamos el número de documento y tipo para no perder lo que escribió
+                const documentoActual = formData.numero_documento;
+                const tipoIdActual = formData.id_tipo_identificacion;
+
+                // Limpiar campos de pestañas 2 a 6, manteniendo pestañas 1 y identificadores
+                setFormData(prev => ({
+                    ...initialFormData, // Reset total
+                    numero_documento: documentoActual, // Restaurar documento
+                    id_tipo_identificacion: tipoIdActual, // Restaurar tipo
+                    
+                    // Mantener nombres si el usuario ya los había escrito antes de buscar (casos raros pero posibles)
+                    primer_nombre: prev.primer_nombre,
+                    segundo_nombre: prev.segundo_nombre,
+                    primer_apellido: prev.primer_apellido,
+                    segundo_apellido: prev.segundo_apellido,
+                }));
+
+                setFormHabilitado(true); // Habilitar para edición
+                
+                // Feedback claro para el usuario
+                console.log('Paciente no encontrado, formulario limpio para registro.');
+                
+                 setModalConfig({
+                    show: true, type: 'info', title: 'Paciente Nuevo',
+                    message: 'El número de documento no se encuentra registrado. El formulario ha sido habilitado para ingresar un paciente nuevo.',
+                    confirmAction: () => setModalConfig(p => ({...p, show: false}))
                 });
             }
         } catch (error) {
-            console.error('Error al buscar paciente');
+            console.error('Error al buscar paciente:', error);
+            // Si es un error real de red o 500
             setModalConfig({
                 show: true, type: 'error', title: 'Error de Conexión',
                 message: 'No se pudo consultar el microservicio de personas.'
@@ -689,6 +792,9 @@ const FormularioAdmisionMaestra = () => {
                  },
                 admissionData: {
                     motivo_consulta: formData.motivo_consulta,
+                    enfermedad_actual: formData.enfermedad_actual,
+                    id_sintoma: formData.id_sintoma,
+                    sintoma_categoria: formData.sintoma_categoria,
                     motivo_detalle: formData.motivo_detalle,
                     id_forma_llegada: formData.id_forma_llegada,
                     id_fuente_informacion: formData.id_fuente_informacion,
@@ -717,10 +823,11 @@ const FormularioAdmisionMaestra = () => {
                 title: 'Registro Exitoso',
                 message: 'La admisión y los datos del paciente se han guardado correctamente.',
                 confirmAction: () => {
-                    if (formData.motivo_consulta === 'EMERGENCIA' || formData.motivo_consulta === 'TRIAGE' || formData.motivo_consulta === '1') {
-                        navigate('/dashboard/triaje-signos');
+                    const cat = formData.sintoma_categoria || '';
+                    if (cat === 'PROCEDIMIENTOS - EMERGENCIA' || cat === 'VACUNATORIO - EMERGENCIA') {
+                        navigate('/dashboard/procedimientos');
                     } else {
-                        navigate('/dashboard/consultas');
+                        navigate('/dashboard/triaje-signos');
                     }
                 }
             });
@@ -941,9 +1048,9 @@ const FormularioAdmisionMaestra = () => {
                             
                             <button
                                 type="submit"
-                                disabled={loading || !formHabilitado || !formData.motivo_consulta}
+                                disabled={loading || !formHabilitado || !formData.motivo_detalle}
                                 className={`group flex items-center px-12 py-4 font-black rounded-lg shadow-2xl transition-all transform ${
-                                    loading || !formHabilitado || !formData.motivo_consulta
+                                    loading || !formHabilitado || !formData.motivo_detalle
                                     ? 'bg-gray-200 text-gray-400 cursor-not-allowed border border-gray-300'
                                     : 'bg-blue-600 text-white hover:bg-blue-700 hover:-translate-y-1 active:scale-95 border-b-4 border-blue-800'
                                 }`}

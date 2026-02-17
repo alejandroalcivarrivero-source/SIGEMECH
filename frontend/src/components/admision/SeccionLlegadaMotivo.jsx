@@ -1,11 +1,19 @@
 import React, { useEffect, useMemo, useState, useRef } from 'react';
-import { Info } from 'lucide-react';
+import { Info, Search, X } from 'lucide-react';
 import ModalFeedback from '../ModalFeedback';
+import catalogService from '../../api/catalogService';
 
 const SeccionLlegadaMotivo = ({ formData, handleChange, catalogos, formHabilitado, soloLlegada = false, soloMotivo = false, setFormData }) => {
+    const [busqueda, setBusqueda] = useState('');
+    const [resultados, setResultados] = useState([]);
+    const [buscando, setBuscando] = useState(false);
+    
+    // Ensure results is always an array for rendering
+    const resultsArray = Array.isArray(resultados) ? resultados : [];
+    const [mostrarResultados, setMostrarResultados] = useState(false);
     const inputPersonaEntregaRef = useRef(null);
     const [showFuenteWarning, setShowFuenteWarning] = useState(false);
-    const tipoSeleccionado = catalogos.tiposIdentificacion?.find(t => t.id == formData.id_tipo_identificacion);
+    const tipoSeleccionado = catalogos?.tiposIdentificacion?.find(t => t.id == formData?.id_tipo_identificacion);
     const esNoIdentificado = tipoSeleccionado?.nombre?.toUpperCase()?.includes('NO IDENTIFICADO');
     const habilitadoParaNN = formHabilitado || esNoIdentificado;
 
@@ -16,7 +24,7 @@ const SeccionLlegadaMotivo = ({ formData, handleChange, catalogos, formHabilitad
     // TAREA: Limpieza Reactiva y Autollenado
     useEffect(() => {
         // TAREA: Limpieza Reactiva y Reset Total al cambiar forma de llegada
-        const formaLlegadaObj = catalogos.formasLlegada?.find(f => f.id == formData.id_forma_llegada);
+        const formaLlegadaObj = catalogos?.formasLlegada?.find(f => f.id == formData?.id_forma_llegada);
         const nombreForma = formaLlegadaObj?.nombre?.toUpperCase() || '';
 
         // Reset base para garantizar datos limpios en la pestaña
@@ -152,6 +160,52 @@ const SeccionLlegadaMotivo = ({ formData, handleChange, catalogos, formHabilitad
     const handleTransporteReferencia = (tipo) => {
         const value = tipo.toUpperCase();
         setFormData(prev => ({ ...prev, medio_transporte_referencia: value }));
+    };
+
+    // Lógica para el buscador asíncrono de síntomas
+    useEffect(() => {
+        const delayDebounceFn = setTimeout(async () => {
+            if (busqueda?.length >= 3) {
+                setBuscando(true);
+                try {
+                    const data = await catalogService.searchMotivosConsulta(busqueda);
+                    if (Array.isArray(data)) {
+                        setResultados(data);
+                        setMostrarResultados(true);
+                    } else {
+                        setResultados([]);
+                    }
+                } catch (error) {
+                    console.error('Error buscando síntomas:', error);
+                    setResultados([]);
+                } finally {
+                    setBuscando(false);
+                }
+            } else {
+                setResultados([]);
+                setMostrarResultados(false);
+            }
+        }, 300);
+
+        return () => clearTimeout(delayDebounceFn);
+    }, [busqueda]);
+
+    const seleccionarSintoma = (sintoma) => {
+        // Validación de nulidad (Fix 3)
+        const nombreSintoma = (sintoma?.nombre || '').toUpperCase();
+        const categoria = sintoma?.categoria || '';
+        const idSintoma = sintoma?.id || '';
+
+        setFormData(prev => ({
+            ...prev,
+            id_sintoma: idSintoma,
+            motivo_consulta: nombreSintoma,
+            sintoma_categoria: categoria,
+            enfermedad_actual: nombreSintoma, // Mapeo del relato
+            motivo_detalle: nombreSintoma
+        }));
+        setBusqueda(nombreSintoma);
+        setMostrarResultados(false);
     };
 
     return (
@@ -403,54 +457,90 @@ const SeccionLlegadaMotivo = ({ formData, handleChange, catalogos, formHabilitad
 
                 {soloMotivo && (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div className="col-span-1 md:col-span-3">
+                        <div className="col-span-1 md:col-span-3 relative">
                             <label className={labelClasses}>
-                                MOTIVO PRINCIPAL <span className="text-red-500">*</span>
+                                BUSCADOR DE SÍNTOMAS / MOTIVO PRINCIPAL <span className="text-red-500">*</span>
                             </label>
-                            <textarea
-                                tabIndex="701"
-                                name="motivo_detalle"
-                                value={formData.motivo_detalle || ''}
-                                onChange={handleInputChangeUpperCase}
-                                disabled={!habilitadoParaNN}
-                                rows="3"
-                                placeholder="DESCRIBA EL SÍNTOMA PRINCIPAL..."
-                                className="w-full rounded border-gray-400 bg-white text-[11px] py-1 px-1.5 focus:border-blue-600 focus:outline-none font-medium border-2 shadow-sm transition-colors uppercase"
-                                required
-                            ></textarea>
-                        </div>
-
-                        <div className="col-span-1 md:col-span-3 mt-2 p-2 bg-blue-50 rounded border border-blue-200">
-                            <label className="block text-[10px] font-black text-blue-900 mb-2 uppercase text-center">
-                                DESTINO INICIAL <span className="text-red-500">*</span>
-                            </label>
-                            <div className="grid grid-cols-3 gap-2">
-                                {[
-                                    { id: 'EMERGENCIA', label: 'EMERGENCIA', color: 'bg-red-50 text-red-700 border-red-100 hover:bg-red-100' },
-                                    { id: 'TRIAGE', label: 'TRIAGE', color: 'bg-yellow-50 text-yellow-700 border-yellow-100 hover:bg-yellow-100' },
-                                    { id: 'CONSULTA', label: 'CONSULTA', color: 'bg-green-50 text-green-700 border-green-100 hover:bg-green-100' }
-                                ].map(destino => (
-                                    <label
-                                        key={destino.id}
-                                        className={`flex items-center justify-center p-2 rounded border cursor-pointer transition-all ${
-                                            formData.motivo_consulta === destino.id
-                                            ? 'border-blue-600 bg-blue-600 text-white'
-                                            : destino.color
-                                        }`}
+                            <div className="relative group">
+                                <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none">
+                                    <Search size={14} className="text-blue-500" />
+                                </div>
+                                <input
+                                    type="text"
+                                    value={busqueda || formData.enfermedad_actual || formData.motivo_detalle || ''}
+                                    onChange={(e) => {
+                                        const val = e.target.value.toUpperCase();
+                                        setBusqueda(val);
+                                        // Si el usuario escribe manualmente, guardamos en enfermedad_actual y motivo_detalle
+                                        setFormData(prev => ({
+                                            ...prev,
+                                            enfermedad_actual: val,
+                                            motivo_detalle: val
+                                        }));
+                                    }}
+                                    onFocus={() => busqueda.length >= 3 && setMostrarResultados(true)}
+                                    placeholder="ESCRIBA PARA BUSCAR SÍNTOMA (EJ: FIEBRE, DOLOR...)"
+                                    className={`${inputClasses} pl-8 pr-8 !h-9 text-[12px] border-blue-300 focus:border-blue-600`}
+                                    disabled={!habilitadoParaNN}
+                                />
+                                {(busqueda || formData.enfermedad_actual || formData.motivo_detalle) && (
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setBusqueda('');
+                                            setFormData(prev => ({ 
+                                                ...prev, 
+                                                id_sintoma: '', 
+                                                motivo_consulta: '',
+                                                sintoma_categoria: '', 
+                                                enfermedad_actual: '',
+                                                motivo_detalle: '' 
+                                            }));
+                                        }}
+                                        className="absolute inset-y-0 right-0 pr-2.5 flex items-center text-gray-400 hover:text-red-500"
                                     >
-                                        <input
-                                            tabIndex="702"
-                                            type="radio"
-                                            name="motivo_consulta"
-                                            value={destino.id}
-                                            checked={formData.motivo_consulta === destino.id}
-                                            onChange={handleChange}
-                                            className="hidden"
-                                        />
-                                        <span className="text-[10px] font-black tracking-tighter">{destino.label}</span>
-                                    </label>
-                                ))}
+                                        <X size={14} />
+                                    </button>
+                                )}
                             </div>
+
+                            {/* Dropdown de resultados */}
+                            {mostrarResultados && (
+                                <div className="absolute z-50 w-full mt-1 bg-white border-2 border-blue-600 rounded shadow-xl max-h-60 overflow-y-auto">
+                                    {buscando ? (
+                                        <div className="p-3 text-center text-[10px] font-bold text-blue-600 uppercase animate-pulse">
+                                            Buscando coincidencias...
+                                        </div>
+                                    ) : resultados && resultsArray?.length > 0 ? (
+                                        resultsArray.map((r, idx) => (
+                                            <div
+                                                key={r?.id || idx}
+                                                onClick={() => seleccionarSintoma(r)}
+                                                className="p-2 border-b border-gray-100 hover:bg-blue-50 cursor-pointer transition-colors"
+                                            >
+                                                <div className="text-[11px] font-black text-gray-800 uppercase">{(r?.nombre || '').toUpperCase()}</div>
+                                                <div className="text-[9px] font-bold text-blue-500 uppercase flex justify-between">
+                                                    <span>Categoría: {r?.categoria || 'S/C'}</span>
+                                                    {/* Mostrar Prioridad/Triaje si existe */}
+                                                    {(r?.prioridad || r?.codigo_triaje) && (
+                                                        <span className="bg-blue-100 px-1 rounded">
+                                                            Nivel: {r?.prioridad || r?.codigo_triaje}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <div className="p-3 text-center text-[10px] font-bold text-red-500 uppercase">
+                                            No se encontraron síntomas. Se registrará como motivo manual.
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+
+                            <p className="mt-2 text-[10px] font-bold text-gray-500 uppercase italic">
+                                * SELECCIONE UN SÍNTOMA DE LA LISTA PARA LA DERIVACIÓN AUTOMÁTICA.
+                            </p>
                         </div>
                     </div>
                 )}

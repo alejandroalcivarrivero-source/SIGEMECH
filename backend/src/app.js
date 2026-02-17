@@ -63,7 +63,9 @@ app.use(errorHandler);
 
 const iniciarServidor = async () => {
     try {
+        const { db } = require('./config/db');
         await inicializar(); // Inicializa la DB y los modelos
+        console.log("Modelos vivos:", Object.keys(db));
         app.listen(port, () => {
             logger.info(`🚀 Servidor SIGEMECH iniciado en el puerto ${port}`);
             console.log(`🚀 Servidor SIGEMECH corriendo en http://localhost:${port}`);

@@ -3,23 +3,23 @@ const { sequelize } = require('../config/db');
 /**
  * Script de limpieza para eliminar tablas en inglés creadas por error
  */
-const cleanDatabase = async () => {
+const limpiarBaseDeDatos = async () => {
     try {
-        console.log('Iniciando limpieza de tablas en inglés...');
+        console.log('Iniciando limpieza de tablas obsoletas (inglés)...');
         
         // Deshabilitar temporalmente restricciones de llaves foráneas para evitar errores al borrar
         await sequelize.query('SET FOREIGN_KEY_CHECKS = 0');
         
-        const tablesToDelete = [
+        const tablasParaEliminar = [
             'Users',
             'Admissions',
             'Patients',
             'Nationalities'
         ];
 
-        for (const table of tablesToDelete) {
-            console.log(`Eliminando tabla: ${table}...`);
-            await sequelize.query(`DROP TABLE IF EXISTS ${table}`);
+        for (const tabla of tablasParaEliminar) {
+            console.log(`Eliminando tabla: ${tabla}...`);
+            await sequelize.query(`DROP TABLE IF EXISTS ${tabla}`);
         }
 
         await sequelize.query('SET FOREIGN_KEY_CHECKS = 1');
@@ -32,4 +32,4 @@ const cleanDatabase = async () => {
     }
 };
 
-cleanDatabase();
+limpiarBaseDeDatos();

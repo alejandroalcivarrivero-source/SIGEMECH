@@ -1,7 +1,7 @@
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
 const sequelize = require('../config/db');
-const { EmergencyAdmission } = require('../models_index');
+const { Admision } = require('../models_index');
 
 async function syncAndVerify() {
     console.log('--- Iniciando Sincronización y Verificación de Refactorización: Admisión ---');
@@ -19,7 +19,7 @@ async function syncAndVerify() {
         // Para este ejercicio asumimos que estamos en etapa de desarrollo/refactorización y alter es aceptable,
         // o que se aceptará la creación de nuevas columnas.
         console.log('   (Usando alter: { drop: false } para evitar error de metadatos)');
-        await EmergencyAdmission.sync({ alter: { drop: false } });
+        await Admision.sync({ alter: { drop: false } });
         console.log('   Sincronización completada.');
 
         console.log('3. Verificando estructura de la tabla...');
@@ -48,7 +48,7 @@ async function syncAndVerify() {
             console.log('4. Verificación Estructural EXITOSA.');
             
             console.log('5. Prueba de Lectura (Count)...');
-            const count = await EmergencyAdmission.count();
+            const count = await Admision.count();
             console.log(`   Total de admisiones en base de datos: ${count}`);
             
             console.log('--- Refactorización y Verificación Completadas Exitosamente ---');

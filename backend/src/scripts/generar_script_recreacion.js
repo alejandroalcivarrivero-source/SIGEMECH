@@ -10,7 +10,7 @@ const fs = require("fs");
  */
 async function generarScriptRecreacion() {
   const queryInterface = sequelize.getQueryInterface();
-  const modelosParaRecrear = ["Paciente", "Admission"]; // Nombres de los modelos en Sequelize
+  const modelosParaRecrear = ["Paciente", "Admision"]; // Nombres de los modelos en Sequelize
   let scriptSql =
     "-- Script de Recreación de Tablas Transaccionales Vacías\n\n";
 

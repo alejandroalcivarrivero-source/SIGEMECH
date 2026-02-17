@@ -103,7 +103,21 @@ module.exports = (sequelize) => {
 
     const TipoDiscapacidad = defineModel(sequelize, 'TipoDiscapacidad', 'cat_tipos_discapacidad', {}, { timestamps: false });
 
+    const MotivoConsultaSintoma = defineModel(sequelize, 'MotivoConsultaSintoma', 'cat_motivo_consulta_sintomas', {
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true,
+            field: 'id_sintoma'
+        },
+        nombre: { type: DataTypes.STRING(255), field: 'motivo_consulta_sintoma' },
+        categoria: { type: DataTypes.STRING(100), field: 'categoria' },
+        codigo_triaje: { type: DataTypes.INTEGER, field: 'codigo_triaje' },
+        activo: { type: DataTypes.BOOLEAN, defaultValue: true, field: 'esta_activo' }
+    });
+
     return {
+        MotivoConsultaSintoma,
         TipoEmpresa,
         SeguroSalud,
         Pueblo,

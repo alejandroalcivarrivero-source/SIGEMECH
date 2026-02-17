@@ -44,5 +44,6 @@ router.get('/seguros-salud', catalogsController.getSegurosSalud);
 router.get('/estado-nivel-instruccion', catalogsController.obtenerEstadosInstruccion);
 router.get('/tipos-empresa', catalogsController.obtenerTiposEmpresa);
 router.get('/bonos', catalogsController.obtenerBonos);
+router.get('/motivos-consulta', catalogsController.searchMotivosConsulta);
 
 module.exports = router;

@@ -11,6 +11,7 @@ const pacienteService = {
      * @returns {Promise<Object|null>}
      */
     async findByCedula(numeroDocumento) {
+        // Ruta Backend: GET /api/pacientes/buscar/:cedula
         const response = await api.get(`/pacientes/buscar/${numeroDocumento}`);
         return response.data;
     },
@@ -21,17 +22,21 @@ const pacienteService = {
      * @returns {Promise<Object>}
      */
     async savePaciente(pacienteData) {
-        const response = await api.post(`/pacientes/registrar`, pacienteData);
+        // Ruta Backend: POST /api/pacientes (Registro general) o POST /api/pacientes/admision (Registro simplificado)
+        const response = await api.post(`/pacientes`, pacienteData);
         return response.data;
     },
 
     /**
      * Crea un registro de admisión de emergencia (Atómico).
-     * @param {Object} payload { pacienteData, admissionData, representanteData, datos_parto }
+     * Ahora utiliza el endpoint unificado de pacientes que maneja paciente + admisión
+     * @param {Object} payload { datosPaciente, ... }
      * @returns {Promise<Object>}
      */
     async createEmergencyAdmission(payload) {
-        const response = await api.post(`/admissions`, payload);
+        // Ruta Backend: POST /api/pacientes/admision
+        // Nota: El backend espera { datosPaciente } en el body
+        const response = await api.post(`/pacientes/admision`, payload);
         return response.data;
     },
 
@@ -48,6 +53,9 @@ const pacienteService = {
      */
     async verificarAdmisionReciente(pacienteId, horas) {
         try {
+            // Ajustar ruta si es necesario, asumiendo que admissions sigue existiendo para consultas específicas
+            // O si se movió a pacientes, ajustar aquí. Por ahora mantenemos admissions si el backend lo soporta.
+            // Revisando routes, admissions_routes.js existe.
             const response = await api.get(`/admissions/verificar-reciente/${pacienteId}?horas=${horas}`);
             return response.data.tieneAdmision;
         } catch (error) {

@@ -10,10 +10,10 @@ module.exports = (sequelize) => {
             autoIncrement: true,
             field: 'id'
         },
-        paciente_id: {
+        id_paciente: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            field: 'paciente_id',
+            field: 'id_paciente',
             references: {
                 model: 'pacientes',
                 key: 'id'

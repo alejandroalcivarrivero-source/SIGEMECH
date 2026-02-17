@@ -3,6 +3,7 @@ const router = express.Router();
 const admissionsController = require('./admissions_controller');
 const partosController = require('./partos_controlador');
 const authMiddleware = require('../../middlewares/auth_middleware');
+const uppercaseMiddleware = require('../../middlewares/uppercase_middleware');
 
 /**
  * Rutas para el módulo de Admisiones de Emergencia (Formulario 008)
@@ -10,13 +11,13 @@ const authMiddleware = require('../../middlewares/auth_middleware');
  */
 
 // Crear una nueva admisión
-router.post('/', authMiddleware, admissionsController.createAdmission);
+router.post('/', authMiddleware, admissionsController.crearAdmision);
 
-// Validar paciente materna para sección nacimiento
-router.post('/validar-materna', authMiddleware, admissionsController.validarMaterna);
+// Ruta para buscar paciente por número de documento (para vínculo materno)
+router.get('/buscar-paciente/:numero_documento', authMiddleware, admissionsController.buscarPacientePorDocumento);
 
 // Verificar admisión reciente
-router.get('/verificar-reciente/:pacienteId', authMiddleware, admissionsController.verifyRecentAdmission);
+router.get('/verificar-reciente/:pacienteId', authMiddleware, admissionsController.verificarAdmisionReciente);
 
 // Rutas para el Libro de Partos (RPIS/MSP)
 router.post('/partos', authMiddleware, partosController.guardarParto);
@@ -26,5 +27,8 @@ router.get('/partos/:paciente_id', authMiddleware, partosController.obtenerParto
 // router.get('/', authMiddleware, admissionsController.getAll);
 // router.get('/:id', authMiddleware, admissionsController.getById);
 // router.patch('/:id', authMiddleware, admissionsController.update);
+
+// Super-Controller para guardar toda la admisión
+router.post('/completa', [authMiddleware, uppercaseMiddleware], admissionsController.crear_admision_completa);
 
 module.exports = router;

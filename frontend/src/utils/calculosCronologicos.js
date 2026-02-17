@@ -11,7 +11,7 @@
  * @param {string} horaNacimiento - Hora en formato 'HH:mm' (opcional, default '00:00')
  * @returns {Object} Objeto con desglose de edad y banderas booleanas de clasificación
  */
-export const calcularEdadDetallada = (fechaNacimiento, horaNacimiento = '00:00') => {
+export const calcularEdad = (fechaNacimiento, horaNacimiento = '00:00') => {
     if (!fechaNacimiento) {
         return {
             anios: 0,
@@ -38,57 +38,63 @@ export const calcularEdadDetallada = (fechaNacimiento, horaNacimiento = '00:00')
         };
     }
 
-    // Diferencia en milisegundos
-    let diff = ahora - nacimiento;
-
-    // Cálculo de unidades
-    const msPorHora = 1000 * 60 * 60;
-    const msPorDia = msPorHora * 24;
+    // --- LÓGICA DE CÁLCULO DE EDAD PRECISA POR CICLOS DE 24 HORAS ---
+    // Refactorización Crítica: Se centraliza el cálculo en milisegundos para evitar
+    // inconsistencias por calendario (meses de 28, 30, 31 días).
     
-    // Cálculo aproximado de años/meses/días usando lógica de calendario
+    const diffMilisegundos = ahora - nacimiento;
+
+    // Unidades de tiempo en milisegundos (CONSTANTES DE SOBERANÍA)
+    const MS_POR_HORA = 1000 * 60 * 60;
+    const MS_POR_DIA = MS_POR_HORA * 24;
+    const MS_POR_MES_APROX = MS_POR_DIA * 30.4375; // Promedio para cálculo inicial
+    const MS_POR_ANIO_APROX = MS_POR_DIA * 365.25; // Contempla años bisiestos
+
+    // --- CÁLCULO DIRECTO POR CICLOS ---
+    const horasTotales = diffMilisegundos / MS_POR_HORA;
+    const diasCompletos = Math.floor(diffMilisegundos / MS_POR_DIA);
+    
+    // REGLA CRÍTICA: Si han pasado menos de 24h, los días son CERO.
+    const diasParaMostrar = horasTotales < 24 ? 0 : diasCompletos;
+
+    // Para meses y años, se usa una lógica de calendario más tradicional pero ajustada.
     let anios = ahora.getFullYear() - nacimiento.getFullYear();
     let meses = ahora.getMonth() - nacimiento.getMonth();
-    let dias = ahora.getDate() - nacimiento.getDate();
+    let diasCalendario = ahora.getDate() - nacimiento.getDate();
+    let horas = ahora.getHours() - nacimiento.getHours();
 
-    // Ajuste negativo de meses/días
-    if (dias < 0) {
-        meses--;
-        // Días del mes anterior
-        const ultimoDiaMesAnterior = new Date(ahora.getFullYear(), ahora.getMonth(), 0).getDate();
-        dias += ultimoDiaMesAnterior;
+    // Ajustes finos de calendario
+    if (horas < 0) {
+        diasCalendario--;
+        horas += 24;
     }
-
+    if (diasCalendario < 0) {
+        meses--;
+        const ultimoDiaMesAnterior = new Date(ahora.getFullYear(), ahora.getMonth(), 0).getDate();
+        diasCalendario += ultimoDiaMesAnterior;
+    }
     if (meses < 0) {
         anios--;
         meses += 12;
     }
-
-    // Cálculo de horas (para neonatos)
-    // Se calcula la diferencia total en horas
-    const horasTotales = Math.floor(diff / msPorHora);
     
-    // Clasificaciones Normativas MSP
-    const isNeonato = (anios === 0 && meses === 0 && dias <= 28);
+    // --- CLASIFICACIÓN NORMATIVA MSP ---
+    const esNeonato = diasCompletos <= 28 && anios === 0 && meses === 0;
     const esMenorDeUnAnio = anios === 0;
     const esTerceraEdad = anios >= 65;
-    
-    // Parto Reciente: Definido como menos de 48 horas (Normativa de Alta Conjunta)
-    const esPartoReciente = horasTotales < 48;
-
-    // Mostrar Flujo Neonatal: Si es neonato o si el parto fue reciente
-    const mostrarFlujoNeonatal = isNeonato || esPartoReciente;
+    const esPartoReciente = horasTotales < 48; // Menos de 48 horas
+    const mostrarFlujoNeonatal = esNeonato || esPartoReciente;
 
     return {
         anios,
         meses,
-        dias,
-        horas: horasTotales, // Devolvemos horas totales para lógica de < 24h o < 48h
-        isNeonato,
+        dias: (anios === 0 && meses === 0) ? diasParaMostrar : diasCalendario,
+        horas: Math.floor(horasTotales % 24), // Horas dentro del día actual
+        isNeonato: esNeonato,
         esMenorDeUnAnio,
         esTerceraEdad,
         esPartoReciente,
         mostrarFlujoNeonatal,
-        // Helper booleano para UI inmediata
         isLess24h: horasTotales < 24
     };
 };
@@ -97,7 +103,7 @@ export const calcularEdadDetallada = (fechaNacimiento, horaNacimiento = '00:00')
  * Obtiene el dígito verificador de década para el Código Normativo.
  * Regla: Tercer dígito del año de nacimiento.
  * Ej: 1994 -> '9', 2023 -> '2'
- * 
+ *
  * @param {string} fechaNacimiento - Fecha 'YYYY-MM-DD'
  * @returns {string} Un solo carácter numérico o '0' por defecto
  */
@@ -109,4 +115,10 @@ export const obtenerDigitoDecada = (fechaNacimiento) => {
         return anio.charAt(2);
     }
     return '0';
+};
+
+// Exportación por defecto para compatibilidad
+export default {
+    calcularEdad,
+    obtenerDigitoDecada
 };
