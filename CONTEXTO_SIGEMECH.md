@@ -1,42 +1,38 @@
 # CONTEXTO DEL PROYECTO SIGEMECH
 
-## 📜 Protocolo de Despliegue
+## 1. Identidad Visual y UX (Soberanía y Estándares MSP)
 
-### 🛡️ Protocolo de Integridad
-Para garantizar la estabilidad del sistema antes de cualquier inicio, se ha implementado una **Prueba de Humo de Modelos**.
-- **Ejecución Automática:** Se ejecuta automáticamente antes de `npm run dev` mediante el hook `predev`.
-- **Alcance:** Verifica la conexión a la base de datos y la sincronización correcta de todos los modelos críticos (Paciente, Admision, Catalogos).
-- **Fallo:** Si la prueba de humo falla, el servidor NO iniciará, protegiendo la integridad de los datos.
+### Paleta de Colores (Modo Claro Exclusivo - "Blanco Quirúrgico")
+- **Fondo Global (Body/Main):** `#FFFFFF` (Blanco Puro) - **Prohibido usar grises (slate-50) en fondos generales.**
+- **Contenedores/Tarjetas:** `#FFFFFF` (Sin bordes, sombras sutiles, estilo "Clean").
+- **Labels (Etiquetas):** `#1e3a8a` (Azul MSP Extra Bold `font-bold`).
+- **Inputs:** Fondo `#FFFFFF`, Borde `#cbd5e1` (Slate-300).
+- **Input Focus:** Borde Amarillo Oro `#eab308` (Yellow-500). Sin anillo de enfoque (ring-0).
+- **Botones:** Azul MSP (Primario), Blanco con borde (Secundario), Rojo (Peligro).
 
-### 🔮 Seguridad Futura
-Para mantener la soberanía y mantenibilidad del proyecto a largo plazo:
-1.  **Auditoría de Modelos:** El archivo `backend/src/models_index.js` es la fuente de la verdad para las relaciones. Cualquier nuevo modelo debe registrarse allí en español.
-2.  **Hooks de Git:** Se recomienda implementar hooks de pre-commit para validar que no se introduzcan términos en inglés en nombres de tablas o campos.
-3.  **Inmutabilidad de Catálogos:** Los catálogos base (nacionalidades, etnias, etc.) deben considerarse inmutables en producción y solo modificarse mediante scripts de migración controlados.
+### Estructura de Formularios (Formulario 001)
+- **Diseño:** Limpio, sin "Cajas dentro de cajas". Los campos flotan sobre el lienzo blanco.
+- **Validaciones:** Borde rojo en error, mensaje de texto debajo.
+- **Mayúsculas:** Textos obligatorios en mayúsculas (vía CSS `uppercase` o JS `toUpperCase()`).
 
-## Estado Actual
-- **Fase:** Refactorización y Auditoría de Soberanía Lingüística (Español Técnico).
-- **Backend:** Node.js + Express + Sequelize (MariaDB).
-- **Frontend:** React + Vite.
-- **Base de Datos:** MariaDB (Tablas en `snake_case`, Datos en MAYÚSCULAS).
+## 2. Arquitectura Frontend (React + Tailwind)
+- **Componentes Atómicos:** Secciones divididas por archivos (`SeccionIdentidad.jsx`, `SeccionResidencia.jsx`, etc.) para mantenibilidad.
+- **Gestión de Estado:** `react-hook-form` para manejo de formularios complejos.
+- **Contextos:** `AuthContext` (Autenticación). **NOTA:** `ThemeContext` eliminado por simplificación (Solo Modo Claro).
+- **Enrutamiento:** `react-router-dom` con Layout principal `Dashboard.jsx`.
 
-## Cambios Recientes (Auditoría de Calidad)
-- **Eliminación de Alias en Inglés:** Se verificó la inexistencia de términos como `Patient`, `User`, `EmergencyAdmission`, `Birth`, `Representative` en la lógica de negocio (`backend/src/modules`).
-- **Validación de Modelos:**
-  - Todos los modelos se acceden mediante sus nombres en español (`Paciente`, `Usuario`, `Admision`).
-  - Las relaciones (`hasMany`, `belongsTo`) en `models_index.js` están correctamente definidas usando las entidades en español.
-- **Prueba de Humo:**
-  - Se creó y ejecutó exitosamente el script `backend/src/scripts/prueba_humo_final.js`.
-  - El script confirmó la carga correcta de los modelos críticos: `Paciente`, `Admision`, `Parto`, `Representante`, `Usuario` y catálogos de ubicación.
-  - Se verificó la integridad de las asociaciones clave (ej. `Paciente` <-> `Admision`).
+## 3. Backend (Node.js + Express + MariaDB)
+- **Soberanía Lingüística:** Todo en ESPAÑOL (variables, rutas, comentarios).
+- **Base de Datos:** Tablas normalizadas `snake_case`. Datos almacenados en MAYÚSCULAS.
+- **Controladores:** Lógica de negocio separada de rutas.
+- **Modelos:** Consultas SQL directas o vía Query Builder ligero (sin ORM pesado para control total).
 
-## Arquitectura de Modelos
-- **Ubicación:** `backend/src/modules/**/models.js` y centralizados en `backend/src/models_index.js`.
-- **Convención:**
-  - Nombres de Clases/Modelos: PascalCase en Español (ej. `Paciente`).
-  - Nombres de Tablas: snake_case (ej. `pacientes`, `admisiones`).
-  - Claves Foráneas: `id_entidad` (ej. `id_paciente`, `id_provincia_nacimiento`).
+## 4. Historial de Cambios Recientes
+- **RESET TÉCNICO DE UI:** Eliminación de `ThemeContext` y soporte de Modo Oscuro para simplificar la interfaz.
+- **Limpieza de Estilos:** Restauración de `index.css` y `tailwind.config.js` a valores base.
+- **Estandarización:** Enfoque total en Modo Claro Institucional (Azul/Blanco/Oro).
 
-## Próximos Pasos Sugeridos
-1.  Continuar con la limpieza de código muerto si se detecta.
-2.  Reforzar pruebas de integración para flujos completos (ej. creación de admisión).
+## 5. Próximos Pasos (Roadmap)
+- Validación exhaustiva de reglas de negocio Formulario 001.
+- Optimización de carga de catálogos (caching).
+- Implementación de reportes y estadísticas.
