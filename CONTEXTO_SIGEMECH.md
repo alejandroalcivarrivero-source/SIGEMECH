@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 # CONTEXTO DEL PROYECTO SIGEMECH
 
 ## 1. Identidad Visual y UX (Soberanía y Estándares MSP)
@@ -36,3 +37,45 @@
 - Validación exhaustiva de reglas de negocio Formulario 001.
 - Optimización de carga de catálogos (caching).
 - Implementación de reportes y estadísticas.
+=======
+# CONTEXTO_SIGEMECH.md
+
+## Estado del Proyecto: FINALIZADO
+- **Fecha:** 2026-02-18
+- **Hito:** Cierre de Infraestructura, Código Limpio y Soberanía Técnica.
+- **Estado:** SISTEMA SIGEMECH 2026: Código Limpio, Datos Soberanos.
+
+## Arquitectura Consolidada
+El sistema opera bajo una arquitectura de microservicios modulares en NodeJS (Backend) y React (Frontend), con persistencia en MariaDB.
+
+### Microservicios Activos (Backend):
+1.  **Autenticación (`auth`):** Gestión de acceso seguro mediante JWT.
+2.  **Pacientes (`pacientes`):** Gestión integral de datos demográficos y clínicos del paciente.
+3.  **Admisiones (`admissions` / `/api/admisiones`):** Flujo de ingreso de emergencia (Formulario 008).
+4.  **Catálogos (`catalogs` / `/api/catalogos`):** Gestión de terminología médica estandarizada (MSP Ecuador).
+5.  **Soporte (`soporte`):** Utilidades de diagnóstico y auditoría del sistema.
+
+### Infraestructura de Datos:
+- **Base de Datos:** MariaDB Soberana.
+- **IP del Servidor DB:** `100.64.87.1`
+- **Protocolo de Normalización:** 
+    - Nombres de tablas/campos: `snake_case` (minúsculas).
+    - Datos de valores: `MAYÚSCULAS` (estándar clínico).
+    - Idioma: 100% Español Técnico.
+
+## Protocolo de Inicio e Integridad
+El sistema implementa un **Verificador de Integridad Soberana** (`verificador_sistema.js`) que se ejecuta automáticamente en cada arranque (`npm start`):
+1.  **Validación de Conectividad:** Comprueba enlace con MariaDB en `100.64.87.1`.
+2.  **Validación de Modelos:** Verifica que todos los modelos esenciales (`Usuario`, `Paciente`, `Admision`, `Catálogos`) estén correctamente mapeados.
+3.  **Validación de Tablas:** Confirma la existencia física de las tablas en la base de datos antes de abrir el puerto de escucha.
+4.  **Aborto Seguro:** Si falla cualquier prueba de integridad, el sistema se detiene inmediatamente para evitar corrupción de datos.
+
+## Registro de Operaciones Finales
+- Eliminación de archivos temporales (`.old`, `.bak`, `.tmp`).
+- Remoción de scripts de prueba obsoletos y archivos de texto huérfanos.
+- Saneamiento de comentarios técnicos y deuda técnica de lenguaje.
+- Sincronización final de payloads para cumplimiento estricto del Formulario 001/008.
+
+---
+**[FINALIZADO] Sistema SIGEMECH 2026: Código Limpio, Datos Soberanos.**
+>>>>>>> Stashed changes
